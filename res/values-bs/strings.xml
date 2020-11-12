@@ -17,16 +17,16 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="hvac_min_text" msgid="8167124789068494624">"Min."</string>
-    <string name="hvac_max_text" msgid="3669693372074755551">"Maks."</string>
-    <string name="voice_recognition_toast" msgid="1149934534584052842">"Prepoznavanjem glasa sada upravlja povezani Bluetooth uređaj"</string>
-    <string name="car_guest" msgid="318393171202663722">"Gost"</string>
-    <string name="start_guest_session" msgid="497784785761754874">"Gost"</string>
-    <string name="car_add_user" msgid="4067337059622483269">"Dodaj korisnika"</string>
-    <string name="car_new_user" msgid="6637442369728092473">"Novi korisnik"</string>
-    <string name="user_add_user_message_setup" msgid="1035578846007352323">"Kada dodate novog korisnika, ta osoba treba postaviti svoj prostor."</string>
-    <string name="user_add_user_message_update" msgid="7061671307004867811">"Bilo koji korisnik može ažurirati aplikacije za sve druge korisnike."</string>
-    <string name="car_loading_profile" msgid="4507385037552574474">"Učitavanje"</string>
-    <string name="car_loading_profile_developer_message" msgid="1660962766911529611">"Učitavanje korisnika (od korisnika <xliff:g id="FROM_USER">%1$d</xliff:g> do korisnika <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
-    <string name="rear_view_camera_close_button_text" msgid="8430918817320533693">"Zatvori"</string>
+    <string name="hvac_min_text" msgid="866677328637088715">"Min."</string>
+    <string name="hvac_max_text" msgid="7627950157128770380">"Maks."</string>
+    <string name="voice_recognition_toast" msgid="7579725862117020349">"Prepoznavanjem glasa sada upravlja povezani Bluetooth uređaj"</string>
+    <string name="car_guest" msgid="768913000117469596">"Gost"</string>
+    <string name="start_guest_session" msgid="2759367183497948650">"Gost"</string>
+    <string name="car_add_user" msgid="8660226923614358478">"Dodaj korisnika"</string>
+    <string name="car_new_user" msgid="304628168515673432">"Novi korisnik"</string>
+    <string name="user_add_user_message_setup" msgid="2130987756494836929">"Kada dodate novog korisnika, ta osoba treba postaviti svoj prostor."</string>
+    <string name="user_add_user_message_update" msgid="1001907075316748931">"Bilo koji korisnik može ažurirati aplikacije za sve druge korisnike."</string>
+    <string name="car_loading_profile" msgid="458961191993686065">"Učitavanje"</string>
+    <string name="car_loading_profile_developer_message" msgid="737810794567935702">"Učitavanje korisnika (od korisnika <xliff:g id="FROM_USER">%1$d</xliff:g> do korisnika <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
+    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Zatvori"</string>
 </resources>
