@@ -16,8 +16,6 @@
 
 package com.android.systemui.car.keyguard;
 
-import android.car.Car;
-import android.car.user.CarUserManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -31,7 +29,6 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardViewController;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.R;
-import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.navigationbar.CarNavigationBarController;
 import com.android.systemui.car.window.OverlayViewController;
 import com.android.systemui.car.window.OverlayViewGlobalStateController;
@@ -60,7 +57,6 @@ public class CarKeyguardViewController extends OverlayViewController implements
     private static final boolean DEBUG = true;
 
     private final Handler mHandler;
-    private final CarServiceProvider mCarServiceProvider;
     private final KeyguardStateController mKeyguardStateController;
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     private final Lazy<BiometricUnlockController> mBiometricUnlockControllerLazy;
@@ -68,8 +64,8 @@ public class CarKeyguardViewController extends OverlayViewController implements
     private final CarNavigationBarController mCarNavigationBarController;
     private final Factory mKeyguardBouncerFactory;
     // Needed to instantiate mBouncer.
-    private final KeyguardBouncer.BouncerExpansionCallback
-            mExpansionCallback = new KeyguardBouncer.BouncerExpansionCallback() {
+    private final KeyguardBouncer.BouncerExpansionCallback mExpansionCallback =
+            new KeyguardBouncer.BouncerExpansionCallback() {
                 @Override
                 public void onFullyShown() {
                 }
@@ -86,11 +82,6 @@ public class CarKeyguardViewController extends OverlayViewController implements
                 public void onFullyHidden() {
                 }
             };
-    private final CarUserManager.UserLifecycleListener mUserLifecycleListener = (e) -> {
-        if (e.getEventType() == CarUserManager.USER_LIFECYCLE_EVENT_TYPE_SWITCHING) {
-            revealKeyguardIfBouncerPrepared();
-        }
-    };
 
     private KeyguardBouncer mBouncer;
     private OnKeyguardCancelClickedListener mKeyguardCancelClickedListener;
@@ -100,7 +91,6 @@ public class CarKeyguardViewController extends OverlayViewController implements
     @Inject
     public CarKeyguardViewController(
             @Main Handler mainHandler,
-            CarServiceProvider carServiceProvider,
             OverlayViewGlobalStateController overlayViewGlobalStateController,
             KeyguardStateController keyguardStateController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
@@ -112,15 +102,12 @@ public class CarKeyguardViewController extends OverlayViewController implements
         super(R.id.keyguard_stub, overlayViewGlobalStateController);
 
         mHandler = mainHandler;
-        mCarServiceProvider = carServiceProvider;
         mKeyguardStateController = keyguardStateController;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
         mBiometricUnlockControllerLazy = biometricUnlockControllerLazy;
         mViewMediatorCallback = viewMediatorCallback;
         mCarNavigationBarController = carNavigationBarController;
         mKeyguardBouncerFactory = keyguardBouncerFactory;
-
-        registerUserSwitchedListener();
     }
 
     @Override
@@ -178,21 +165,24 @@ public class CarKeyguardViewController extends OverlayViewController implements
 
     @Override
     public void reset(boolean hideBouncerWhenShowing) {
-        if (mShowing) {
-            if (mBouncer != null) {
-                if (!mBouncer.isSecure()) {
-                    dismissAndCollapse();
+        mHandler.post(() -> {
+            if (mShowing) {
+                if (mBouncer != null) {
+                    if (!mBouncer.isSecure()) {
+                        dismissAndCollapse();
+                    }
+                    resetBouncer();
                 }
-                mBouncer.show(/* resetSecuritySelection= */ true);
+                mKeyguardUpdateMonitor.sendKeyguardReset();
+                notifyKeyguardUpdateMonitor();
+            } else {
+                // This is necessary in order to address an inconsistency between the keyguard
+                // service
+                // and the keyguard views.
+                // TODO: Investigate the source of the inconsistency.
+                show(/* options= */ null);
             }
-            mKeyguardUpdateMonitor.sendKeyguardReset();
-            notifyKeyguardUpdateMonitor();
-        } else {
-            // This is necessary in order to address an inconsistency between the keyguard service
-            // and the keyguard views.
-            // TODO: Investigate the source of the inconsistency.
-            show(/* options= */ null);
-        }
+        });
     }
 
     @Override
@@ -342,9 +332,9 @@ public class CarKeyguardViewController extends OverlayViewController implements
     }
 
     /**
-     *  Hides Keyguard so that the transitioning Bouncer can be hidden until it is prepared. To be
-     *  called by {@link com.android.systemui.car.userswitcher.FullscreenUserSwitcherViewMediator}
-     *  when a new user is selected.
+     * Hides Keyguard so that the transitioning Bouncer can be hidden until it is prepared. To be
+     * called by {@link com.android.systemui.car.userswitcher.FullscreenUserSwitcherViewMediator}
+     * when a new user is selected.
      */
     public void hideKeyguardToPrepareBouncer() {
         getLayout().setVisibility(View.INVISIBLE);
@@ -361,12 +351,12 @@ public class CarKeyguardViewController extends OverlayViewController implements
             if (mBouncer == null) {
                 if (DEBUG) {
                     Log.d(TAG, "revealKeyguardIfBouncerPrepared: revealKeyguard request is ignored "
-                                    + "since the Bouncer has not been initialized yet.");
+                            + "since the Bouncer has not been initialized yet.");
                 }
                 return;
             }
             if (!mBouncer.inTransit() || !mBouncer.isSecure()) {
-                getLayout().setVisibility(View.VISIBLE);
+                showInternal();
             } else {
                 if (DEBUG) {
                     Log.d(TAG, "revealKeyguardIfBouncerPrepared: Bouncer is not prepared "
@@ -385,10 +375,12 @@ public class CarKeyguardViewController extends OverlayViewController implements
         }
     }
 
-    private void registerUserSwitchedListener() {
-        mCarServiceProvider.addListener(car -> {
-            CarUserManager userManager = (CarUserManager) car.getCarManager(Car.CAR_USER_SERVICE);
-            userManager.addListener(Runnable::run, mUserLifecycleListener);
+    private void resetBouncer() {
+        mHandler.post(() -> {
+            hideInternal();
+            mBouncer.hide(/* destroyView= */ false);
+            mBouncer.show(/* resetSecuritySelection= */ true);
+            revealKeyguardIfBouncerPrepared();
         });
     }
 

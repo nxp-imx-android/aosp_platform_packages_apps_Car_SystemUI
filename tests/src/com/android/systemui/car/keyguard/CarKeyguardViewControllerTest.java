@@ -81,7 +81,6 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
 
         mCarKeyguardViewController = new CarKeyguardViewController(
                 Handler.getMain(),
-                mock(CarServiceProvider.class),
                 mOverlayViewGlobalStateController,
                 mock(KeyguardStateController.class),
                 mock(KeyguardUpdateMonitor.class),
@@ -98,6 +97,7 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
     public void onShow_bouncerIsSecure_showsBouncerWithSecuritySelectionReset() {
         when(mBouncer.isSecure()).thenReturn(true);
         mCarKeyguardViewController.show(/* options= */ null);
+        waitForIdleSync();
 
         verify(mBouncer).show(/* resetSecuritySelection= */ true);
     }
@@ -114,6 +114,7 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
     public void onShow_bouncerNotSecure_hidesBouncerAndDestroysTheView() {
         when(mBouncer.isSecure()).thenReturn(false);
         mCarKeyguardViewController.show(/* options= */ null);
+        waitForIdleSync();
 
         verify(mBouncer).hide(/* destroyView= */ true);
     }
@@ -166,15 +167,17 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
     }
 
     @Test
-    public void setOccludedFalse_currentlyOccluded_bouncerReset() {
+    public void setOccludedFalse_currentlyOccluded_showsKeyguard() {
         when(mBouncer.isSecure()).thenReturn(true);
         mCarKeyguardViewController.show(/* options= */ null);
         mCarKeyguardViewController.setOccluded(/* occluded= */ true, /* animate= */ false);
         reset(mBouncer);
 
         mCarKeyguardViewController.setOccluded(/* occluded= */ false, /* animate= */ false);
+        waitForIdleSync();
 
-        verify(mBouncer).show(/* resetSecuritySelection= */ true);
+        verify(mOverlayViewGlobalStateController).showView(eq(mCarKeyguardViewController),
+                any());
     }
 
     @Test
