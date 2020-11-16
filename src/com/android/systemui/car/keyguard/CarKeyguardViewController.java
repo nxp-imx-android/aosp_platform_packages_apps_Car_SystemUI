@@ -156,7 +156,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
         mShowing = false;
         mKeyguardStateController.notifyKeyguardState(mShowing, /* occluded= */ false);
         mBouncer.hide(/* destroyView= */ true);
-        mCarNavigationBarController.hideAllKeyguardButtons(/* isSetUp= */ true);
+        mCarNavigationBarController.showAllNavigationButtons(/* isSetUp= */ true);
         stop();
         mKeyguardStateController.notifyKeyguardDoneFading();
         mHandler.post(mViewMediatorCallback::keyguardGone);
@@ -196,8 +196,11 @@ public class CarKeyguardViewController extends OverlayViewController implements
     public void setOccluded(boolean occluded, boolean animate) {
         mIsOccluded = occluded;
         getOverlayViewGlobalStateController().setOccluded(occluded);
-        if (!occluded) {
+        if (occluded) {
+            mCarNavigationBarController.showAllOcclusionButtons(/* isSetup= */ true);
+        } else {
             reset(/* hideBouncerWhenShowing= */ false);
+            mCarNavigationBarController.showAllKeyguardButtons(/* isSetup= */ true);
         }
     }
 

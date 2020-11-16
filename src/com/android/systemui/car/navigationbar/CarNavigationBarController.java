@@ -278,42 +278,62 @@ public class CarNavigationBarController {
     }
 
     /**
+     *  Shows all of the navigation buttons on the valid instances of
+     *  {@link CarNavigationBarView}.
+     */
+    public void showAllNavigationButtons(boolean isSetUp) {
+        checkAllBars(isSetUp);
+        if (mTopView != null) {
+            mTopView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_NAVIGATION);
+        }
+        if (mBottomView != null) {
+            mBottomView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_NAVIGATION);
+        }
+        if (mLeftView != null) {
+            mLeftView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_NAVIGATION);
+        }
+        if (mRightView != null) {
+            mRightView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_NAVIGATION);
+        }
+    }
+
+    /**
      * Shows all of the keyguard specific buttons on the valid instances of
      * {@link CarNavigationBarView}.
      */
     public void showAllKeyguardButtons(boolean isSetUp) {
         checkAllBars(isSetUp);
         if (mTopView != null) {
-            mTopView.showKeyguardButtons();
+            mTopView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_KEYGUARD);
         }
         if (mBottomView != null) {
-            mBottomView.showKeyguardButtons();
+            mBottomView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_KEYGUARD);
         }
         if (mLeftView != null) {
-            mLeftView.showKeyguardButtons();
+            mLeftView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_KEYGUARD);
         }
         if (mRightView != null) {
-            mRightView.showKeyguardButtons();
+            mRightView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_KEYGUARD);
         }
     }
 
     /**
-     * Hides all of the keyguard specific buttons on the valid instances of
-     * {@link CarNavigationBarView}.
+     *  Shows all of the occlusion state buttons on the valid instances of
+     *  {@link CarNavigationBarView}.
      */
-    public void hideAllKeyguardButtons(boolean isSetUp) {
+    public void showAllOcclusionButtons(boolean isSetUp) {
         checkAllBars(isSetUp);
         if (mTopView != null) {
-            mTopView.hideKeyguardButtons();
+            mTopView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_OCCLUSION);
         }
         if (mBottomView != null) {
-            mBottomView.hideKeyguardButtons();
+            mBottomView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_OCCLUSION);
         }
         if (mLeftView != null) {
-            mLeftView.hideKeyguardButtons();
+            mLeftView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_OCCLUSION);
         }
         if (mRightView != null) {
-            mRightView.hideKeyguardButtons();
+            mRightView.showButtonsOfType(CarNavigationBarView.BUTTON_TYPE_OCCLUSION);
         }
     }
 
