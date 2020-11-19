@@ -313,7 +313,7 @@ public class CarNavigationBar extends SystemUI implements CommandQueue.Callbacks
         if (mKeyguardStateControllerLazy.get().isShowing()) {
             mCarNavigationBarController.showAllKeyguardButtons(isDeviceSetupForUser());
         } else {
-            mCarNavigationBarController.hideAllKeyguardButtons(isDeviceSetupForUser());
+            mCarNavigationBarController.showAllNavigationButtons(isDeviceSetupForUser());
         }
 
         // Upon restarting the Navigation Bar, CarFacetButtonController should immediately apply the

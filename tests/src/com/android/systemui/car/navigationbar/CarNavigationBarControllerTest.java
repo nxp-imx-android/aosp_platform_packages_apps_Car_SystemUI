@@ -398,6 +398,42 @@ public class CarNavigationBarControllerTest extends SysuiTestCase {
     }
 
     @Test
+    public void testShowAllNavigationButtons_bottomEnabled_bottomNavigationButtonsVisible() {
+        mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
+        mCarNavigationBar = createNavigationBarController();
+        CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
+        View bottomNavButtons = bottomBar.findViewById(R.id.nav_buttons);
+
+        mCarNavigationBar.showAllNavigationButtons(/* isSetUp= */ true);
+
+        assertThat(bottomNavButtons.getVisibility()).isEqualTo(View.VISIBLE);
+    }
+
+    @Test
+    public void testShowAllNavigationButtons_bottomEnabled_bottomKeyguardButtonsGone() {
+        mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
+        mCarNavigationBar = createNavigationBarController();
+        CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
+        View bottomKeyguardButtons = bottomBar.findViewById(R.id.lock_screen_nav_buttons);
+
+        mCarNavigationBar.showAllNavigationButtons(/* isSetUp= */ true);
+
+        assertThat(bottomKeyguardButtons.getVisibility()).isEqualTo(View.GONE);
+    }
+
+    @Test
+    public void testShowAllNavigationButtons_bottomEnabled_bottomOcclusionButtonsGone() {
+        mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
+        mCarNavigationBar = createNavigationBarController();
+        CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
+        View occlusionButtons = bottomBar.findViewById(R.id.occlusion_buttons);
+
+        mCarNavigationBar.showAllNavigationButtons(/* isSetUp= */ true);
+
+        assertThat(occlusionButtons.getVisibility()).isEqualTo(View.GONE);
+    }
+
+    @Test
     public void testShowAllKeyguardButtons_bottomEnabled_bottomKeyguardButtonsVisible() {
         mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
         mCarNavigationBar = createNavigationBarController();
@@ -410,43 +446,63 @@ public class CarNavigationBarControllerTest extends SysuiTestCase {
     }
 
     @Test
-    public void testShowAllKeyguardButtons_bottomEnabled_bottomNavButtonsGone() {
+    public void testShowAllKeyguardButtons_bottomEnabled_bottomNavigationButtonsGone() {
         mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
         mCarNavigationBar = createNavigationBarController();
         CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
-        View bottomButtons = bottomBar.findViewById(R.id.nav_buttons);
+        View bottomNavButtons = bottomBar.findViewById(R.id.nav_buttons);
 
         mCarNavigationBar.showAllKeyguardButtons(/* isSetUp= */ true);
 
-        assertThat(bottomButtons.getVisibility()).isEqualTo(View.GONE);
+        assertThat(bottomNavButtons.getVisibility()).isEqualTo(View.GONE);
     }
 
     @Test
-    public void testHideAllKeyguardButtons_bottomEnabled_bottomKeyguardButtonsGone() {
+    public void testShowAllKeyguardButtons_bottomEnabled_bottomOcclusionButtonsGone() {
         mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
         mCarNavigationBar = createNavigationBarController();
         CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
-        View bottomKeyguardButtons = bottomBar.findViewById(R.id.lock_screen_nav_buttons);
+        View occlusionButtons = bottomBar.findViewById(R.id.occlusion_buttons);
 
         mCarNavigationBar.showAllKeyguardButtons(/* isSetUp= */ true);
-        assertThat(bottomKeyguardButtons.getVisibility()).isEqualTo(View.VISIBLE);
-        mCarNavigationBar.hideAllKeyguardButtons(/* isSetUp= */ true);
 
-        assertThat(bottomKeyguardButtons.getVisibility()).isEqualTo(View.GONE);
+        assertThat(occlusionButtons.getVisibility()).isEqualTo(View.GONE);
     }
 
     @Test
-    public void testHideAllKeyguardButtons_bottomEnabled_bottomNavButtonsVisible() {
+    public void testShowOcclusionButtons_bottomEnabled_bottomOcclusionButtonsVisible() {
         mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
         mCarNavigationBar = createNavigationBarController();
         CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
-        View bottomButtons = bottomBar.findViewById(R.id.nav_buttons);
+        View occlusionButtons = bottomBar.findViewById(R.id.occlusion_buttons);
 
-        mCarNavigationBar.showAllKeyguardButtons(/* isSetUp= */ true);
-        assertThat(bottomButtons.getVisibility()).isEqualTo(View.GONE);
-        mCarNavigationBar.hideAllKeyguardButtons(/* isSetUp= */ true);
+        mCarNavigationBar.showAllOcclusionButtons(/* isSetUp= */ true);
 
-        assertThat(bottomButtons.getVisibility()).isEqualTo(View.VISIBLE);
+        assertThat(occlusionButtons.getVisibility()).isEqualTo(View.VISIBLE);
+    }
+
+    @Test
+    public void testShowOcclusionButtons_bottomEnabled_bottomNavigationButtonsGone() {
+        mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
+        mCarNavigationBar = createNavigationBarController();
+        CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
+        View bottomNavButtons = bottomBar.findViewById(R.id.nav_buttons);
+
+        mCarNavigationBar.showAllOcclusionButtons(/* isSetUp= */ true);
+
+        assertThat(bottomNavButtons.getVisibility()).isEqualTo(View.GONE);
+    }
+
+    @Test
+    public void testShowOcclusionButtons_bottomEnabled_bottomKeyguardButtonsGone() {
+        mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
+        mCarNavigationBar = createNavigationBarController();
+        CarNavigationBarView bottomBar = mCarNavigationBar.getBottomBar(/* isSetUp= */ true);
+        View keyguardButtons = bottomBar.findViewById(R.id.lock_screen_nav_buttons);
+
+        mCarNavigationBar.showAllOcclusionButtons(/* isSetUp= */ true);
+
+        assertThat(keyguardButtons.getVisibility()).isEqualTo(View.GONE);
     }
 
     @Test
