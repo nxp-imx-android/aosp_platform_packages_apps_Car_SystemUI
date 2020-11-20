@@ -119,4 +119,24 @@
         android:paddingStart="@dimen/car_keyline_1"
         android:visibility="gone"
     />
+
+    <LinearLayout
+        android:id="@+id/occlusion_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layoutDirection="ltr"
+        android:paddingEnd="@dimen/car_keyline_1"
+        android:paddingStart="@dimen/car_keyline_1"
+        android:visibility="gone"
+    >
+        <com.android.systemui.car.navigationbar.CarNavigationButton
+            android:id="@+id/home"
+            style="@style/NavigationBarButton"
+            systemui:componentNames="com.android.car.carlauncher/.CarLauncher"
+            systemui:highlightWhenSelected="true"
+            systemui:icon="@drawable/car_ic_home"
+            systemui:intent="intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.HOME;launchFlags=0x14000000;end"/>
+    </LinearLayout>
 </com.android.systemui.car.navigationbar.CarNavigationBarView>

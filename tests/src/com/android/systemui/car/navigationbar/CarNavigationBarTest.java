@@ -185,7 +185,7 @@ public class CarNavigationBarTest extends SysuiTestCase {
     }
 
     @Test
-    public void restartNavbars_newUserIsSetupWithKeyguardHidden_hidesKeyguardButtons() {
+    public void restartNavbars_newUserIsSetupWithKeyguardHidden_showsNavigationButtons() {
         mTestableResources.addOverride(R.bool.config_enableTopNavigationBar, true);
         mTestableResources.addOverride(R.bool.config_enableBottomNavigationBar, true);
         ArgumentCaptor<CarDeviceProvisionedController.DeviceProvisionedListener>
@@ -205,7 +205,7 @@ public class CarNavigationBarTest extends SysuiTestCase {
         deviceProvisionedCallbackCaptor.getValue().onUserSetupChanged();
         waitForIdleSync(mHandler);
 
-        verify(mCarNavigationBarController).hideAllKeyguardButtons(true);
+        verify(mCarNavigationBarController).showAllNavigationButtons(true);
     }
 
     @Test

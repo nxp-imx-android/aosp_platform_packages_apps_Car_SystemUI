@@ -16,6 +16,7 @@
 
 package com.android.systemui.car.navigationbar;
 
+import android.annotation.IntDef;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -28,6 +29,9 @@ import com.android.systemui.car.navigationbar.CarNavigationBarController.Notific
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
 /**
  * A custom navigation bar for the automotive use case.
  * <p>
@@ -35,12 +39,23 @@ import com.android.systemui.statusbar.phone.StatusBarIconController;
  * in a linear layout.
  */
 public class CarNavigationBarView extends LinearLayout {
+
+    @IntDef(value = {BUTTON_TYPE_NAVIGATION, BUTTON_TYPE_KEYGUARD, BUTTON_TYPE_OCCLUSION})
+    @Target({ElementType.TYPE_PARAMETER, ElementType.TYPE_USE})
+    private @interface ButtonsType {
+    }
+
+    public static final int BUTTON_TYPE_NAVIGATION = 0;
+    public static final int BUTTON_TYPE_KEYGUARD = 1;
+    public static final int BUTTON_TYPE_OCCLUSION = 2;
+
     private final boolean mConsumeTouchWhenPanelOpen;
 
     private View mNavButtons;
     private CarNavigationButton mNotificationsButton;
     private NotificationsShadeController mNotificationsShadeController;
     private View mLockScreenButtons;
+    private View mOcclusionButtons;
     // used to wire in open/close gestures for notifications
     private OnTouchListener mStatusBarWindowTouchListener;
 
@@ -54,7 +69,7 @@ public class CarNavigationBarView extends LinearLayout {
     public void onFinishInflate() {
         mNavButtons = findViewById(R.id.nav_buttons);
         mLockScreenButtons = findViewById(R.id.lock_screen_nav_buttons);
-
+        mOcclusionButtons = findViewById(R.id.occlusion_buttons);
         mNotificationsButton = findViewById(R.id.notifications);
         if (mNotificationsButton != null) {
             mNotificationsButton.setOnClickListener(this::onNotificationsClick);
@@ -133,26 +148,49 @@ public class CarNavigationBarView extends LinearLayout {
     }
 
     /**
-     * If there are buttons declared in the layout they will be shown and the normal
-     * Nav buttons will be hidden.
+     * Shows buttons of the specified {@link ButtonsType}.
+     *
+     * NOTE: Only one type of buttons can be shown at a time, so showing buttons of one type will
+     * hide all buttons of other types.
+     *
+     * @param buttonsType
      */
-    public void showKeyguardButtons() {
-        if (mLockScreenButtons == null) {
-            return;
+    public void showButtonsOfType(@ButtonsType int buttonsType) {
+        switch(buttonsType) {
+            case BUTTON_TYPE_NAVIGATION:
+                setNavigationButtonsVisibility(View.VISIBLE);
+                setKeyguardButtonsVisibility(View.GONE);
+                setOcclusionButtonsVisibility(View.GONE);
+                break;
+            case BUTTON_TYPE_KEYGUARD:
+                setNavigationButtonsVisibility(View.GONE);
+                setKeyguardButtonsVisibility(View.VISIBLE);
+                setOcclusionButtonsVisibility(View.GONE);
+                break;
+            case BUTTON_TYPE_OCCLUSION:
+                setNavigationButtonsVisibility(View.GONE);
+                setKeyguardButtonsVisibility(View.GONE);
+                setOcclusionButtonsVisibility(View.VISIBLE);
+                break;
         }
-        mLockScreenButtons.setVisibility(View.VISIBLE);
-        mNavButtons.setVisibility(View.GONE);
     }
 
-    /**
-     * If there are buttons declared in the layout they will be hidden and the normal
-     * Nav buttons will be shown.
-     */
-    public void hideKeyguardButtons() {
-        if (mLockScreenButtons == null) return;
+    private void setNavigationButtonsVisibility(int visibility) {
+        if (mNavButtons != null) {
+            mNavButtons.setVisibility(visibility);
+        }
+    }
 
-        mNavButtons.setVisibility(View.VISIBLE);
-        mLockScreenButtons.setVisibility(View.GONE);
+    private void setKeyguardButtonsVisibility(int visibility) {
+        if (mLockScreenButtons != null) {
+            mLockScreenButtons.setVisibility(visibility);
+        }
+    }
+
+    private void setOcclusionButtonsVisibility(int visibility) {
+        if (mOcclusionButtons != null) {
+            mOcclusionButtons.setVisibility(visibility);
+        }
     }
 
     /**
