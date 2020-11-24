@@ -206,17 +206,17 @@
     <dimen name="car_user_switcher_vertical_spacing_between_name_and_avatar">@*android:dimen/car_padding_4</dimen>
     <dimen name="car_user_switcher_margin_top">@*android:dimen/car_padding_4</dimen>
 
-    <dimen name="car_navigation_button_width">64dp</dimen>
-    <dimen name="car_navigation_button_icon_height">44dp</dimen>
-    <dimen name="car_navigation_bar_width">760dp</dimen>
-    <dimen name="car_left_navigation_bar_width">96dp</dimen>
-    <dimen name="car_right_navigation_bar_width">96dp</dimen>
-    <!-- In order to change the height of the bottom nav bar, overlay navigation_bar_height in
+    <dimen name="car_system_bar_button_width">64dp</dimen>
+    <dimen name="car_system_bar_button_icon_height">44dp</dimen>
+    <dimen name="car_system_bar_width">760dp</dimen>
+    <dimen name="car_left_system_bar_width">96dp</dimen>
+    <dimen name="car_right_system_bar_width">96dp</dimen>
+    <!-- In order to change the height of the bottom nav bar, overlay system_bar_height in
          frameworks/base/core/res/res instead. -->
-    <dimen name="car_bottom_navigation_bar_height">@*android:dimen/navigation_bar_height</dimen>
+    <dimen name="car_bottom_system_bar_height">@*android:dimen/navigation_bar_height</dimen>
     <!-- In order to change the height of the top nav bar, overlay status_bar_height in
          frameworks/base/core/res/res instead. -->
-    <dimen name="car_top_navigation_bar_height">@*android:dimen/status_bar_height</dimen>
+    <dimen name="car_top_system_bar_height">@*android:dimen/status_bar_height</dimen>
 
     <dimen name="car_user_switcher_container_height">420dp</dimen>
     <!-- This must be the negative of car_user_switcher_container_height for the animation. -->

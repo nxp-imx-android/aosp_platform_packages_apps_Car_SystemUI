@@ -220,7 +220,7 @@ public class NotificationPanelViewController extends OverlayPanelViewController
     }
 
     @Override
-    protected boolean shouldShowNavigationBarInsets() {
+    protected boolean shouldShowSystemBarInsets() {
         return true;
     }
 

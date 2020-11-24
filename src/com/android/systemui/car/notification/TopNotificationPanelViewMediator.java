@@ -18,7 +18,7 @@ package com.android.systemui.car.notification;
 
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.car.CarDeviceProvisionedController;
-import com.android.systemui.car.navigationbar.CarNavigationBarController;
+import com.android.systemui.car.systembar.CarSystemBarController;
 import com.android.systemui.car.window.OverlayPanelViewController;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -34,7 +34,7 @@ public class TopNotificationPanelViewMediator extends NotificationPanelViewMedia
 
     @Inject
     public TopNotificationPanelViewMediator(
-            CarNavigationBarController carNavigationBarController,
+            CarSystemBarController carSystemBarController,
             NotificationPanelViewController notificationPanelViewController,
 
             PowerManagerHelper powerManagerHelper,
@@ -43,7 +43,7 @@ public class TopNotificationPanelViewMediator extends NotificationPanelViewMedia
             CarDeviceProvisionedController carDeviceProvisionedController,
             ConfigurationController configurationController
     ) {
-        super(carNavigationBarController,
+        super(carSystemBarController,
                 notificationPanelViewController,
                 powerManagerHelper,
                 broadcastDispatcher,
@@ -56,7 +56,7 @@ public class TopNotificationPanelViewMediator extends NotificationPanelViewMedia
     @Override
     public void registerListeners() {
         super.registerListeners();
-        getCarNavigationBarController().registerTopBarTouchListener(
+        getCarSystemBarController().registerTopBarTouchListener(
                 getNotificationPanelViewController().getDragOpenTouchListener());
     }
 }

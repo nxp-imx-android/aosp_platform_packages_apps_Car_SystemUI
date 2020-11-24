@@ -40,7 +40,7 @@
     </declare-styleable>
 
     <!-- Allow for custom attribs to be added to a nav button -->
-    <declare-styleable name="CarNavigationButton">
+    <declare-styleable name="CarSystemBarButton">
         <!-- intent to start when button is click -->
         <attr name="intent" />
         <!-- intent to start when a long press has happened -->

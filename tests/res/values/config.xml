@@ -17,7 +17,7 @@
 <resources>
     <!-- Configure which system ui bars should be displayed.
          These can be overwritten within the tests. -->
-    <bool name="config_enableLeftNavigationBar">false</bool>
-    <bool name="config_enableRightNavigationBar">false</bool>
-    <bool name="config_enableBottomNavigationBar">false</bool>
+    <bool name="config_enableLeftSystemBar">false</bool>
+    <bool name="config_enableRightSystemBar">false</bool>
+    <bool name="config_enableBottomSystemBar">false</bool>
 </resources>

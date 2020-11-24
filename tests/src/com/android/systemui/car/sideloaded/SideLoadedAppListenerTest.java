@@ -82,10 +82,10 @@ public class SideLoadedAppListenerTest extends SysuiTestCase {
         ComponentName componentName = new ComponentName(APP_PACKAGE_NAME, APP_CLASS_NAME);
 
         RootTaskInfo taskInfo1 = createTask(1, /* isVisible= */ true);
-        taskInfo1.childTaskIds = new int[] { 11, 22, 33 };
+        taskInfo1.childTaskIds = new int[]{11, 22, 33};
 
         RootTaskInfo taskInfo2 = createTask(2, /* isVisible= */ true);
-        taskInfo2.childTaskIds = new int[] { 111, 222, 333, taskId };
+        taskInfo2.childTaskIds = new int[]{111, 222, 333, taskId};
         taskInfo2.displayId = displayId;
 
         List<RootTaskInfo> taskInfoList = Arrays.asList(taskInfo1, taskInfo2);
@@ -110,9 +110,9 @@ public class SideLoadedAppListenerTest extends SysuiTestCase {
         ComponentName componentName = new ComponentName(APP_PACKAGE_NAME, APP_CLASS_NAME);
 
         RootTaskInfo taskInfo1 = createTask(1, /* isVisible= */ true);
-        taskInfo1.childTaskIds = new int[] { 11, 22, 33 };
+        taskInfo1.childTaskIds = new int[]{11, 22, 33};
         RootTaskInfo taskInfo2 = createTask(2, /* isVisible= */ true);
-        taskInfo2.childTaskIds = new int[] { 111, 222, 333, taskId };
+        taskInfo2.childTaskIds = new int[]{111, 222, 333, taskId};
         taskInfo2.displayId = displayId;
         List<RootTaskInfo> taskInfoList = Arrays.asList(taskInfo1, taskInfo2);
 
@@ -143,7 +143,7 @@ public class SideLoadedAppListenerTest extends SysuiTestCase {
         when(mActivityTaskManager.getAllRootTaskInfosOnDisplay(display.getDisplayId()))
                 .thenReturn(taskInfoList);
         when(mSideLoadedAppDetector.isSafe(taskInfo2)).thenReturn(true);
-        when(mDisplayManager.getDisplays()).thenReturn(new Display[] { display });
+        when(mDisplayManager.getDisplays()).thenReturn(new Display[]{display});
 
         mSideLoadedAppListener.onTaskStackChanged();
 
@@ -167,7 +167,7 @@ public class SideLoadedAppListenerTest extends SysuiTestCase {
         when(mActivityTaskManager.getAllRootTaskInfosOnDisplay(display.getDisplayId()))
                 .thenReturn(taskInfoList);
         when(mSideLoadedAppDetector.isSafe(taskInfo2)).thenReturn(false);
-        when(mDisplayManager.getDisplays()).thenReturn(new Display[] { display });
+        when(mDisplayManager.getDisplays()).thenReturn(new Display[]{display});
 
         mSideLoadedAppListener.onTaskStackChanged();
 
@@ -208,7 +208,7 @@ public class SideLoadedAppListenerTest extends SysuiTestCase {
         when(mSideLoadedAppDetector.isSafe(taskInfo5)).thenReturn(true);
 
         when(mDisplayManager.getDisplays())
-                .thenReturn(new Display[] { display1, display2, display3});
+                .thenReturn(new Display[]{display1, display2, display3});
 
         mSideLoadedAppListener.onTaskStackChanged();
 

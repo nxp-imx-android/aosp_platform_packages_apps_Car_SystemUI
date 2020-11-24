@@ -29,7 +29,7 @@ import androidx.annotation.CallSuper;
 
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.car.CarDeviceProvisionedController;
-import com.android.systemui.car.navigationbar.CarNavigationBarController;
+import com.android.systemui.car.systembar.CarSystemBarController;
 import com.android.systemui.car.window.OverlayViewMediator;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.statusbar.policy.ConfigurationController;
@@ -47,7 +47,7 @@ public class NotificationPanelViewMediator implements OverlayViewMediator,
     private static final boolean DEBUG = false;
     private static final String TAG = "NotificationPanelVM";
 
-    private final CarNavigationBarController mCarNavigationBarController;
+    private final CarSystemBarController mCarSystemBarController;
     private final NotificationPanelViewController mNotificationPanelViewController;
     private final PowerManagerHelper mPowerManagerHelper;
     private final BroadcastDispatcher mBroadcastDispatcher;
@@ -69,7 +69,7 @@ public class NotificationPanelViewMediator implements OverlayViewMediator,
 
     @Inject
     public NotificationPanelViewMediator(
-            CarNavigationBarController carNavigationBarController,
+            CarSystemBarController carSystemBarController,
             NotificationPanelViewController notificationPanelViewController,
 
             PowerManagerHelper powerManagerHelper,
@@ -78,7 +78,7 @@ public class NotificationPanelViewMediator implements OverlayViewMediator,
             CarDeviceProvisionedController carDeviceProvisionedController,
             ConfigurationController configurationController
     ) {
-        mCarNavigationBarController = carNavigationBarController;
+        mCarSystemBarController = carSystemBarController;
         mNotificationPanelViewController = notificationPanelViewController;
         mPowerManagerHelper = powerManagerHelper;
         mBroadcastDispatcher = broadcastDispatcher;
@@ -89,17 +89,17 @@ public class NotificationPanelViewMediator implements OverlayViewMediator,
     @Override
     @CallSuper
     public void registerListeners() {
-        mCarNavigationBarController.registerTopBarTouchListener(
+        mCarSystemBarController.registerTopBarTouchListener(
                 mNotificationPanelViewController.getDragCloseTouchListener());
-        mCarNavigationBarController.registerBottomBarTouchListener(
+        mCarSystemBarController.registerBottomBarTouchListener(
                 mNotificationPanelViewController.getDragCloseTouchListener());
-        mCarNavigationBarController.registerLeftBarTouchListener(
+        mCarSystemBarController.registerLeftBarTouchListener(
                 mNotificationPanelViewController.getDragCloseTouchListener());
-        mCarNavigationBarController.registerRightBarTouchListener(
+        mCarSystemBarController.registerRightBarTouchListener(
                 mNotificationPanelViewController.getDragCloseTouchListener());
 
-        mCarNavigationBarController.registerNotificationController(
-                new CarNavigationBarController.NotificationsShadeController() {
+        mCarSystemBarController.registerNotificationController(
+                new CarSystemBarController.NotificationsShadeController() {
                     @Override
                     public void togglePanel() {
                         mNotificationPanelViewController.toggle();
@@ -119,7 +119,7 @@ public class NotificationPanelViewMediator implements OverlayViewMediator,
     public void setupOverlayContentViewControllers() {
         mNotificationPanelViewController.setOnUnseenCountUpdateListener(unseenNotificationCount -> {
             boolean hasUnseen = unseenNotificationCount > 0;
-            mCarNavigationBarController.toggleAllNotificationsUnseenIndicator(
+            mCarSystemBarController.toggleAllNotificationsUnseenIndicator(
                     mCarDeviceProvisionedController.isCurrentUserFullySetup(), hasUnseen);
         });
 
@@ -164,8 +164,8 @@ public class NotificationPanelViewMediator implements OverlayViewMediator,
         registerListeners();
     }
 
-    protected final CarNavigationBarController getCarNavigationBarController() {
-        return mCarNavigationBarController;
+    protected final CarSystemBarController getCarSystemBarController() {
+        return mCarSystemBarController;
     }
 
     protected final NotificationPanelViewController getNotificationPanelViewController() {

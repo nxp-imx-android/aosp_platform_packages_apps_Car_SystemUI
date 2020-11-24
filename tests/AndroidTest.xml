@@ -16,15 +16,15 @@
   -->
 <configuration description="Runs Tests for CarSystemUI.">
     <target_preparer class="com.android.tradefed.targetprep.TestAppInstallSetup">
-        <option name="test-file-name" value="CarSystemUITests.apk" />
+        <option name="test-file-name" value="CarSystemUITests.apk"/>
     </target_preparer>
 
-    <option name="test-suite-tag" value="apct" />
-    <option name="test-suite-tag" value="framework-base-presubmit" />
-    <option name="test-tag" value="CarSystemUITests" />
-    <test class="com.android.tradefed.testtype.AndroidJUnitTest" >
-        <option name="package" value="com.android.systemui.tests" />
-        <option name="runner" value="android.testing.TestableInstrumentation" />
+    <option name="test-suite-tag" value="apct"/>
+    <option name="test-suite-tag" value="framework-base-presubmit"/>
+    <option name="test-tag" value="CarSystemUITests"/>
+    <test class="com.android.tradefed.testtype.AndroidJUnitTest">
+        <option name="package" value="com.android.systemui.tests"/>
+        <option name="runner" value="android.testing.TestableInstrumentation"/>
         <option name="hidden-api-checks" value="false"/>
     </test>
 </configuration>

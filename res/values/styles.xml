@@ -42,7 +42,7 @@
         <item name="android:textColor">@color/system_bar_text_color</item>
     </style>
 
-    <style name="NavigationBarButton">
+    <style name="SystemBarButton">
         <item name="android:layout_height">@dimen/system_bar_button_size</item>
         <item name="android:layout_width">@dimen/system_bar_button_size</item>
         <item name="android:layout_marginEnd">@dimen/system_bar_button_margin</item>

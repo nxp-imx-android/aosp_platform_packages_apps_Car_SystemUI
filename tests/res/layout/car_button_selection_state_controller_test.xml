@@ -25,27 +25,27 @@
     android:paddingEnd="20dp"
     android:gravity="center">
 
-    <com.android.systemui.car.navigationbar.CarNavigationButton
+    <com.android.systemui.car.systembar.CarSystemBarButton
         android:id="@+id/detectable_by_component_name"
-        style="@style/NavigationBarButton"
+        style="@style/SystemBarButton"
         systemui:componentNames="com.android.car.carlauncher/.CarLauncher"
         systemui:icon="@drawable/car_ic_overview"
         systemui:intent="intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.HOME;launchFlags=0x14000000;end"
         systemui:highlightWhenSelected="true"
     />
 
-    <com.android.systemui.car.navigationbar.CarNavigationButton
+    <com.android.systemui.car.systembar.CarSystemBarButton
         android:id="@+id/detectable_by_category"
-        style="@style/NavigationBarButton"
+        style="@style/SystemBarButton"
         systemui:categories="android.intent.category.APP_MAPS"
         systemui:icon="@drawable/car_ic_navigation"
         systemui:intent="intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_MAPS;launchFlags=0x14000000;end"
         systemui:highlightWhenSelected="true"
     />
 
-    <com.android.systemui.car.navigationbar.CarNavigationButton
+    <com.android.systemui.car.systembar.CarSystemBarButton
         android:id="@+id/detectable_by_package"
-        style="@style/NavigationBarButton"
+        style="@style/SystemBarButton"
         systemui:icon="@drawable/car_ic_phone"
         systemui:intent="intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.android.car.dialer;launchFlags=0x10000000;end"
         systemui:packages="com.android.car.dialer"

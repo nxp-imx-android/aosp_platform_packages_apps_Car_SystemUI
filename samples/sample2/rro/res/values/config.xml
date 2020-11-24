@@ -17,10 +17,10 @@
 
 <resources>
     <!-- Configure which system bars should be displayed. -->
-    <bool name="config_enableTopNavigationBar">false</bool>
-    <bool name="config_enableLeftNavigationBar">true</bool>
-    <bool name="config_enableRightNavigationBar">false</bool>
-    <bool name="config_enableBottomNavigationBar">false</bool>
+    <bool name="config_enableTopSystemBar">false</bool>
+    <bool name="config_enableLeftSystemBar">true</bool>
+    <bool name="config_enableRightSystemBar">false</bool>
+    <bool name="config_enableBottomSystemBar">false</bool>
 
     <!-- Configure the type of each system bar. Each system bar must have a unique type. -->
     <!--    STATUS_BAR = 0-->

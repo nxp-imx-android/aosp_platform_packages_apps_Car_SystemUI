@@ -15,7 +15,7 @@
   ~ limitations under the License
   -->
 <resources>
-    <dimen name="car_left_navigation_bar_width">280dp</dimen>
+    <dimen name="car_left_system_bar_width">280dp</dimen>
     <dimen name="car_keyline_1">24dp</dimen>
     <dimen name="system_bar_button_group_padding">64dp</dimen>
     <dimen name="system_bar_icon_drawing_size">44dp</dimen>

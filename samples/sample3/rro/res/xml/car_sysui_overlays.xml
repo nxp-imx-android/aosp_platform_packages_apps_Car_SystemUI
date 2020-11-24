@@ -16,13 +16,13 @@
   -->
 
 <overlay>
-    <item target="layout/car_navigation_bar" value="@layout/car_navigation_bar"/>
-    <item target="layout/car_left_navigation_bar" value="@layout/car_left_navigation_bar"/>
+    <item target="layout/car_bottom_system_bar" value="@layout/car_bottom_system_bar"/>
+    <item target="layout/car_left_system_bar" value="@layout/car_left_system_bar"/>
 
-    <item target="bool/config_enableTopNavigationBar" value="@bool/config_enableTopNavigationBar"/>
-    <item target="bool/config_enableLeftNavigationBar" value="@bool/config_enableLeftNavigationBar"/>
-    <item target="bool/config_enableRightNavigationBar" value="@bool/config_enableRightNavigationBar"/>
-    <item target="bool/config_enableBottomNavigationBar" value="@bool/config_enableBottomNavigationBar"/>
+    <item target="bool/config_enableTopSystemBar" value="@bool/config_enableTopSystemBar"/>
+    <item target="bool/config_enableLeftSystemBar" value="@bool/config_enableLeftSystemBar"/>
+    <item target="bool/config_enableRightSystemBar" value="@bool/config_enableRightSystemBar"/>
+    <item target="bool/config_enableBottomSystemBar" value="@bool/config_enableBottomSystemBar"/>
     <item target="bool/config_showHeadsUpNotificationOnBottom" value="@bool/config_showHeadsUpNotificationOnBottom"/>
 
     <item target="attr/icon" value="@attr/icon"/>
@@ -54,7 +54,7 @@
     <item target="drawable/car_ic_phone" value="@drawable/car_ic_phone" />
     <item target="drawable/car_ic_navigation" value="@drawable/car_ic_navigation" />
 
-    <item target="dimen/car_left_navigation_bar_width" value="@dimen/car_left_navigation_bar_width" />
+    <item target="dimen/car_left_system_bar_width" value="@dimen/car_left_system_bar_width" />
     <item target="dimen/car_keyline_1" value="@dimen/car_keyline_1" />
     <item target="dimen/system_bar_button_group_padding" value="@dimen/system_bar_button_group_padding" />
     <item target="dimen/system_bar_icon_drawing_size" value="@dimen/system_bar_icon_drawing_size" />
@@ -71,5 +71,5 @@
 
     <item target="string/config_notificationPanelViewMediator" value="@string/config_notificationPanelViewMediator"/>
 
-    <item target="style/NavigationBarButton" value="@style/NavigationBarButton"/>
+    <item target="style/SystemBarButton" value="@style/SystemBarButton"/>
 </overlay>
