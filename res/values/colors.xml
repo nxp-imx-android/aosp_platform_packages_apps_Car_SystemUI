@@ -56,7 +56,7 @@
     <color name="car_nav_unseen_indicator_color">#e25142</color>
 
     <!-- The color of the ripples on the untinted notifications -->
-    <color name="notification_ripple_untinted_color">@color/ripple_material_light</color>
+    <color name="notification_ripple_untinted_color">?android:attr/colorControlHighlight</color>
 
     <color name="keyguard_button_text_color">@android:color/black</color>
 
