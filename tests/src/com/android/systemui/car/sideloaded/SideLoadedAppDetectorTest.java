@@ -68,7 +68,7 @@ public class SideLoadedAppDetectorTest extends SysuiTestCase {
         MockitoAnnotations.initMocks(this);
 
         TestableResources testableResources = mContext.getOrCreateTestableResources();
-        String[] allowedAppInstallSources = new String[] {SAFE_VENDOR};
+        String[] allowedAppInstallSources = new String[]{SAFE_VENDOR};
         testableResources.addOverride(R.array.config_allowedAppInstallSources,
                 allowedAppInstallSources);
 

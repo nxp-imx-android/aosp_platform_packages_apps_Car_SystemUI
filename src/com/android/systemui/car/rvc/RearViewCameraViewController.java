@@ -130,7 +130,7 @@ public class RearViewCameraViewController extends OverlayViewController {
     }
 
     @Override
-    protected boolean shouldShowNavigationBarInsets() {
+    protected boolean shouldShowSystemBarInsets() {
         return true;
     }
 

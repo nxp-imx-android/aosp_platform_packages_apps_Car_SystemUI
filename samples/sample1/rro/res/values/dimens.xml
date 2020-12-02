@@ -15,5 +15,5 @@
   ~ limitations under the License
   -->
 <resources>
-    <dimen name="car_right_navigation_bar_width">280dp</dimen>
+    <dimen name="car_right_system_bar_width">280dp</dimen>
 </resources>

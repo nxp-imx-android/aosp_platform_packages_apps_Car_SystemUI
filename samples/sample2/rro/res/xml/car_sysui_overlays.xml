@@ -16,7 +16,7 @@
   -->
 
 <overlay>
-    <item target="layout/car_left_navigation_bar" value="@layout/car_left_navigation_bar"/>
+    <item target="layout/car_left_system_bar" value="@layout/car_left_system_bar"/>
 
     <item target="attr/icon" value="@attr/icon"/>
     <item target="attr/selectedIcon" value="@attr/selectedIcon"/>
@@ -35,14 +35,14 @@
     <item target="drawable/car_ic_phone" value="@drawable/car_ic_phone" />
     <item target="drawable/car_ic_navigation" value="@drawable/car_ic_navigation" />
 
-    <item target="style/NavigationBarButton" value="@style/NavigationBarButton"/>
+    <item target="style/SystemBarButton" value="@style/SystemBarButton"/>
 
     <item target="color/car_nav_icon_fill_color" value="@color/car_nav_icon_fill_color" />
 
-    <item target="bool/config_enableTopNavigationBar" value="@bool/config_enableTopNavigationBar"/>
-    <item target="bool/config_enableLeftNavigationBar" value="@bool/config_enableLeftNavigationBar"/>
-    <item target="bool/config_enableRightNavigationBar" value="@bool/config_enableRightNavigationBar"/>
-    <item target="bool/config_enableBottomNavigationBar" value="@bool/config_enableBottomNavigationBar"/>
+    <item target="bool/config_enableTopSystemBar" value="@bool/config_enableTopSystemBar"/>
+    <item target="bool/config_enableLeftSystemBar" value="@bool/config_enableLeftSystemBar"/>
+    <item target="bool/config_enableRightSystemBar" value="@bool/config_enableRightSystemBar"/>
+    <item target="bool/config_enableBottomSystemBar" value="@bool/config_enableBottomSystemBar"/>
     <item target="bool/config_showHeadsUpNotificationOnBottom" value="@bool/config_showHeadsUpNotificationOnBottom"/>
 
     <item target="integer/config_topSystemBarType" value="@integer/config_topSystemBarType"/>

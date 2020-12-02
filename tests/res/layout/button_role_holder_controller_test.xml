@@ -25,16 +25,16 @@
     android:paddingEnd="20dp"
     android:gravity="center">
 
-    <com.android.systemui.car.navigationbar.AssitantButton
+    <com.android.systemui.car.systembar.AssitantButton
         android:id="@+id/assistant_role_button"
-        style="@style/NavigationBarButton"
+        style="@style/SystemBarButton"
         systemui:icon="@drawable/car_ic_overview"
         systemui:useDefaultAppIconForRole="true"
     />
 
-    <com.android.systemui.car.navigationbar.AssitantButton
+    <com.android.systemui.car.systembar.AssitantButton
         android:id="@+id/assistant_role_disabled_button"
-        style="@style/NavigationBarButton"
+        style="@style/SystemBarButton"
         systemui:icon="@drawable/car_ic_overview"
     />
 
