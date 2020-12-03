@@ -17,7 +17,7 @@
 package com.android.systemui;
 
 import com.android.systemui.biometrics.AuthController;
-import com.android.systemui.car.navigationbar.CarNavigationBar;
+import com.android.systemui.car.systembar.CarSystemBar;
 import com.android.systemui.car.notification.CarNotificationModule;
 import com.android.systemui.car.sideloaded.SideLoadedAppController;
 import com.android.systemui.car.toast.CarToastUI;
@@ -58,8 +58,8 @@ public abstract class CarSystemUIBinder {
     /** Inject Car Navigation Bar. */
     @Binds
     @IntoMap
-    @ClassKey(CarNavigationBar.class)
-    public abstract SystemUI bindCarNavigationBar(CarNavigationBar sysui);
+    @ClassKey(CarSystemBar.class)
+    public abstract SystemUI bindCarSystemBar(CarSystemBar sysui);
 
     /** Inject into GarbageMonitor.Service. */
     @Binds

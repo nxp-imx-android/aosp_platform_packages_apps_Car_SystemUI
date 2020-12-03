@@ -38,9 +38,8 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.ViewMediatorCallback;
 import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
-import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.CarSystemUiTest;
-import com.android.systemui.car.navigationbar.CarNavigationBarController;
+import com.android.systemui.car.systembar.CarSystemBarController;
 import com.android.systemui.car.window.OverlayViewGlobalStateController;
 import com.android.systemui.statusbar.phone.BiometricUnlockController;
 import com.android.systemui.statusbar.phone.KeyguardBouncer;
@@ -86,7 +85,7 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
                 mock(KeyguardUpdateMonitor.class),
                 () -> mock(BiometricUnlockController.class),
                 mock(ViewMediatorCallback.class),
-                mock(CarNavigationBarController.class),
+                mock(CarSystemBarController.class),
                 mKeyguardBouncerFactory
         );
         mCarKeyguardViewController.inflate((ViewGroup) LayoutInflater.from(mContext).inflate(

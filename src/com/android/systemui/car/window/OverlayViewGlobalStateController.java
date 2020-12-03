@@ -123,7 +123,7 @@ public class OverlayViewGlobalStateController {
         refreshUseStableInsets();
         refreshInsetsToFit();
         refreshWindowFocus();
-        refreshNavigationBarVisibility();
+        refreshSystemBarVisibility();
         refreshStatusBarVisibility();
 
         Log.d(TAG, "Content shown: " + viewController.getClass().getName());
@@ -197,7 +197,7 @@ public class OverlayViewGlobalStateController {
         refreshUseStableInsets();
         refreshInsetsToFit();
         refreshWindowFocus();
-        refreshNavigationBarVisibility();
+        refreshSystemBarVisibility();
         refreshStatusBarVisibility();
 
         if (mZOrderVisibleSortedMap.isEmpty()) {
@@ -220,14 +220,14 @@ public class OverlayViewGlobalStateController {
         mHighestZOrder = mZOrderVisibleSortedMap.get(mZOrderVisibleSortedMap.lastKey());
     }
 
-    private void refreshNavigationBarVisibility() {
+    private void refreshSystemBarVisibility() {
         if (mZOrderVisibleSortedMap.isEmpty()) {
             mWindowInsetsController.show(navigationBars());
             return;
         }
 
         // Do not hide navigation bar insets if the window is not focusable.
-        if (mHighestZOrder.shouldFocusWindow() && !mHighestZOrder.shouldShowNavigationBarInsets()) {
+        if (mHighestZOrder.shouldFocusWindow() && !mHighestZOrder.shouldShowSystemBarInsets()) {
             mWindowInsetsController.hide(navigationBars());
         } else {
             mWindowInsetsController.show(navigationBars());

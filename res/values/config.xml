@@ -25,10 +25,10 @@
     <bool name="config_enableFullscreenUserSwitcher">true</bool>
 
     <!-- Configure which system bars should be displayed. -->
-    <bool name="config_enableTopNavigationBar">true</bool>
-    <bool name="config_enableLeftNavigationBar">false</bool>
-    <bool name="config_enableRightNavigationBar">false</bool>
-    <bool name="config_enableBottomNavigationBar">true</bool>
+    <bool name="config_enableTopSystemBar">true</bool>
+    <bool name="config_enableLeftSystemBar">false</bool>
+    <bool name="config_enableRightSystemBar">false</bool>
+    <bool name="config_enableBottomSystemBar">true</bool>
 
     <!-- Configure the type of each system bar. Each system bar must have a unique type. -->
     <!--    STATUS_BAR = 0-->
@@ -66,7 +66,7 @@
 
     <!-- Whether navigationBar touch events should be consumed before reaching the CarFacetButton \
          when the notification panel is open. -->
-    <bool name="config_consumeNavigationBarTouchWhenNotificationPanelOpen">false</bool>
+    <bool name="config_consumeSystemBarTouchWhenNotificationPanelOpen">false</bool>
 
     <!-- Whether heads-up notifications should be shown when shade is open. -->
     <bool name="config_enableHeadsUpNotificationWhenNotificationShadeOpen">true</bool>
@@ -108,7 +108,7 @@
         Car SystemUI's notification mediator. Replace with other notification mediators to have
         the notification panel show from another system bar. The system bar should be enabled to
         use the mediator with that system bar.
-        Example: config_enableBottomNavigationBar=true
+        Example: config_enableBottomSystemBar=true
                  config_notificationPanelViewMediator=
                     com.android.systemui.car.notification.BottomNotificationPanelViewMediator -->
     <string name="config_notificationPanelViewMediator" translatable="false">
@@ -137,7 +137,7 @@
 
     <!-- The list of components to append to config_systemUIServiceComponents. -->
     <string-array name="config_systemUIServiceComponentsInclude" translatable="false">
-        <item>com.android.systemui.car.navigationbar.CarNavigationBar</item>
+        <item>com.android.systemui.car.systembar.CarSystemBar</item>
         <item>com.android.systemui.car.voicerecognition.ConnectedDeviceVoiceRecognitionNotifier</item>
         <item>com.android.systemui.car.window.SystemUIOverlayWindowManager</item>
         <item>com.android.systemui.car.toast.CarToastUI</item>
