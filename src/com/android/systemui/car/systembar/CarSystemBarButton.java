@@ -98,7 +98,7 @@ public class CarSystemBarButton extends LinearLayout {
         mSelected = selected;
 
         if (mHighlightWhenSelected) {
-            setAlpha(mSelected ? mSelectedAlpha : mUnselectedAlpha);
+            mIcon.setAlpha(mSelected ? mSelectedAlpha : mUnselectedAlpha);
         }
 
         if (mShowMoreWhenSelected && mMoreIcon != null) {
@@ -301,7 +301,7 @@ public class CarSystemBarButton extends LinearLayout {
         mIcon = findViewById(R.id.car_nav_button_icon_image);
         // Always apply un-selected alpha regardless of if the button toggles alpha based on
         // selection state.
-        setAlpha(mHighlightWhenSelected ? mUnselectedAlpha : mSelectedAlpha);
+        mIcon.setAlpha(mHighlightWhenSelected ? mUnselectedAlpha : mSelectedAlpha);
         mMoreIcon = findViewById(R.id.car_nav_button_more_icon);
         mUnseenIcon = findViewById(R.id.car_nav_button_unseen_icon);
         updateImage();
@@ -315,5 +315,4 @@ public class CarSystemBarButton extends LinearLayout {
         }
         mUnseenIcon.setVisibility(mHasUnseen ? VISIBLE : GONE);
     }
-
 }
