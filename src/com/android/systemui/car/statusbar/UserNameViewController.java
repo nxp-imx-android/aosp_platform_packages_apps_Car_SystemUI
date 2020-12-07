@@ -116,7 +116,7 @@ public class UserNameViewController {
         // Register for user switching
         mCarServiceProvider.addListener(car -> {
             mCarUserManager = (CarUserManager) car.getCarManager(Car.CAR_USER_SERVICE);
-            if (mCarUserManager != null) {
+            if (mCarUserManager != null && !mUserLifecycleListenerRegistered) {
                 mCarUserManager.addListener(Runnable::run, mUserLifecycleListener);
                 mUserLifecycleListenerRegistered = true;
             } else {
