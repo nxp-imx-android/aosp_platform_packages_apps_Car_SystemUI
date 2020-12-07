@@ -117,14 +117,14 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
     public void onUnselected_doesNotHighlightWhenSelected_applySelectedAlpha() {
         mDefaultButton.setSelected(false);
 
-        assertThat(mDefaultButton.getAlpha()).isEqualTo(CarSystemBarButton.DEFAULT_SELECTED_ALPHA);
+        assertThat(mDefaultButton.getAlpha()).isEqualTo(mDefaultButton.getSelectedAlpha());
     }
 
     @Test
     public void onSelected_doesNotHighlightWhenSelected_applySelectedAlpha() {
         mDefaultButton.setSelected(true);
 
-        assertThat(mDefaultButton.getAlpha()).isEqualTo(CarSystemBarButton.DEFAULT_SELECTED_ALPHA);
+        assertThat(mDefaultButton.getAlpha()).isEqualTo(mDefaultButton.getSelectedAlpha());
     }
 
     @Test
@@ -134,7 +134,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         highlightWhenSelectedButton.setSelected(false);
 
         assertThat(highlightWhenSelectedButton.getAlpha()).isEqualTo(
-                CarSystemBarButton.DEFAULT_UNSELECTED_ALPHA);
+                highlightWhenSelectedButton.getUnselectedAlpha());
     }
 
     @Test
@@ -144,7 +144,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         highlightWhenSelectedButton.setSelected(true);
 
         assertThat(highlightWhenSelectedButton.getAlpha()).isEqualTo(
-                CarSystemBarButton.DEFAULT_SELECTED_ALPHA);
+                highlightWhenSelectedButton.getSelectedAlpha());
     }
 
     @Test
@@ -200,8 +200,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         roleBasedButton.setSelected(false);
         roleBasedButton.setAppIcon(getContext().getDrawable(R.drawable.ic_android));
 
-        assertThat(roleBasedButton.getAlpha()).isEqualTo(
-                CarSystemBarButton.DEFAULT_UNSELECTED_ALPHA);
+        assertThat(roleBasedButton.getAlpha()).isEqualTo(roleBasedButton.getUnselectedAlpha());
     }
 
     @Test
@@ -225,8 +224,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         roleBasedButton.setSelected(true);
         roleBasedButton.setAppIcon(getContext().getDrawable(R.drawable.ic_android));
 
-        assertThat(roleBasedButton.getAlpha()).isEqualTo(
-                CarSystemBarButton.DEFAULT_SELECTED_ALPHA);
+        assertThat(roleBasedButton.getAlpha()).isEqualTo(roleBasedButton.getSelectedAlpha());
     }
 
     @Test

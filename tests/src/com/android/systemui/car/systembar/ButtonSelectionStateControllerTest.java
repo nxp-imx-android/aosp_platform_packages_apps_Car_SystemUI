@@ -118,11 +118,11 @@ public class ButtonSelectionStateControllerTest extends SysuiTestCase {
     // Comparing alpha is a valid way to verify button selection state because all test buttons use
     // highlightWhenSelected = true.
     private void assertbuttonSelected(CarSystemBarButton button) {
-        assertThat(button.getAlpha()).isEqualTo(CarSystemBarButton.DEFAULT_SELECTED_ALPHA);
+        assertThat(button.getAlpha()).isEqualTo(button.getSelectedAlpha());
     }
 
     private void assertButtonUnselected(CarSystemBarButton button) {
-        assertThat(button.getAlpha()).isEqualTo(CarSystemBarButton.DEFAULT_UNSELECTED_ALPHA);
+        assertThat(button.getAlpha()).isEqualTo(button.getUnselectedAlpha());
     }
 
     private List<RootTaskInfo> createTestStack(ComponentName componentName) {
