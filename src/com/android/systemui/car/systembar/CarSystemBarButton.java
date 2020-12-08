@@ -44,13 +44,12 @@ import java.net.URISyntaxException;
  */
 public class CarSystemBarButton extends LinearLayout {
 
-    protected static final float DEFAULT_SELECTED_ALPHA = 1f;
-    protected static final float DEFAULT_UNSELECTED_ALPHA = 0.75f;
-
     private static final String TAG = "CarSystemBarButton";
     private static final String BUTTON_FILTER_DELIMITER = ";";
     private static final String EXTRA_BUTTON_CATEGORIES = "categories";
     private static final String EXTRA_BUTTON_PACKAGES = "packages";
+    private static final float DEFAULT_SELECTED_ALPHA = 1f;
+    private static final float DEFAULT_UNSELECTED_ALPHA = 0.75f;
 
     private Context mContext;
     private AlphaOptimizedImageView mIcon;
@@ -194,6 +193,16 @@ public class CarSystemBarButton extends LinearLayout {
 
     protected boolean hasSelectionState() {
         return mHighlightWhenSelected || mShowMoreWhenSelected;
+    }
+
+    @VisibleForTesting
+    protected float getSelectedAlpha() {
+        return mSelectedAlpha;
+    }
+
+    @VisibleForTesting
+    protected float getUnselectedAlpha() {
+        return mUnselectedAlpha;
     }
 
     /**
