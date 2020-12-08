@@ -16,14 +16,29 @@
 
 package com.android.systemui.car.rvc;
 
-import android.app.ActivityView;
-import android.app.ActivityView.StateCallback;
+import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+
+import android.app.ActivityOptions;
+import android.app.ActivityTaskManager;
+import android.app.TaskStackListener;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Rect;
+import android.os.RemoteException;
 import android.util.Slog;
+import android.view.Display;
+import android.view.Surface;
+import android.view.SurfaceControl;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout.LayoutParams;
+import android.window.DisplayAreaAppearedInfo;
+import android.window.DisplayAreaOrganizer;
+import android.window.WindowContainerToken;
+import android.window.WindowContainerTransaction;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.R;
@@ -40,34 +55,44 @@ public class RearViewCameraViewController extends OverlayViewController {
     private static final String TAG = "RearViewCameraView";
     private static final boolean DBG = false;
 
+    private final Context mContext;
+    private final ActivityTaskManager mActivityTaskManager;
     private final ComponentName mRearViewCameraActivity;
-    private ViewGroup mRvcView;
+    private final DisplayAreaOrganizer mDisplayAreaOrganizer;
+
+    ViewGroup mRvcView;
+    private int mRvcTaskId = INVALID_TASK_ID;
+
     private final LayoutParams mRvcViewLayoutParams = new LayoutParams(
             LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, /* weight= */ 1.0f);
-    @VisibleForTesting
-    ActivityView mActivityView;
-    @VisibleForTesting
-    final StateCallback mActivityViewCallback = new StateCallback() {
-        @Override
-        public void onActivityViewReady(ActivityView view) {
-            Intent intent = new Intent(Intent.ACTION_MAIN)
-                    .setComponent(mRearViewCameraActivity)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
-                    .addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            // TODO(b/170899079): Migrate this to FixedActivityService.
-            view.startActivity(intent);
-        }
 
+    @VisibleForTesting
+    View mView;
+
+    private final TaskStackListener mTaskStackListener = new TaskStackListener() {
         @Override
-        public void onActivityViewDestroyed(ActivityView view) {}
+        public void onTaskCreated(int taskId, ComponentName componentName) throws RemoteException {
+            if (DBG) {
+                Slog.d(TAG, "onTaskCreated: taskId=" + taskId + ", componentName="
+                        + componentName + ", RvcTaskId=" + mRvcTaskId);
+            }
+            if (mRearViewCameraActivity.equals(componentName)) {
+                mRvcTaskId = taskId;
+            }
+        }
     };
+
+    private final RvcLayoutListener mRvcLayoutListener = new RvcLayoutListener();
 
     @Inject
     public RearViewCameraViewController(
+            Context context,
             @Main Resources resources,
-            OverlayViewGlobalStateController overlayViewGlobalStateController) {
+            OverlayViewGlobalStateController overlayViewGlobalStateController,
+            ActivityTaskManager activityTaskManager,
+            DisplayAreaOrganizer displayAreaOrganizer) {
         super(R.id.rear_view_camera_stub, overlayViewGlobalStateController);
+        mContext = context;
         String rearViewCameraActivityName = resources.getString(
                 R.string.config_rearViewCameraActivity);
         if (!rearViewCameraActivityName.isEmpty()) {
@@ -77,11 +102,15 @@ public class RearViewCameraViewController extends OverlayViewController {
             mRearViewCameraActivity = null;
             Slog.e(TAG, "RearViewCameraViewController is disabled, since no Activity is defined");
         }
+        mActivityTaskManager = activityTaskManager;
+        mActivityTaskManager.registerTaskStackListener(mTaskStackListener);
+        mDisplayAreaOrganizer = displayAreaOrganizer;
     }
 
     @Override
     protected void onFinishInflate() {
-        mRvcView = (ViewGroup) getLayout().findViewById(R.id.rear_view_camera_container);
+        mRvcView = getLayout().findViewById(R.id.rear_view_camera_container);
+        mRvcView.getViewTreeObserver().addOnGlobalLayoutListener(mRvcLayoutListener);
         getLayout().findViewById(R.id.close_button).setOnClickListener(v -> {
             stop();
         });
@@ -90,28 +119,32 @@ public class RearViewCameraViewController extends OverlayViewController {
     @Override
     protected void hideInternal() {
         super.hideInternal();
-        if (DBG) Slog.d(TAG, "hideInternal: mActivityView=" + mActivityView);
-        if (mActivityView == null) return;
-        mRvcView.removeView(mActivityView);
+        if (DBG) Slog.d(TAG, "hideInternal: mActivityView=" + mView);
+        if (mView == null) return;
+        mRvcView.removeView(mView);
         // Release ActivityView since the Activity on ActivityView (with showWhenLocked flag) keeps
         // running even if ActivityView is hidden.
-        mActivityView.release();
-        mActivityView = null;
+        mView = null;
     }
 
     @Override
     protected void showInternal() {
         super.showInternal();
-        if (DBG) Slog.d(TAG, "showInternal: mActivityView=" + mActivityView);
-        if (mActivityView != null) return;
-        mActivityView = new ActivityView(mRvcView.getContext());
-        mActivityView.setCallback(mActivityViewCallback);
-        mActivityView.setLayoutParams(mRvcViewLayoutParams);
-        mRvcView.addView(mActivityView, /* index= */ 0);
+        if (DBG) Slog.d(TAG, "showInternal: mActivityView=" + mView + ", RvcTaskId="
+                + mRvcTaskId);
+        if (mView != null) return;
+        mView = new View(mRvcView.getContext());
+        mView.setLayoutParams(mRvcViewLayoutParams);
+        mRvcView.addView(mView, /* index= */ 0);
+    }
+
+    @VisibleForTesting
+    void startRearViewCameraActivity(ActivityOptions activityOptions, Intent rearViewCameraIntent) {
+        mContext.startActivity(rearViewCameraIntent, activityOptions.toBundle());
     }
 
     boolean isShown() {
-        return mActivityView != null;
+        return mView != null;
     }
 
     boolean isEnabled() {
@@ -137,5 +170,77 @@ public class RearViewCameraViewController extends OverlayViewController {
     @Override
     protected boolean shouldShowStatusBarInsets() {
         return true;
+    }
+
+    // This listener contains the logic for creating and removing RVC display area. The geometry of
+    // RVC display area is based on the one from {@link mRvcView}.
+    private class RvcLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+
+        private DisplayAreaAppearedInfo mDisplayAreaAppearedInfo;
+
+        @Override
+        public void onGlobalLayout() {
+            if (DBG) {
+                Slog.d(TAG, "onGlobalLayout: isShown=" + isShown()
+                        + ", mRvcTaskId=" + mRvcTaskId + ", mDisplayAreaAppearedInfo="
+                        + mDisplayAreaAppearedInfo);
+            }
+            if (isShown() && mDisplayAreaAppearedInfo == null) {
+                createRvcDisplayArea();
+            } else if (!isShown() && mDisplayAreaAppearedInfo != null) {
+                removeRvcDisplayArea();
+            }
+        }
+
+        private void createRvcDisplayArea() {
+            Rect rect = new Rect();
+            mRvcView.getBoundsOnScreen(rect);
+
+            mDisplayAreaAppearedInfo = mDisplayAreaOrganizer.createTaskDisplayArea(
+                    Display.DEFAULT_DISPLAY, DisplayAreaOrganizer.FEATURE_ROOT, "RVC");
+            WindowContainerToken token = mDisplayAreaAppearedInfo.getDisplayAreaInfo().token;
+            WindowContainerTransaction wct = new WindowContainerTransaction();
+            wct.setBounds(token, rect);
+
+            wct.setHidden(token, /* hidden= */ false);
+            mDisplayAreaOrganizer.applyTransaction(wct);
+
+            SurfaceControl surfaceControl = mDisplayAreaAppearedInfo.getLeash();
+            SurfaceControl.Transaction st = new SurfaceControl.Transaction();
+            st.setGeometry(surfaceControl, /* sourceCrop= */ null, rect, Surface.ROTATION_0);
+            st.setVisibility(surfaceControl, true);
+            st.apply();
+
+            Intent rearViewCameraIntent = new Intent(Intent.ACTION_MAIN)
+                    .setComponent(mRearViewCameraActivity)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                    .addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+            ActivityOptions activityOptions = ActivityOptions.makeBasic().setLaunchTaskDisplayArea(
+                    token);
+            startRearViewCameraActivity(activityOptions, rearViewCameraIntent);
+        }
+
+        private void removeRvcDisplayArea() {
+            if (mRvcTaskId != INVALID_TASK_ID) {
+                mActivityTaskManager.removeTask(mRvcTaskId);
+                mRvcTaskId = INVALID_TASK_ID;
+            }
+
+            WindowContainerToken token = mDisplayAreaAppearedInfo.getDisplayAreaInfo().token;
+            WindowContainerTransaction wct = new WindowContainerTransaction();
+            wct.setHidden(token, true);
+            mDisplayAreaOrganizer.applyTransaction(wct);
+
+            SurfaceControl surfaceControl = mDisplayAreaAppearedInfo.getLeash();
+            SurfaceControl.Transaction st = new SurfaceControl.Transaction();
+            st.setVisibility(surfaceControl, false);
+            st.apply();
+
+            mDisplayAreaOrganizer.deleteTaskDisplayArea(token);
+            mDisplayAreaAppearedInfo = null;
+        }
     }
 }
