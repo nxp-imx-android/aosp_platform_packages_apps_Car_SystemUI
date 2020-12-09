@@ -33,10 +33,10 @@
             android:layout_alignParentTop="true"
             android:theme="@android:style/Theme"/>
 
-
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <com.android.systemui.car.userswitcher.UserGridRecyclerView
                 android:id="@+id/user_grid"
                 android:layout_width="match_parent"
@@ -44,6 +44,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/car_user_switcher_margin_top"/>
         </FrameLayout>
+
+        <com.android.car.ui.admin.ManagedDeviceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/car_user_switcher_margin_bottom"/>
 
     </LinearLayout>
 </FrameLayout>
