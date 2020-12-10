@@ -63,6 +63,10 @@
     <bool name="config_hideLeftSystemBarForKeyboard">false</bool>
     <bool name="config_hideRightSystemBarForKeyboard">false</bool>
 
+    <!-- If set to false, requests CarSystemBarViews to not intercept touch events to make it easier
+        to touch the buttons without accidentally expanding the notification shade.-->
+    <bool name="config_systemBarButtonsDraggable">false</bool>
+
     <!--
     Car SystemUI's notification mediator. Replace with other notification mediators to have
     the notification panel show from another system bar. The system bar should be enabled to
