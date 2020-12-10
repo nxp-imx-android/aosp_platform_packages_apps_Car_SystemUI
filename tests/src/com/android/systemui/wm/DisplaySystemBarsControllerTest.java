@@ -34,6 +34,7 @@ import androidx.test.filters.SmallTest;
 
 import com.android.systemui.SysuiTestCase;
 import com.android.wm.shell.common.DisplayController;
+import com.android.wm.shell.common.DisplayImeController;
 import com.android.wm.shell.common.TransactionPool;
 
 import org.junit.Before;
@@ -79,7 +80,8 @@ public class DisplaySystemBarsControllerTest extends SysuiTestCase {
         mController.onDisplayAdded(DISPLAY_ID);
 
         verify(mIWindowManager).setDisplayWindowInsetsController(
-                eq(DISPLAY_ID), any(DisplaySystemBarsController.PerDisplay.class));
+                eq(DISPLAY_ID), any(DisplayImeController.PerDisplay.
+                        DisplayWindowInsetsControllerImpl.class));
     }
 
     @Test
