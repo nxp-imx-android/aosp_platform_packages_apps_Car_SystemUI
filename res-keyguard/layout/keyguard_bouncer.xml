@@ -17,15 +17,24 @@
 <!-- Car customizations
      Car has solid black background instead of a transparent one
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@android:color/black"
              android:fitsSystemWindows="true">
-
     <include
         style="@style/BouncerSecurityContainer"
         layout="@layout/keyguard_host_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/managed_device"/>
+
+    <com.android.car.admin.ui.ManagedDeviceTextView
+        android:id="@+id/managed_device"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/car_user_switcher_margin_bottom"
+        android:gravity="center"/>
+
+</RelativeLayout>
