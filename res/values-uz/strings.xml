@@ -17,7 +17,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="hvac_min_text" msgid="866677328637088715">"Daq."</string>
+    <string name="hvac_min_text" msgid="866677328637088715">"Min"</string>
     <string name="hvac_max_text" msgid="7627950157128770380">"Maks."</string>
     <string name="voice_recognition_toast" msgid="7579725862117020349">"Endi ovozni tanish Bluetooth qurilma ulanganda amalga oshadi"</string>
     <string name="car_guest" msgid="768913000117469596">"Mehmon"</string>
