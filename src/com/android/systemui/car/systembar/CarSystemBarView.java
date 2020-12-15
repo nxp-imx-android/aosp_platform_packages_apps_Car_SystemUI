@@ -50,6 +50,7 @@ public class CarSystemBarView extends LinearLayout {
     public static final int BUTTON_TYPE_OCCLUSION = 2;
 
     private final boolean mConsumeTouchWhenPanelOpen;
+    private final boolean mButtonsDraggable;
 
     private View mNavButtons;
     private CarSystemBarButton mNotificationsButton;
@@ -63,6 +64,7 @@ public class CarSystemBarView extends LinearLayout {
         super(context, attrs);
         mConsumeTouchWhenPanelOpen = getResources().getBoolean(
                 R.bool.config_consumeSystemBarTouchWhenNotificationPanelOpen);
+        mButtonsDraggable = getResources().getBoolean(R.bool.config_systemBarButtonsDraggable);
     }
 
     @Override
@@ -95,6 +97,9 @@ public class CarSystemBarView extends LinearLayout {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (mStatusBarWindowTouchListener != null) {
+            if (!mButtonsDraggable) {
+                return false;
+            }
             boolean shouldConsumeEvent = mNotificationsShadeController == null ? false
                     : mNotificationsShadeController.isNotificationPanelOpen();
 
