@@ -32,7 +32,7 @@ android_library {
         "SystemUIPluginLib",
         "SystemUISharedLib",
         "SettingsLib",
-        "com.android.car.admin.ui",
+        "car-admin-ui-lib",
         "car-ui-lib",
         "android.car.userlib",
         "androidx.legacy_legacy-support-v4",
