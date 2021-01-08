@@ -68,11 +68,7 @@ public class DisplaySystemBarsController extends DisplayImeController {
     @Override
     public void onDisplayAdded(int displayId) {
         PerDisplay pd = new PerDisplay(displayId);
-        try {
-            mWmService.setDisplayWindowInsetsController(displayId, pd);
-        } catch (RemoteException e) {
-            Slog.w(TAG, "Unable to set insets controller on display " + displayId);
-        }
+        pd.register();
         // Lazy loading policy control filters instead of during boot.
         if (mPerDisplaySparseArray == null) {
             mPerDisplaySparseArray = new SparseArray<>();
@@ -109,7 +105,7 @@ public class DisplaySystemBarsController extends DisplayImeController {
             super(displayId, mDisplayController.getDisplayLayout(displayId).rotation());
             mDisplayId = displayId;
             mInsetsController = new InsetsController(
-                    new DisplaySystemBarsInsetsControllerHost(mHandler, this));
+                    new DisplaySystemBarsInsetsControllerHost(mHandler, mInsetsControllerImpl));
         }
 
         @Override
