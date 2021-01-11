@@ -97,6 +97,7 @@ android_library {
         "androidx.slice_slice-builders",
         "androidx.arch.core_core-runtime",
         "androidx.lifecycle_lifecycle-extensions",
+        "car-admin-ui-lib",
         "car-ui-lib",
         "SystemUI-tags",
         "SystemUI-proto",

@@ -18,6 +18,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:admin_ui="http://schemas.android.com/apk/res-auto"
     android:clipChildren="false"
     android:alpha="0"
     android:layout_height="wrap_content"
@@ -25,12 +26,14 @@
     android:orientation="vertical"
     android:gravity="center">
 
-    <ImageView
+    <com.android.car.admin.ui.UserAvatarView
         android:id="@+id/user_avatar"
         android:layout_width="@dimen/car_user_switcher_image_avatar_size"
         android:layout_height="@dimen/car_user_switcher_image_avatar_size"
         android:background="?android:attr/selectableItemBackground"
-        android:gravity="center"/>
+        android:gravity="center"
+        admin_ui:badgeDiameter="@dimen/car_user_switcher_managed_badge_size"
+        admin_ui:badgeMargin="@dimen/car_user_switcher_managed_badge_margin" />
 
     <TextView
         android:id="@+id/user_name"
