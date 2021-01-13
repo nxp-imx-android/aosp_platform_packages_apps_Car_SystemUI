@@ -349,28 +349,24 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
         mTopSystemBarView = mCarSystemBarController.getTopBar(isDeviceSetupForUser());
         if (mTopSystemBarView != null) {
             mSystemBarConfigs.insetSystemBar(SystemBarConfigs.TOP, mTopSystemBarView);
-            mSystemBarConfigs.setInsetUpdater(SystemBarConfigs.TOP, mTopSystemBarView);
             mTopSystemBarWindow.addView(mTopSystemBarView);
         }
 
         mBottomSystemBarView = mCarSystemBarController.getBottomBar(isDeviceSetupForUser());
         if (mBottomSystemBarView != null) {
             mSystemBarConfigs.insetSystemBar(SystemBarConfigs.BOTTOM, mBottomSystemBarView);
-            mSystemBarConfigs.setInsetUpdater(SystemBarConfigs.BOTTOM, mBottomSystemBarView);
             mBottomSystemBarWindow.addView(mBottomSystemBarView);
         }
 
         mLeftSystemBarView = mCarSystemBarController.getLeftBar(isDeviceSetupForUser());
         if (mLeftSystemBarView != null) {
             mSystemBarConfigs.insetSystemBar(SystemBarConfigs.LEFT, mLeftSystemBarView);
-            mSystemBarConfigs.setInsetUpdater(SystemBarConfigs.LEFT, mLeftSystemBarView);
             mLeftSystemBarWindow.addView(mLeftSystemBarView);
         }
 
         mRightSystemBarView = mCarSystemBarController.getRightBar(isDeviceSetupForUser());
         if (mRightSystemBarView != null) {
             mSystemBarConfigs.insetSystemBar(SystemBarConfigs.RIGHT, mRightSystemBarView);
-            mSystemBarConfigs.setInsetUpdater(SystemBarConfigs.RIGHT, mRightSystemBarView);
             mRightSystemBarWindow.addView(mRightSystemBarView);
         }
     }
