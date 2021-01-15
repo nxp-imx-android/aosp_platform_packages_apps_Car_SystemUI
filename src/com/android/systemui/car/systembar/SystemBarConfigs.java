@@ -25,7 +25,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.InsetsState;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
 import android.view.WindowManager;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -137,14 +136,6 @@ public class SystemBarConfigs {
 
         int[] paddings = mSystemBarConfigMap.get(side).getPaddings();
         view.setPadding(paddings[2], paddings[0], paddings[3], paddings[1]);
-    }
-
-    protected void setInsetUpdater(@SystemBarSide int side, CarSystemBarView view) {
-        view.setOnApplyWindowInsetsListener((v, insets) -> {
-            updateInsetPaddings(side, getSystemBarsVisibility(insets));
-            insetSystemBar(side, view);
-            return insets;
-        });
     }
 
     protected List<Integer> getSystemBarSidesByZOrder() {
@@ -376,32 +367,6 @@ public class SystemBarConfigs {
         visibilityMap.put(LEFT, mLeftNavBarEnabled);
         visibilityMap.put(RIGHT, mRightNavBarEnabled);
         return visibilityMap;
-    }
-
-    private Map<@SystemBarSide Integer, Boolean> getSystemBarsVisibility(WindowInsets insets) {
-        ArrayMap<@SystemBarSide Integer, Boolean> visibilityMap = new ArrayMap<>();
-        if (mTopNavBarEnabled) {
-            visibilityMap.put(TOP, getSystemBarInsetVisibleBySide(TOP, insets));
-        }
-        if (mBottomNavBarEnabled) {
-            visibilityMap.put(BOTTOM, getSystemBarInsetVisibleBySide(BOTTOM, insets));
-        }
-        if (mLeftNavBarEnabled) {
-            visibilityMap.put(LEFT, getSystemBarInsetVisibleBySide(LEFT, insets));
-        }
-        if (mRightNavBarEnabled) {
-            visibilityMap.put(RIGHT, getSystemBarInsetVisibleBySide(RIGHT, insets));
-        }
-        return visibilityMap;
-    }
-
-    private boolean getSystemBarInsetVisibleBySide(@SystemBarSide int side, WindowInsets insets) {
-        if (mSystemBarConfigMap.get(side) == null) return false;
-
-        int internalInsetType = BAR_TYPE_MAP[getSystemBarTypeBySide(side)];
-        int publicInsetType = InsetsState.toPublicType(internalInsetType);
-
-        return insets.isVisible(publicInsetType);
     }
 
     private void checkOverlappingBarsHaveDifferentZOrders(@SystemBarSide int horizontalSide,

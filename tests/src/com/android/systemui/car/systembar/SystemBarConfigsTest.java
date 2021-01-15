@@ -244,9 +244,9 @@ public class SystemBarConfigsTest extends SysuiTestCase {
         when(mResources.getBoolean(R.bool.config_enableRightSystemBar)).thenReturn(true);
 
         when(mResources.getDimensionPixelSize(
-                com.android.internal.R.dimen.navigation_bar_height)).thenReturn(SYSTEM_BAR_GIRTH);
+                R.dimen.car_top_system_bar_height)).thenReturn(SYSTEM_BAR_GIRTH);
         when(mResources.getDimensionPixelSize(
-                com.android.internal.R.dimen.navigation_bar_height)).thenReturn(SYSTEM_BAR_GIRTH);
+                R.dimen.car_bottom_system_bar_height)).thenReturn(SYSTEM_BAR_GIRTH);
         when(mResources.getDimensionPixelSize(R.dimen.car_left_system_bar_width)).thenReturn(
                 SYSTEM_BAR_GIRTH);
         when(mResources.getDimensionPixelSize(R.dimen.car_right_system_bar_width)).thenReturn(
