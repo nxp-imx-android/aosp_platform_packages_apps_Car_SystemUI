@@ -183,8 +183,8 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
             ex.rethrowFromSystemServer();
         }
 
-        onSystemBarAppearanceChanged(mDisplayId, result.mAppearance, result.mAppearanceRegions,
-                result.mNavbarColorManagedByIme);
+        onSystemBarAttributesChanged(mDisplayId, result.mAppearance, result.mAppearanceRegions,
+                result.mNavbarColorManagedByIme, result.mBehavior, result.mAppFullscreen);
 
         // StatusBarManagerService has a back up of IME token and it's restored here.
         setImeWindowStatus(mDisplayId, result.mImeToken, result.mImeWindowVis,
@@ -443,11 +443,13 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
     }
 
     @Override
-    public void onSystemBarAppearanceChanged(
+    public void onSystemBarAttributesChanged(
             int displayId,
             @WindowInsetsController.Appearance int appearance,
             AppearanceRegion[] appearanceRegions,
-            boolean navbarColorManagedByIme) {
+            boolean navbarColorManagedByIme,
+            @WindowInsetsController.Behavior int behavior,
+            boolean isFullscreen) {
         if (displayId != mDisplayId) {
             return;
         }
