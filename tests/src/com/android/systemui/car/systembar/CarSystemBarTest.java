@@ -20,6 +20,7 @@ import static android.view.InsetsState.ITYPE_NAVIGATION_BAR;
 import static android.view.InsetsState.ITYPE_STATUS_BAR;
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 import static android.view.WindowInsetsController.APPEARANCE_OPAQUE_STATUS_BARS;
+import static android.view.WindowInsetsController.BEHAVIOR_DEFAULT;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -129,8 +130,8 @@ public class CarSystemBarTest extends SysuiTestCase {
                 /* disabledFlags2= */ 0,
                 /* imeToken= */ null,
                 /* navbarColorMangedByIme= */ false,
+                BEHAVIOR_DEFAULT,
                 /* appFullscreen= */ false,
-                /* appImmersive= */ false,
                 /* transientBarTypes= */ new int[]{});
         try {
             when(mBarService.registerStatusBar(any())).thenReturn(mBarResult);
