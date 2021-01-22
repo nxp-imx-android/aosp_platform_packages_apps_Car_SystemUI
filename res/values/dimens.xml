@@ -206,9 +206,7 @@
     <dimen name="car_user_switcher_vertical_spacing_between_name_and_avatar">@*android:dimen/car_padding_4</dimen>
     <dimen name="car_user_switcher_margin_top">@*android:dimen/car_padding_4</dimen>
     <dimen name="car_user_switcher_margin_bottom">@*android:dimen/car_padding_4</dimen>
-    <!--  TODO(b/175214581): un-hardcode to something like car_large_avatar_badge_size, which would
-          have to be defined on frameworks/base -->
-    <dimen name="car_user_switcher_managed_badge_size">32dp</dimen>
+    <dimen name="car_user_switcher_managed_badge_size">@*android:dimen/car_large_avatar_badge_size</dimen>
     <dimen name="car_user_switcher_managed_badge_margin">1dp</dimen>
 
     <dimen name="car_system_bar_button_width">64dp</dimen>
