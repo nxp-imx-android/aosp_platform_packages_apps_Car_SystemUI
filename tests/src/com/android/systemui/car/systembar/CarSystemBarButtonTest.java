@@ -124,7 +124,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
     public void onSelected_doesNotHighlightWhenSelected_applySelectedAlpha() {
         mDefaultButton.setSelected(true);
 
-        assertThat(mDefaultButton.getAlpha()).isEqualTo(mDefaultButton.getSelectedAlpha());
+        assertThat(mDefaultButton.getIconAlpha()).isEqualTo(mDefaultButton.getSelectedAlpha());
     }
 
     @Test
@@ -133,7 +133,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
                 R.id.highlightable_no_more_button);
         highlightWhenSelectedButton.setSelected(false);
 
-        assertThat(highlightWhenSelectedButton.getAlpha()).isEqualTo(
+        assertThat(highlightWhenSelectedButton.getIconAlpha()).isEqualTo(
                 highlightWhenSelectedButton.getUnselectedAlpha());
     }
 
@@ -143,7 +143,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
                 R.id.highlightable_no_more_button);
         highlightWhenSelectedButton.setSelected(true);
 
-        assertThat(highlightWhenSelectedButton.getAlpha()).isEqualTo(
+        assertThat(highlightWhenSelectedButton.getIconAlpha()).isEqualTo(
                 highlightWhenSelectedButton.getSelectedAlpha());
     }
 
@@ -200,7 +200,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         roleBasedButton.setSelected(false);
         roleBasedButton.setAppIcon(getContext().getDrawable(R.drawable.ic_android));
 
-        assertThat(roleBasedButton.getAlpha()).isEqualTo(roleBasedButton.getUnselectedAlpha());
+        assertThat(roleBasedButton.getIconAlpha()).isEqualTo(roleBasedButton.getUnselectedAlpha());
     }
 
     @Test
@@ -224,7 +224,7 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         roleBasedButton.setSelected(true);
         roleBasedButton.setAppIcon(getContext().getDrawable(R.drawable.ic_android));
 
-        assertThat(roleBasedButton.getAlpha()).isEqualTo(roleBasedButton.getSelectedAlpha());
+        assertThat(roleBasedButton.getIconAlpha()).isEqualTo(roleBasedButton.getSelectedAlpha());
     }
 
     @Test

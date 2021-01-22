@@ -205,6 +205,9 @@ public class CarSystemBarButton extends LinearLayout {
         return mUnselectedAlpha;
     }
 
+    @VisibleForTesting
+    protected float getIconAlpha() { return mIcon.getAlpha(); }
+
     /**
      * Sets up intents for click, long touch, and broadcast.
      */

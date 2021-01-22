@@ -62,6 +62,8 @@ public class CarSystemBarViewTest extends SysuiTestCase {
     public void tearDown() {
         getContext().getOrCreateTestableResources().addOverride(
                 R.bool.config_consumeSystemBarTouchWhenNotificationPanelOpen, false);
+        getContext().getOrCreateTestableResources().addOverride(
+                R.bool.config_systemBarButtonsDraggable, false);
     }
 
     @Test
@@ -86,6 +88,9 @@ public class CarSystemBarViewTest extends SysuiTestCase {
     public void dispatchTouch_shadeOpen_flagOn_consumesTouch() {
         getContext().getOrCreateTestableResources().addOverride(
                 R.bool.config_consumeSystemBarTouchWhenNotificationPanelOpen, true);
+        // Prevent the test from failing due to buttons on the system bar not being draggable.
+        getContext().getOrCreateTestableResources().addOverride(
+                R.bool.config_systemBarButtonsDraggable, true);
         when(mNotificationsShadeController.isNotificationPanelOpen()).thenReturn(true);
         mNavBarView = (CarSystemBarView) LayoutInflater.from(getContext()).inflate(
                 R.layout.car_system_bar_view_test, /* root= */ null);
