@@ -262,7 +262,9 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
         // mIconPolicy.init().
         mMainHandler.post(() -> {
             mIconPolicyLazy.get().init();
-            mSignalPolicy = new StatusBarSignalPolicy(mContext, mIconControllerLazy.get());
+            if (mSignalPolicy == null) {
+                mSignalPolicy = new StatusBarSignalPolicy(mContext, mIconControllerLazy.get());
+            }
         });
     }
 
@@ -551,6 +553,11 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
     @VisibleForTesting
     boolean isNavBarTransientShown() {
         return mNavBarTransientShown;
+    }
+
+    @VisibleForTesting
+    void setSignalPolicy(StatusBarSignalPolicy signalPolicy) {
+        mSignalPolicy = signalPolicy;
     }
 
     @Override
