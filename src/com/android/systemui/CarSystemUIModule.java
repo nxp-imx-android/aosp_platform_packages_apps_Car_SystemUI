@@ -23,6 +23,7 @@ import android.content.Context;
 import android.hardware.SensorPrivacyManager;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.window.DisplayAreaOrganizer;
 
 import com.android.keyguard.KeyguardViewController;
 import com.android.systemui.broadcast.BroadcastDispatcher;
@@ -70,6 +71,8 @@ import com.android.systemui.statusbar.policy.SensorPrivacyController;
 import com.android.systemui.statusbar.policy.SensorPrivacyControllerImpl;
 import com.android.systemui.volume.VolumeDialogComponent;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Named;
 
 import dagger.Binds;
@@ -113,6 +116,12 @@ abstract class CarSystemUIModule {
     static Recents provideRecents(Context context, RecentsImplementation recentsImplementation,
             CommandQueue commandQueue) {
         return new Recents(context, recentsImplementation, commandQueue);
+    }
+
+    @Provides
+    @SysUISingleton
+    static DisplayAreaOrganizer provideDisplayAreaOrganizer(@Main Executor executor) {
+        return new DisplayAreaOrganizer(executor);
     }
 
     @Binds
