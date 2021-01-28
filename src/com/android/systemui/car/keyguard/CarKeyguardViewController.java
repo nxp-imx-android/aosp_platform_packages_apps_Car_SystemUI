@@ -227,7 +227,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
         if (mIsOccluded) {
             setOccluded(/* occluded= */ false, /* animate= */ false);
         }
-        if (!mBouncer.isSecure()) {
+        if (mBouncer != null && !mBouncer.isSecure()) {
             hide(/* startTime= */ 0, /* fadeoutDuration= */ 0);
         }
     }
