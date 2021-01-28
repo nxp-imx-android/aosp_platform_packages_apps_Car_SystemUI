@@ -115,13 +115,6 @@ public abstract class CarSystemUIBinder {
     @ClassKey(ShortcutKeyDispatcher.class)
     public abstract SystemUI bindsShortcutKeyDispatcher(ShortcutKeyDispatcher sysui);
 
-    /** Inject into SizeCompatModeActivityController. */
-    @Binds
-    @IntoMap
-    @ClassKey(SizeCompatModeActivityController.class)
-    public abstract SystemUI bindsSizeCompatModeActivityController(
-            SizeCompatModeActivityController sysui);
-
     /** Inject into SliceBroadcastRelayHandler. */
     @Binds
     @IntoMap
