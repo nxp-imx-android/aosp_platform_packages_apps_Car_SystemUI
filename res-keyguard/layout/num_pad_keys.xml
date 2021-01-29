@@ -59,25 +59,23 @@
         app:digit="9" />
 
     <!-- Row 4 -->
-    <ImageButton
+    <com.android.keyguard.NumPadButton
         android:id="@+id/delete_button"
         style="@style/NumPadKeyButton.LastRow"
         android:gravity="center_vertical"
         android:src="@drawable/ic_backspace"
         android:clickable="true"
-        android:tint="@android:color/white"
-        android:background="@drawable/ripple_drawable"
+        android:tint="?android:attr/textColorSecondary"
         android:contentDescription="@string/keyboardview_keycode_delete" />
     <com.android.keyguard.NumPadKey
         android:id="@+id/key0"
         style="@style/NumPadKeyButton.LastRow.MiddleColumn"
         app:digit="0" />
-    <ImageButton
+    <com.android.keyguard.NumPadButton
         android:id="@+id/key_enter"
         style="@style/NumPadKeyButton.LastRow"
         android:src="@drawable/ic_done"
-        android:tint="@android:color/white"
-        android:background="@drawable/ripple_drawable"
+        android:tint="?android:attr/textColorSecondary"
         android:contentDescription="@string/keyboardview_keycode_enter" />
 </merge>
 
