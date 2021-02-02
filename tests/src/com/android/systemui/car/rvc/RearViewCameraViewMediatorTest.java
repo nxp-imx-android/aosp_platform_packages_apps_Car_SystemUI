@@ -16,6 +16,9 @@
 
 package com.android.systemui.car.rvc;
 
+import static com.android.systemui.car.rvc.RearViewCameraViewController.CLOSE_SYSTEM_DIALOG_REASON_KEY;
+import static com.android.systemui.car.rvc.RearViewCameraViewController.CLOSE_SYSTEM_DIALOG_REASON_VALUE;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -165,5 +168,18 @@ public class RearViewCameraViewMediatorTest extends SysuiTestCase {
         mBroadcastReceiverCaptor.getValue().onReceive(mContext, actionCloseSystemDialogs);
 
         verify(mRearViewCameraViewController, times(1)).stop();
+    }
+
+    @Test
+    public void testIgnoreBroadcastIntentWhenComingFromRearViewCamera() {
+        setUpListener();
+        when(mRearViewCameraViewController.isShown()).thenReturn(true);
+
+        Intent rearViewCameraIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        rearViewCameraIntent.putExtra(CLOSE_SYSTEM_DIALOG_REASON_KEY,
+                CLOSE_SYSTEM_DIALOG_REASON_VALUE);
+        mBroadcastReceiverCaptor.getValue().onReceive(mContext, rearViewCameraIntent);
+
+        verify(mRearViewCameraViewController, never()).stop();
     }
 }

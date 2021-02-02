@@ -16,6 +16,9 @@
 
 package com.android.systemui.car.rvc;
 
+import static com.android.systemui.car.rvc.RearViewCameraViewController.CLOSE_SYSTEM_DIALOG_REASON_KEY;
+import static com.android.systemui.car.rvc.RearViewCameraViewController.CLOSE_SYSTEM_DIALOG_REASON_VALUE;
+
 import android.car.Car;
 import android.car.VehicleGear;
 import android.car.VehiclePropertyIds;
@@ -76,6 +79,8 @@ public class RearViewCameraViewMediator implements OverlayViewMediator {
         public void onReceive(Context context, Intent intent) {
             if (DBG) Slog.d(TAG, "onReceive: " + intent);
             if (Intent.ACTION_CLOSE_SYSTEM_DIALOGS.equals(intent.getAction())
+                    && !CLOSE_SYSTEM_DIALOG_REASON_VALUE.equals(
+                            intent.getStringExtra(CLOSE_SYSTEM_DIALOG_REASON_KEY))
                     && mRearViewCameraViewController.isShown()) {
                 mRearViewCameraViewController.stop();
             }
