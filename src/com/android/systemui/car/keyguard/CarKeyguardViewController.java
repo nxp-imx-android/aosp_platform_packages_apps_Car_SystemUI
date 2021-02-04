@@ -17,7 +17,6 @@
 package com.android.systemui.car.keyguard;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ import com.android.systemui.statusbar.phone.KeyguardBypassController;
 import com.android.systemui.statusbar.phone.NotificationPanelViewController;
 import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.util.concurrency.DelayableExecutor;
 
 import javax.inject.Inject;
 
@@ -56,7 +56,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
     private static final String TAG = "CarKeyguardViewController";
     private static final boolean DEBUG = true;
 
-    private final Handler mHandler;
+    private final DelayableExecutor mMainExecutor;
     private final KeyguardStateController mKeyguardStateController;
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     private final Lazy<BiometricUnlockController> mBiometricUnlockControllerLazy;
@@ -90,7 +90,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
 
     @Inject
     public CarKeyguardViewController(
-            @Main Handler mainHandler,
+            @Main DelayableExecutor mainExecutor,
             OverlayViewGlobalStateController overlayViewGlobalStateController,
             KeyguardStateController keyguardStateController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
@@ -101,7 +101,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
 
         super(R.id.keyguard_stub, overlayViewGlobalStateController);
 
-        mHandler = mainHandler;
+        mMainExecutor = mainExecutor;
         mKeyguardStateController = keyguardStateController;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
         mBiometricUnlockControllerLazy = biometricUnlockControllerLazy;
@@ -159,13 +159,13 @@ public class CarKeyguardViewController extends OverlayViewController implements
         mCarSystemBarController.showAllNavigationButtons(/* isSetUp= */ true);
         stop();
         mKeyguardStateController.notifyKeyguardDoneFading();
-        mHandler.post(mViewMediatorCallback::keyguardGone);
+        mMainExecutor.execute(mViewMediatorCallback::keyguardGone);
         notifyKeyguardUpdateMonitor();
     }
 
     @Override
     public void reset(boolean hideBouncerWhenShowing) {
-        mHandler.post(() -> {
+        mMainExecutor.execute(() -> {
             if (mShowing) {
                 if (mBouncer != null) {
                     if (!mBouncer.isSecure()) {
@@ -177,8 +177,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
                 notifyKeyguardUpdateMonitor();
             } else {
                 // This is necessary in order to address an inconsistency between the keyguard
-                // service
-                // and the keyguard views.
+                // service and the keyguard views.
                 // TODO: Investigate the source of the inconsistency.
                 show(/* options= */ null);
             }
@@ -365,10 +364,11 @@ public class CarKeyguardViewController extends OverlayViewController implements
                     Log.d(TAG, "revealKeyguardIfBouncerPrepared: Bouncer is not prepared "
                             + "yet so reattempting after " + reattemptDelayMillis + "ms.");
                 }
-                mHandler.postDelayed(this::revealKeyguardIfBouncerPrepared, reattemptDelayMillis);
+                mMainExecutor.executeDelayed(this::revealKeyguardIfBouncerPrepared,
+                        reattemptDelayMillis);
             }
         };
-        mHandler.post(revealKeyguard);
+        mMainExecutor.execute(revealKeyguard);
     }
 
     private void notifyKeyguardUpdateMonitor() {
@@ -379,7 +379,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
     }
 
     private void resetBouncer() {
-        mHandler.post(() -> {
+        mMainExecutor.execute(() -> {
             hideInternal();
             mBouncer.hide(/* destroyView= */ false);
             mBouncer.show(/* resetSecuritySelection= */ true);

@@ -58,6 +58,7 @@ import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy;
 import com.android.systemui.statusbar.phone.SysuiDarkIconDispatcher;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.util.concurrency.DelayableExecutor;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -77,7 +78,7 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
     private final CommandQueue mCommandQueue;
     private final AutoHideController mAutoHideController;
     private final ButtonSelectionStateListener mButtonSelectionStateListener;
-    private final Handler mMainHandler;
+    private final DelayableExecutor mExecutor;
     private final Executor mUiBgExecutor;
     private final IStatusBarService mBarService;
     private final Lazy<KeyguardStateController> mKeyguardStateControllerLazy;
@@ -133,7 +134,7 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
             CommandQueue commandQueue,
             AutoHideController autoHideController,
             ButtonSelectionStateListener buttonSelectionStateListener,
-            @Main Handler mainHandler,
+            @Main DelayableExecutor mainExecutor,
             @UiBackground Executor uiBgExecutor,
             IStatusBarService barService,
             Lazy<KeyguardStateController> keyguardStateControllerLazy,
@@ -150,7 +151,7 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
         mCommandQueue = commandQueue;
         mAutoHideController = autoHideController;
         mButtonSelectionStateListener = buttonSelectionStateListener;
-        mMainHandler = mainHandler;
+        mExecutor = mainExecutor;
         mUiBgExecutor = uiBgExecutor;
         mBarService = barService;
         mKeyguardStateControllerLazy = keyguardStateControllerLazy;
@@ -236,17 +237,17 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
                 new CarDeviceProvisionedListener() {
                     @Override
                     public void onUserSetupInProgressChanged() {
-                        mMainHandler.post(() -> restartNavBarsIfNecessary());
+                        mExecutor.execute(() -> restartNavBarsIfNecessary());
                     }
 
                     @Override
                     public void onUserSetupChanged() {
-                        mMainHandler.post(() -> restartNavBarsIfNecessary());
+                        mExecutor.execute(() -> restartNavBarsIfNecessary());
                     }
 
                     @Override
                     public void onUserSwitched() {
-                        mMainHandler.post(() -> restartNavBarsIfNecessary());
+                        mExecutor.execute(() -> restartNavBarsIfNecessary());
                     }
                 });
 
@@ -260,7 +261,7 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
         // Lastly, call to the icon policy to install/update all the icons.
         // Must be called on the main thread due to the use of observeForever() in
         // mIconPolicy.init().
-        mMainHandler.post(() -> {
+        mExecutor.execute(() -> {
             mIconPolicyLazy.get().init();
             if (mSignalPolicy == null) {
                 mSignalPolicy = new StatusBarSignalPolicy(mContext, mIconControllerLazy.get());
