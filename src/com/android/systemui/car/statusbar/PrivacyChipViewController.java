@@ -16,6 +16,10 @@
 
 package com.android.systemui.car.statusbar;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.UserHandle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -23,6 +27,7 @@ import androidx.annotation.NonNull;
 import com.android.systemui.R;
 import com.android.systemui.car.privacy.CarOngoingPrivacyChip;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.privacy.OngoingPrivacyChip;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
@@ -39,6 +44,8 @@ public class PrivacyChipViewController implements View.OnClickListener {
     private static final String TAG = "PrivacyChipViewController";
 
     private final PrivacyItemController mPrivacyItemController;
+    private final Context mContext;
+    private final Handler mMainHandler;
     private CarOngoingPrivacyChip mPrivacyChip;
     private boolean mAllIndicatorsEnabled;
     private boolean mMicCameraIndicatorsEnabled;
@@ -87,13 +94,20 @@ public class PrivacyChipViewController implements View.OnClickListener {
             };
 
     @Inject
-    public PrivacyChipViewController(PrivacyItemController privacyItemController) {
+    public PrivacyChipViewController(Context context, @Main Handler mainHandler,
+            PrivacyItemController privacyItemController) {
+        mContext = context;
+        mMainHandler = mainHandler;
         mPrivacyItemController = privacyItemController;
     }
 
     @Override
-    public void onClick(View v) {
-        //TODO(178637042): Launch ReviewOngoingUsageActivity permission controller.
+    public void onClick(View view) {
+        mMainHandler.post(() -> mContext.startActivityAsUser(
+                new Intent(Intent.ACTION_REVIEW_ONGOING_PERMISSION_USAGE)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .addCategory(Intent.CATEGORY_DEFAULT),
+                UserHandle.CURRENT));
     }
 
     /**

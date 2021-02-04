@@ -16,10 +16,15 @@
 
 package com.android.systemui.car.statusbar;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.view.View;
@@ -36,6 +41,8 @@ import com.android.systemui.privacy.PrivacyItemController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -48,15 +55,24 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
     private PrivacyChipViewController mPrivacyChipViewController;
     private FrameLayout mFrameLayout;
 
+    @Captor
+    private ArgumentCaptor<Intent> mIntentArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<Runnable> mRunnableArgumentCaptor;
+
     @Mock
     private PrivacyItemController mPrivacyItemController;
+    @Mock
+    private Handler mHandler;
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        mPrivacyChipViewController = new PrivacyChipViewController(mPrivacyItemController);
-        mFrameLayout = new FrameLayout(getContext());
-        CarOngoingPrivacyChip carOngoingPrivacyChip = new CarOngoingPrivacyChip(getContext());
+        MockitoAnnotations.initMocks(/* testClass= */ this);
+        mFrameLayout = new FrameLayout(mContext);
+        CarOngoingPrivacyChip carOngoingPrivacyChip = new CarOngoingPrivacyChip(mContext);
+        mContext = spy(mContext);
+        mPrivacyChipViewController =
+                new PrivacyChipViewController(mContext, mHandler, mPrivacyItemController);
         carOngoingPrivacyChip.setId(R.id.privacy_chip);
         mFrameLayout.addView(carOngoingPrivacyChip);
     }
@@ -73,5 +89,52 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
         mPrivacyChipViewController.addPrivacyChipView(new View(getContext()));
 
         verify(mPrivacyItemController, never()).addCallback(any());
+    }
+
+    @Test
+    public void onClick_intentNotNull() {
+        mPrivacyChipViewController.onClick(/* view= */ null);
+
+        verify(mHandler).post(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getValue().run();
+        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
+
+        assertThat(mIntentArgumentCaptor.getValue()).isNotNull();
+    }
+
+    @Test
+    public void onClick_intentActionReviewOngoingPermissionUsage() {
+        mPrivacyChipViewController.onClick(/* view= */ null);
+
+        verify(mHandler).post(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getValue().run();
+        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
+
+        assertThat(mIntentArgumentCaptor.getValue().getAction()).isEqualTo(
+                Intent.ACTION_REVIEW_ONGOING_PERMISSION_USAGE);
+    }
+
+    @Test
+    public void onClick_intentCategoryDefault() {
+        mPrivacyChipViewController.onClick(/* view= */ null);
+
+        verify(mHandler).post(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getValue().run();
+        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
+
+        assertThat(mIntentArgumentCaptor.getValue().getCategories()).containsExactly(
+                Intent.CATEGORY_DEFAULT);
+    }
+
+    @Test
+    public void onClick_intentFlagActivityNewTask() {
+        mPrivacyChipViewController.onClick(/* view= */ null);
+
+        verify(mHandler).post(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getValue().run();
+        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
+
+        assertThat(mIntentArgumentCaptor.getValue().getFlags()).isEqualTo(
+                Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 }
