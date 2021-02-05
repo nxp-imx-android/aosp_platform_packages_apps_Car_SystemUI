@@ -142,7 +142,7 @@ public class OverlayViewController {
      * Returns {@code true} if navigation bar insets should be displayed over this view. Has no
      * effect if {@link #shouldFocusWindow} returns {@code false}.
      */
-    protected boolean shouldShowSystemBarInsets() {
+    protected boolean shouldShowNavigationBarInsets() {
         return false;
     }
 
@@ -164,7 +164,7 @@ public class OverlayViewController {
     /**
      * Returns {@code true} if the window should be focued when this view is visible. Note that
      * returning {@code false} here means that {@link #shouldShowStatusBarInsets} and
-     * {@link #shouldShowSystemBarInsets} will have no effect.
+     * {@link #shouldShowNavigationBarInsets} will have no effect.
      */
     protected boolean shouldFocusWindow() {
         return true;

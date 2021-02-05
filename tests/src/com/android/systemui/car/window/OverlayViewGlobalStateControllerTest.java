@@ -112,7 +112,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
     public void showView_nothingVisible_windowNotFocusable_shouldShowNavBar_navBarsVisible() {
         setupOverlayViewController1();
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(false);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(true);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(true);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController1, mRunnable);
 
@@ -123,7 +123,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
     public void showView_nothingVisible_windowNotFocusable_shouldHideNavBar_notHidden() {
         setupOverlayViewController1();
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(false);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(false);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(false);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController1, mRunnable);
 
@@ -156,7 +156,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
     public void showView_nothingAlreadyShown_shouldShowNavBarFalse_navigationBarsHidden() {
         setupOverlayViewController1();
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(true);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(false);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(false);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController1, mRunnable);
 
@@ -167,7 +167,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
     public void showView_nothingAlreadyShown_shouldShowNavBarTrue_navigationBarsShown() {
         setupOverlayViewController1();
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(true);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(true);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(true);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController1, mRunnable);
 
@@ -254,7 +254,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(true);
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController1);
-        when(mOverlayViewController2.shouldShowSystemBarInsets()).thenReturn(false);
+        when(mOverlayViewController2.shouldShowNavigationBarInsets()).thenReturn(false);
         reset(mWindowInsetsController);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController2, mRunnable);
@@ -269,7 +269,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(true);
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController1);
-        when(mOverlayViewController2.shouldShowSystemBarInsets()).thenReturn(true);
+        when(mOverlayViewController2.shouldShowNavigationBarInsets()).thenReturn(true);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController2, mRunnable);
 
@@ -349,8 +349,8 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(true);
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController2);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(true);
-        when(mOverlayViewController2.shouldShowSystemBarInsets()).thenReturn(false);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(true);
+        when(mOverlayViewController2.shouldShowNavigationBarInsets()).thenReturn(false);
         reset(mWindowInsetsController);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController1, mRunnable);
@@ -364,8 +364,8 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController1.shouldFocusWindow()).thenReturn(true);
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController2);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(false);
-        when(mOverlayViewController2.shouldShowSystemBarInsets()).thenReturn(true);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(false);
+        when(mOverlayViewController2.shouldShowNavigationBarInsets()).thenReturn(true);
 
         mOverlayViewGlobalStateController.showView(mOverlayViewController1, mRunnable);
 
@@ -582,7 +582,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController1);
         setOverlayViewControllerAsShowing(mOverlayViewController2);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(false);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(false);
         reset(mWindowInsetsController);
 
         mOverlayViewGlobalStateController.hideView(mOverlayViewController2, mRunnable);
@@ -598,7 +598,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController1);
         setOverlayViewControllerAsShowing(mOverlayViewController2);
-        when(mOverlayViewController1.shouldShowSystemBarInsets()).thenReturn(true);
+        when(mOverlayViewController1.shouldShowNavigationBarInsets()).thenReturn(true);
         reset(mWindowInsetsController);
 
         mOverlayViewGlobalStateController.hideView(mOverlayViewController2, mRunnable);
@@ -673,7 +673,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController1);
         setOverlayViewControllerAsShowing(mOverlayViewController2);
-        when(mOverlayViewController2.shouldShowSystemBarInsets()).thenReturn(false);
+        when(mOverlayViewController2.shouldShowNavigationBarInsets()).thenReturn(false);
         reset(mWindowInsetsController);
 
         mOverlayViewGlobalStateController.hideView(mOverlayViewController1, mRunnable);
@@ -689,7 +689,7 @@ public class OverlayViewGlobalStateControllerTest extends SysuiTestCase {
         when(mOverlayViewController2.shouldFocusWindow()).thenReturn(true);
         setOverlayViewControllerAsShowing(mOverlayViewController1);
         setOverlayViewControllerAsShowing(mOverlayViewController2);
-        when(mOverlayViewController2.shouldShowSystemBarInsets()).thenReturn(true);
+        when(mOverlayViewController2.shouldShowNavigationBarInsets()).thenReturn(true);
 
         mOverlayViewGlobalStateController.hideView(mOverlayViewController1, mRunnable);
 

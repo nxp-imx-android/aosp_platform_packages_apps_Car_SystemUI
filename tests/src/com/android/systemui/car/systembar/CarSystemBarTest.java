@@ -141,12 +141,12 @@ public class CarSystemBarTest extends SysuiTestCase {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        mCarSystemBar = new CarSystemBar(mContext, mTestableResources.getResources(),
-                mCarSystemBarController, mLightBarController, mStatusBarIconController,
-                mWindowManager, mDeviceProvisionedController, new CommandQueue(mContext),
-                mAutoHideController, mButtonSelectionStateListener, mExecutor, mUiBgExecutor,
-                mBarService, () -> mKeyguardStateController, () -> mIconPolicy,
-                () -> mIconController, new SystemBarConfigs(mTestableResources.getResources()));
+        mCarSystemBar = new CarSystemBar(mContext, mCarSystemBarController, mLightBarController,
+                mStatusBarIconController, mWindowManager, mDeviceProvisionedController,
+                new CommandQueue(mContext), mAutoHideController, mButtonSelectionStateListener,
+                mExecutor, mUiBgExecutor, mBarService, () -> mKeyguardStateController,
+                () -> mIconPolicy, () -> mIconController,
+                new SystemBarConfigs(mTestableResources.getResources()));
         mCarSystemBar.setSignalPolicy(mSignalPolicy);
     }
 
