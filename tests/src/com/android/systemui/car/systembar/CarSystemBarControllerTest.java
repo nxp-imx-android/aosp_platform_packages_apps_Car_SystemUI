@@ -33,6 +33,7 @@ import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.car.CarSystemUiTest;
 import com.android.systemui.car.hvac.HvacController;
+import com.android.systemui.car.statusbar.PrivacyChipViewController;
 import com.android.systemui.car.statusbar.UserNameViewController;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
@@ -65,6 +66,8 @@ public class CarSystemBarControllerTest extends SysuiTestCase {
     private HvacController mHvacController;
     @Mock
     private UserNameViewController mUserNameViewController;
+    @Mock
+    private PrivacyChipViewController mPrivacyChipViewController;
 
     @Before
     public void setUp() throws Exception {
@@ -80,7 +83,8 @@ public class CarSystemBarControllerTest extends SysuiTestCase {
     private CarSystemBarController createSystemBarController() {
         return new CarSystemBarController(mContext, mCarSystemBarViewFactory,
                 mButtonSelectionStateController, () -> mHvacController,
-                () -> mUserNameViewController, mButtonRoleHolderController,
+                () -> mUserNameViewController, () -> mPrivacyChipViewController,
+                mButtonRoleHolderController,
                 new SystemBarConfigs(mTestableResources.getResources()));
     }
 
@@ -119,6 +123,15 @@ public class CarSystemBarControllerTest extends SysuiTestCase {
         mCarSystemBar.removeAll();
 
         verify(mButtonSelectionStateController).removeAll();
+    }
+
+    @Test
+    public void testRemoveAll_callsPrivacyChipViewControllerRemoveAll() {
+        mCarSystemBar = createSystemBarController();
+
+        mCarSystemBar.removeAll();
+
+        verify(mPrivacyChipViewController).removeAll();
     }
 
     @Test
