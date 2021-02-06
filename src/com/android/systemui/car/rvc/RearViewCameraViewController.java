@@ -103,7 +103,9 @@ public class RearViewCameraViewController extends OverlayViewController {
             Slog.e(TAG, "RearViewCameraViewController is disabled, since no Activity is defined");
         }
         mActivityTaskManager = activityTaskManager;
-        mActivityTaskManager.registerTaskStackListener(mTaskStackListener);
+        if (isEnabled()) {
+            mActivityTaskManager.registerTaskStackListener(mTaskStackListener);
+        }
         mDisplayAreaOrganizer = displayAreaOrganizer;
     }
 
