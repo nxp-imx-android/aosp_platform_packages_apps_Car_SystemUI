@@ -52,6 +52,12 @@ import javax.inject.Inject;
 /** View controller for the rear view camera. */
 @SysUISingleton
 public class RearViewCameraViewController extends OverlayViewController {
+    // Constants used by RVC related classes to filter out ACTION_CLOSE_SYSTEM_DIALOGS intents
+    // originated in this class.
+    static final String CLOSE_SYSTEM_DIALOG_REASON_KEY = "reason";
+    static final String CLOSE_SYSTEM_DIALOG_REASON_VALUE =
+            RearViewCameraViewController.class.getPackageName();
+
     private static final String TAG = "RearViewCameraView";
     private static final boolean DBG = false;
 
@@ -143,6 +149,11 @@ public class RearViewCameraViewController extends OverlayViewController {
         mContext.startActivity(rearViewCameraIntent, activityOptions.toBundle());
     }
 
+    @VisibleForTesting
+    void broadcastIntent(Intent intent) {
+        mContext.sendBroadcast(intent);
+    }
+
     boolean isShown() {
         return mView != null;
     }
@@ -211,6 +222,13 @@ public class RearViewCameraViewController extends OverlayViewController {
             st.setVisibility(surfaceControl, true);
             st.apply();
 
+            // Request other system dialogs to close.
+            Intent closeSystemDialogsIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+            closeSystemDialogsIntent.putExtra(CLOSE_SYSTEM_DIALOG_REASON_KEY,
+                    CLOSE_SYSTEM_DIALOG_REASON_VALUE);
+            broadcastIntent(closeSystemDialogsIntent);
+
+            // Request RVC to start.
             Intent rearViewCameraIntent = new Intent(Intent.ACTION_MAIN)
                     .setComponent(mRearViewCameraActivity)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
