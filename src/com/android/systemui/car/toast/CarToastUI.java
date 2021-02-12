@@ -42,14 +42,13 @@ import javax.inject.Inject;
 public class CarToastUI extends ToastUI {
     private static final boolean DEBUG = false;
     private static final String TAG = "CarToastUI";
-
+  
     private final PackageManager mPackageManager;
 
     @Inject
     public CarToastUI(Context context, CommandQueue commandQueue, ToastFactory toastFactory,
-            DelayableExecutor mainExecutor, ToastLogger toastLogger,
-            PackageManager packageManager) {
-        super(context, commandQueue, toastFactory, mainExecutor, toastLogger);
+            ToastLogger toastLogger, PackageManager packageManager) {
+        super(context, commandQueue, toastFactory, toastLogger);
         mPackageManager = packageManager;
     }
 
