@@ -40,6 +40,7 @@ import com.android.systemui.car.window.OverlayViewController;
 import com.android.systemui.car.window.OverlayViewGlobalStateController;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.util.concurrency.DelayableExecutor;
 
 import javax.inject.Inject;
 
@@ -53,8 +54,8 @@ public class UserSwitchTransitionViewController extends OverlayViewController {
     private static final boolean DEBUG = false;
 
     private final Context mContext;
-    private final Handler mHandler;
     private final Resources mResources;
+    private final DelayableExecutor mMainExecutor;
     private final UserManager mUserManager;
     private final IWindowManager mWindowManagerService;
     private final int mWindowShownTimeoutMs;
@@ -70,12 +71,13 @@ public class UserSwitchTransitionViewController extends OverlayViewController {
     @GuardedBy("this")
     private boolean mShowing;
     private int mPreviousUserId = UserHandle.USER_NULL;
+    private Runnable mCancelRunnable;
 
     @Inject
     public UserSwitchTransitionViewController(
             Context context,
-            @Main Handler handler,
             @Main Resources resources,
+            @Main DelayableExecutor delayableExecutor,
             UserManager userManager,
             IWindowManager windowManagerService,
             OverlayViewGlobalStateController overlayViewGlobalStateController) {
@@ -83,8 +85,8 @@ public class UserSwitchTransitionViewController extends OverlayViewController {
         super(R.id.user_switching_dialog_stub, overlayViewGlobalStateController);
 
         mContext = context;
-        mHandler = handler;
         mResources = resources;
+        mMainExecutor = delayableExecutor;
         mUserManager = userManager;
         mWindowManagerService = windowManagerService;
         mWindowShownTimeoutMs = mResources.getInteger(
@@ -102,9 +104,9 @@ public class UserSwitchTransitionViewController extends OverlayViewController {
      * showing.
      */
     void handleShow(@UserIdInt int newUserId) {
-        if (mPreviousUserId == newUserId || mShowing) return;
-        mShowing = true;
-        mHandler.post(() -> {
+        mMainExecutor.execute(() -> {
+            if (mPreviousUserId == newUserId || mShowing) return;
+            mShowing = true;
             try {
                 mWindowManagerService.setSwitchingUser(true);
                 mWindowManagerService.lockNow(null);
@@ -118,15 +120,20 @@ public class UserSwitchTransitionViewController extends OverlayViewController {
             mPreviousUserId = newUserId;
             // In case the window is still showing after WINDOW_SHOWN_TIMEOUT_MS, then hide the
             // window and log a warning message.
-            mHandler.postDelayed(mWindowShownTimeoutCallback, mWindowShownTimeoutMs);
+            mCancelRunnable = mMainExecutor.executeDelayed(mWindowShownTimeoutCallback,
+                    mWindowShownTimeoutMs);
         });
     }
 
     void handleHide() {
         if (!mShowing) return;
-        mShowing = false;
-        mHandler.post(this::stop);
-        mHandler.removeCallbacks(mWindowShownTimeoutCallback);
+        mMainExecutor.execute(() -> {
+            mShowing = false;
+            stop();
+            if (mCancelRunnable != null) {
+                mCancelRunnable.run();
+            }
+        });
     }
 
     @VisibleForTesting

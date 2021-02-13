@@ -53,6 +53,7 @@ import com.android.systemui.statusbar.phone.LightBarController;
 import com.android.systemui.statusbar.phone.LightBarTransitionsController;
 import com.android.systemui.statusbar.phone.PhoneStatusBarPolicy;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
+import com.android.systemui.statusbar.phone.StatusBarSignalPolicy;
 import com.android.systemui.statusbar.phone.SysuiDarkIconDispatcher;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.concurrency.FakeExecutor;
@@ -103,6 +104,8 @@ public class CarSystemBarTest extends SysuiTestCase {
     private PhoneStatusBarPolicy mIconPolicy;
     @Mock
     private StatusBarIconController mIconController;
+    @Mock
+    private StatusBarSignalPolicy mSignalPolicy;
 
     private RegisterStatusBarResult mBarResult;
     private AppearanceRegion[] mAppearanceRegions;
@@ -144,6 +147,7 @@ public class CarSystemBarTest extends SysuiTestCase {
                 mAutoHideController, mButtonSelectionStateListener, mHandler, mUiBgExecutor,
                 mBarService, () -> mKeyguardStateController, () -> mIconPolicy,
                 () -> mIconController, new SystemBarConfigs(mTestableResources.getResources()));
+        mCarSystemBar.setSignalPolicy(mSignalPolicy);
     }
 
     @Test

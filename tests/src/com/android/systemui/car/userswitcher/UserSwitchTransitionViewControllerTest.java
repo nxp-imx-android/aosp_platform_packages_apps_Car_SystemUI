@@ -23,8 +23,6 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Handler;
 import android.os.UserManager;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.testing.AndroidTestingRunner;
@@ -38,6 +36,8 @@ import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.car.CarSystemUiTest;
 import com.android.systemui.car.window.OverlayViewGlobalStateController;
+import com.android.systemui.util.concurrency.FakeExecutor;
+import com.android.systemui.util.time.FakeSystemClock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,8 +53,9 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     private static final int TEST_USER_1 = 100;
     private static final int TEST_USER_2 = 110;
 
-    private TestableUserSwitchTransitionViewController mCarUserSwitchingDialogController;
+    private UserSwitchTransitionViewController mCarUserSwitchingDialogController;
     private TestableResources mTestableResources;
+    private FakeExecutor mExecutor;
     @Mock
     private OverlayViewGlobalStateController mOverlayViewGlobalStateController;
     @Mock
@@ -64,10 +65,11 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mTestableResources = mContext.getOrCreateTestableResources();
-        mCarUserSwitchingDialogController = new TestableUserSwitchTransitionViewController(
+        mExecutor = new FakeExecutor(new FakeSystemClock());
+        mCarUserSwitchingDialogController = new UserSwitchTransitionViewController(
                 mContext,
-                Handler.getMain(),
                 mTestableResources.getResources(),
+                mExecutor,
                 (UserManager) mContext.getSystemService(Context.USER_SERVICE),
                 mWindowManagerService,
                 mOverlayViewGlobalStateController
@@ -80,6 +82,8 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onHandleShow_newUserSelected_showsDialog() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
 
         verify(mOverlayViewGlobalStateController).showView(eq(mCarUserSwitchingDialogController),
                 any());
@@ -88,7 +92,11 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onHandleShow_alreadyShowing_ignoresRequest() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_2);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
 
         // Verify that the request was processed only once.
         verify(mOverlayViewGlobalStateController).showView(eq(mCarUserSwitchingDialogController),
@@ -98,8 +106,14 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onHandleShow_sameUserSelected_ignoresRequest() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleHide();
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
 
         // Verify that the request was processed only once.
         verify(mOverlayViewGlobalStateController).showView(eq(mCarUserSwitchingDialogController),
@@ -109,7 +123,11 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onHide_currentlyShowing_hidesDialog() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleHide();
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
 
         verify(mOverlayViewGlobalStateController).hideView(eq(mCarUserSwitchingDialogController),
                 any());
@@ -118,8 +136,14 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onHide_notShowing_ignoresRequest() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleHide();
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleHide();
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
 
         // Verify that the request was processed only once.
         verify(mOverlayViewGlobalStateController).hideView(eq(mCarUserSwitchingDialogController),
@@ -129,6 +153,8 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onWindowShownTimeoutPassed_viewNotHidden_hidesUserSwitchTransitionView() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         reset(mOverlayViewGlobalStateController);
 
         getContext().getMainThreadHandler().postDelayed(() -> {
@@ -140,39 +166,16 @@ public class UserSwitchTransitionViewControllerTest extends SysuiTestCase {
     @Test
     public void onWindowShownTimeoutPassed_viewHidden_doesNotHideUserSwitchTransitionViewAgain() {
         mCarUserSwitchingDialogController.handleShow(/* currentUserId= */ TEST_USER_1);
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         mCarUserSwitchingDialogController.handleHide();
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
         reset(mOverlayViewGlobalStateController);
 
         getContext().getMainThreadHandler().postDelayed(() -> {
             verify(mOverlayViewGlobalStateController, never()).hideView(
                     eq(mCarUserSwitchingDialogController), any());
         }, mCarUserSwitchingDialogController.getWindowShownTimeoutMs() + 10);
-    }
-
-    private final class TestableUserSwitchTransitionViewController extends
-            UserSwitchTransitionViewController {
-
-        private final Handler mHandler;
-
-        TestableUserSwitchTransitionViewController(Context context, Handler handler,
-                Resources resources, UserManager userManager,
-                IWindowManager windowManagerService,
-                OverlayViewGlobalStateController overlayViewGlobalStateController) {
-            super(context, handler, resources, userManager, windowManagerService,
-                    overlayViewGlobalStateController);
-            mHandler = handler;
-        }
-
-        @Override
-        public void handleShow(int currentUserId) {
-            super.handleShow(currentUserId);
-            waitForIdleSync(mHandler);
-        }
-
-        @Override
-        public void handleHide() {
-            super.handleHide();
-            waitForIdleSync(mHandler);
-        }
     }
 }
