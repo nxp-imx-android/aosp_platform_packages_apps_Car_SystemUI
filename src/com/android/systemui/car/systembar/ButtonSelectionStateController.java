@@ -16,12 +16,19 @@
 
 package com.android.systemui.car.systembar;
 
+import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
+
+import android.app.ActivityTaskManager;
 import android.app.ActivityTaskManager.RootTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +52,7 @@ import javax.inject.Inject;
  */
 @SysUISingleton
 public class ButtonSelectionStateController {
+    private static final String TAG = ButtonSelectionStateController.class.getSimpleName();
 
     private final Set<CarSystemBarButton> mRegisteredViews = new HashSet<>();
 
@@ -172,10 +180,32 @@ public class ButtonSelectionStateController {
     }
 
     private HashSet<CarSystemBarButton> findSelectedButtons(RootTaskInfo validTaskInfo) {
-        String packageName = validTaskInfo.topActivity.getPackageName();
+        ComponentName topActivity = null;
+
+        // Window mode being WINDOW_MODE_MULTI_WINDOW implies TaskView might be visible on the
+        // display. In such cases, topActivity reported by validTaskInfo will be the one hosted in
+        // TaskView and not necessarily the main activity visible on display. Thus we should get
+        // rootTaskInfo instead.
+        if (validTaskInfo.getWindowingMode() == WINDOWING_MODE_MULTI_WINDOW) {
+            try {
+                RootTaskInfo rootTaskInfo =
+                        ActivityTaskManager.getService().getRootTaskInfoOnDisplay(
+                                WINDOWING_MODE_FULLSCREEN, ACTIVITY_TYPE_UNDEFINED,
+                                validTaskInfo.displayId);
+                topActivity = rootTaskInfo.topActivity;
+            } catch (RemoteException e) {
+                Log.e(TAG, "findSelectedButtons: Failed getting root task info", e);
+            }
+        } else {
+            topActivity = validTaskInfo.topActivity;
+        }
+
+        if (topActivity == null) return null;
+
+        String packageName = topActivity.getPackageName();
 
         HashSet<CarSystemBarButton> selectedButtons =
-                findButtonsByComponentName(validTaskInfo.topActivity);
+                findButtonsByComponentName(topActivity);
         if (selectedButtons == null) {
             selectedButtons = mButtonsByPackage.get(packageName);
         }
