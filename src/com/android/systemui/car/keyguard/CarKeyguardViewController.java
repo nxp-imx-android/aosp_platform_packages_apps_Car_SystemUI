@@ -199,8 +199,11 @@ public class CarKeyguardViewController extends OverlayViewController implements
         if (occluded) {
             mCarSystemBarController.showAllOcclusionButtons(/* isSetup= */ true);
         } else {
-            reset(/* hideBouncerWhenShowing= */ false);
-            mCarSystemBarController.showAllKeyguardButtons(/* isSetup= */ true);
+            if (mShowing && mBouncer.isSecure()) {
+                mCarSystemBarController.showAllKeyguardButtons(/* isSetup= */ true);
+            } else {
+                mCarSystemBarController.showAllNavigationButtons(/* isSetUp= */ true);
+            }
         }
     }
 
