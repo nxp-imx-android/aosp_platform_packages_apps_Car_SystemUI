@@ -74,7 +74,7 @@ public class CarSystemBarTest extends SysuiTestCase {
 
     private CarSystemBar mCarSystemBar;
     private TestableResources mTestableResources;
-    private Handler mHandler;
+    private FakeExecutor mExecutor;
 
     @Mock
     private CarSystemBarController mCarSystemBarController;
@@ -115,7 +115,7 @@ public class CarSystemBarTest extends SysuiTestCase {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mTestableResources = mContext.getOrCreateTestableResources();
-        mHandler = Handler.getMain();
+        mExecutor = new FakeExecutor(new FakeSystemClock());
         mUiBgExecutor = new FakeExecutor(new FakeSystemClock());
         when(mStatusBarIconController.getTransitionsController()).thenReturn(
                 mLightBarTransitionsController);
@@ -144,7 +144,7 @@ public class CarSystemBarTest extends SysuiTestCase {
         mCarSystemBar = new CarSystemBar(mContext, mTestableResources.getResources(),
                 mCarSystemBarController, mLightBarController, mStatusBarIconController,
                 mWindowManager, mDeviceProvisionedController, new CommandQueue(mContext),
-                mAutoHideController, mButtonSelectionStateListener, mHandler, mUiBgExecutor,
+                mAutoHideController, mButtonSelectionStateListener, mExecutor, mUiBgExecutor,
                 mBarService, () -> mKeyguardStateController, () -> mIconPolicy,
                 () -> mIconController, new SystemBarConfigs(mTestableResources.getResources()));
         mCarSystemBar.setSignalPolicy(mSignalPolicy);
@@ -164,7 +164,7 @@ public class CarSystemBarTest extends SysuiTestCase {
         verify(mDeviceProvisionedController).addCallback(deviceProvisionedCallbackCaptor.capture());
 
         deviceProvisionedCallbackCaptor.getValue().onUserSwitched();
-        waitForIdleSync(mHandler);
+        waitForDelayableExecutor();
 
         verify(mButtonSelectionStateListener).onTaskStackChanged();
     }
@@ -184,7 +184,7 @@ public class CarSystemBarTest extends SysuiTestCase {
         verify(mDeviceProvisionedController).addCallback(deviceProvisionedCallbackCaptor.capture());
 
         deviceProvisionedCallbackCaptor.getValue().onUserSwitched();
-        waitForIdleSync(mHandler);
+        waitForDelayableExecutor();
 
         verify(mCarSystemBarController).showAllKeyguardButtons(false);
     }
@@ -203,12 +203,12 @@ public class CarSystemBarTest extends SysuiTestCase {
         when(mDeviceProvisionedController.isCurrentUserSetup()).thenReturn(false);
         verify(mDeviceProvisionedController).addCallback(deviceProvisionedCallbackCaptor.capture());
         deviceProvisionedCallbackCaptor.getValue().onUserSwitched();
-        waitForIdleSync(mHandler);
+        waitForDelayableExecutor();
         when(mDeviceProvisionedController.isCurrentUserSetup()).thenReturn(true);
         when(mKeyguardStateController.isShowing()).thenReturn(false);
 
         deviceProvisionedCallbackCaptor.getValue().onUserSetupChanged();
-        waitForIdleSync(mHandler);
+        waitForDelayableExecutor();
 
         verify(mCarSystemBarController).showAllNavigationButtons(true);
     }
@@ -374,5 +374,10 @@ public class CarSystemBarTest extends SysuiTestCase {
         // The transient booleans were cleared.
         assertThat(mCarSystemBar.isStatusBarTransientShown()).isFalse();
         assertThat(mCarSystemBar.isNavBarTransientShown()).isFalse();
+    }
+
+    private void waitForDelayableExecutor() {
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
     }
 }

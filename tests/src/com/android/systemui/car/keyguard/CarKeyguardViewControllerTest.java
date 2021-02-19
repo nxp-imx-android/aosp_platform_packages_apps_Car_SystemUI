@@ -44,6 +44,8 @@ import com.android.systemui.car.window.OverlayViewGlobalStateController;
 import com.android.systemui.statusbar.phone.BiometricUnlockController;
 import com.android.systemui.statusbar.phone.KeyguardBouncer;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
+import com.android.systemui.util.concurrency.FakeExecutor;
+import com.android.systemui.util.time.FakeSystemClock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +61,7 @@ import org.mockito.MockitoAnnotations;
 public class CarKeyguardViewControllerTest extends SysuiTestCase {
 
     private CarKeyguardViewController mCarKeyguardViewController;
+    private FakeExecutor mExecutor;
 
     @Mock
     private OverlayViewGlobalStateController mOverlayViewGlobalStateController;
@@ -77,9 +80,10 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
                 any(ViewGroup.class),
                 any(KeyguardBouncer.BouncerExpansionCallback.class)))
                 .thenReturn(mBouncer);
+        mExecutor = new FakeExecutor(new FakeSystemClock());
 
         mCarKeyguardViewController = new CarKeyguardViewController(
-                Handler.getMain(),
+                mExecutor,
                 mOverlayViewGlobalStateController,
                 mock(KeyguardStateController.class),
                 mock(KeyguardUpdateMonitor.class),
@@ -96,7 +100,7 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
     public void onShow_bouncerIsSecure_showsBouncerWithSecuritySelectionReset() {
         when(mBouncer.isSecure()).thenReturn(true);
         mCarKeyguardViewController.show(/* options= */ null);
-        waitForIdleSync();
+        waitForDelayableExecutor();
 
         verify(mBouncer).show(/* resetSecuritySelection= */ true);
     }
@@ -113,7 +117,7 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
     public void onShow_bouncerNotSecure_hidesBouncerAndDestroysTheView() {
         when(mBouncer.isSecure()).thenReturn(false);
         mCarKeyguardViewController.show(/* options= */ null);
-        waitForIdleSync();
+        waitForDelayableExecutor();
 
         verify(mBouncer).hide(/* destroyView= */ true);
     }
@@ -122,6 +126,7 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
     public void onShow_bouncerNotSecure_keyguardIsNotVisible() {
         when(mBouncer.isSecure()).thenReturn(false);
         mCarKeyguardViewController.show(/* options= */ null);
+        waitForDelayableExecutor();
 
         // Here we check for both showView and hideView since the current implementation of show
         // with bouncer being not secure has the following method execution orders:
@@ -173,10 +178,9 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
         reset(mBouncer);
 
         mCarKeyguardViewController.setOccluded(/* occluded= */ false, /* animate= */ false);
-        waitForIdleSync();
+        waitForDelayableExecutor();
 
-        verify(mOverlayViewGlobalStateController).showView(eq(mCarKeyguardViewController),
-                any());
+        verify(mBouncer).show(true);
     }
 
     @Test
@@ -197,5 +201,10 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
         mCarKeyguardViewController.onCancelClicked();
 
         verify(mBouncer).hide(/* destroyView= */ true);
+    }
+
+    private void waitForDelayableExecutor() {
+        mExecutor.advanceClockToLast();
+        mExecutor.runAllReady();
     }
 }
