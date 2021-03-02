@@ -137,7 +137,6 @@
         <item>com.android.systemui.accessibility.WindowMagnification</item>
         <item>com.android.systemui.accessibility.SystemActions</item>
         <item>com.android.systemui.toast.ToastUI</item>
-        <item>com.android.systemui.people.widget.PeopleSpaceWidgetEnabler</item>
     </string-array>
 
     <!-- The list of components to append to config_systemUIServiceComponents. -->
