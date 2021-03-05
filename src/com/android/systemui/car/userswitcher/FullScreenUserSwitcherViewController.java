@@ -92,6 +92,11 @@ public class FullScreenUserSwitcherViewController extends OverlayViewController 
     }
 
     @Override
+    protected int getFocusAreaViewId() {
+        return R.id.user_switcher_container;
+    }
+
+    @Override
     protected boolean shouldFocusWindow() {
         return true;
     }
