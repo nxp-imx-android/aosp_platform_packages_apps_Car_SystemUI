@@ -31,4 +31,11 @@
     <integer name="car_volume_dialog_display_hovering_timeout">16000</integer>
     <integer name="car_volume_dialog_display_expanded_normal_timeout">6000</integer>
     <integer name="car_volume_dialog_display_expanded_hovering_timeout">32000</integer>
+
+    <!-- Privacy chip animation transition duration -->
+    <integer name="privacy_chip_animation_transition_duration">500</integer>
+    <!-- Privacy chip pill to circle animation delay -->
+    <integer name="privacy_chip_pill_to_circle_delay">2000</integer>
+    <!-- Privacy chip no mic usage animation delay -->
+    <integer name="privacy_chip_no_mic_usage_delay">15000</integer>
 </resources>
