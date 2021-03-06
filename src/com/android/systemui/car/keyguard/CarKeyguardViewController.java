@@ -111,7 +111,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
     }
 
     @Override
-    protected boolean shouldShowSystemBarInsets() {
+    protected boolean shouldShowNavigationBarInsets() {
         return true;
     }
 

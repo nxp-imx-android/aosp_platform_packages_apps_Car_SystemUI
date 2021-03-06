@@ -70,7 +70,6 @@ import dagger.Lazy;
 
 /** Navigation bars customized for the automotive use case. */
 public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
-    private final Resources mResources;
     private final CarSystemBarController mCarSystemBarController;
     private final SysuiDarkIconDispatcher mStatusBarIconController;
     private final WindowManager mWindowManager;
@@ -124,7 +123,6 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
 
     @Inject
     public CarSystemBar(Context context,
-            @Main Resources resources,
             CarSystemBarController carSystemBarController,
             // TODO(b/156052638): Should not need to inject LightBarController
             LightBarController lightBarController,
@@ -143,7 +141,6 @@ public class CarSystemBar extends SystemUI implements CommandQueue.Callbacks {
             SystemBarConfigs systemBarConfigs
     ) {
         super(context);
-        mResources = resources;
         mCarSystemBarController = carSystemBarController;
         mStatusBarIconController = (SysuiDarkIconDispatcher) darkIconDispatcher;
         mWindowManager = windowManager;

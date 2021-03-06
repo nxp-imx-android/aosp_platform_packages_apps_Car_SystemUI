@@ -227,7 +227,7 @@ public class OverlayViewGlobalStateController {
         }
 
         // Do not hide navigation bar insets if the window is not focusable.
-        if (mHighestZOrder.shouldFocusWindow() && !mHighestZOrder.shouldShowSystemBarInsets()) {
+        if (mHighestZOrder.shouldFocusWindow() && !mHighestZOrder.shouldShowNavigationBarInsets()) {
             mWindowInsetsController.hide(navigationBars());
         } else {
             mWindowInsetsController.show(navigationBars());
