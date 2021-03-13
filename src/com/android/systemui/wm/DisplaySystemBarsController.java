@@ -122,13 +122,6 @@ public class DisplaySystemBarsController extends DisplayImeController {
         }
 
         @Override
-        public void insetsControlChanged(InsetsState insetsState,
-                InsetsSourceControl[] activeControls) {
-            super.insetsControlChanged(insetsState, activeControls);
-            mInsetsController.onControlsChanged(activeControls);
-        }
-
-        @Override
         public void hideInsets(@WindowInsets.Type.InsetsType int types, boolean fromIme) {
             if ((types & WindowInsets.Type.ime()) == 0) {
                 mInsetsController.hide(types);
