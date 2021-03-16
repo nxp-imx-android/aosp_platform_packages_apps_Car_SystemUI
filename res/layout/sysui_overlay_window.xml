@@ -22,6 +22,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.android.car.ui.FocusParkingView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <ViewStub android:id="@+id/notification_panel_stub"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -30,7 +34,7 @@
     <ViewStub android:id="@+id/keyguard_stub"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout="@layout/keyguard_container" />
+              android:layout="@layout/keyguard_container"/>
 
     <ViewStub android:id="@+id/fullscreen_user_switcher_stub"
               android:layout_width="match_parent"

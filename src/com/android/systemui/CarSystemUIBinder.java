@@ -16,6 +16,7 @@
 
 package com.android.systemui;
 
+import com.android.systemui.accessibility.SystemActions;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.car.systembar.CarSystemBar;
 import com.android.systemui.car.notification.CarNotificationModule;
@@ -132,6 +133,12 @@ public abstract class CarSystemUIBinder {
     @IntoMap
     @ClassKey(StatusBar.class)
     public abstract SystemUI bindsStatusBar(StatusBar sysui);
+
+    /** Inject into SystemActions. */
+    @Binds
+    @IntoMap
+    @ClassKey(SystemActions.class)
+    public abstract SystemUI bindSystemActions(SystemActions sysui);
 
     /** Inject into VolumeUI. */
     @Binds
