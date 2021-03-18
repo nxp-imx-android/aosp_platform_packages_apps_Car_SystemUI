@@ -180,6 +180,10 @@ public class NotificationPanelViewController extends OverlayPanelViewController
                 R.bool.config_notif_panel_inset_by_left_systembar);
         mFitRightSystemBarInset = mResources.getBoolean(
                 R.bool.config_notif_panel_inset_by_right_systembar);
+
+        // Inflate view on instantiation to properly initialize listeners even if panel has
+        // not been opened.
+        getOverlayViewGlobalStateController().inflateView(this);
     }
 
     // CommandQueue.Callbacks
