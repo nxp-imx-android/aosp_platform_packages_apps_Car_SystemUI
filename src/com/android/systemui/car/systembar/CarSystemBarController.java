@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.android.systemui.car.hvac.HvacController;
-import com.android.systemui.car.statusbar.PrivacyChipViewController;
 import com.android.systemui.car.statusbar.UserNameViewController;
 import com.android.systemui.dagger.SysUISingleton;
 

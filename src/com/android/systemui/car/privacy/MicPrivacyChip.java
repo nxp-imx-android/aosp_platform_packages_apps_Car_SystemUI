@@ -50,7 +50,6 @@ import java.util.concurrent.TimeUnit;
  * Mic Off:
  * <ul>
  * <li>Mic Status? - Off ->> MICROPHONE_OFF</li>
- * <li>MICROPHONE_OFF - delay ->> INVISIBLE</li>
  * </ul>
  */
 public class MicPrivacyChip extends MotionLayout {
@@ -63,15 +62,8 @@ public class MicPrivacyChip extends MotionLayout {
 
     private AnimationStates mCurrentTransitionState;
     private boolean mIsInflated;
+    private boolean mIsMicrophoneEnabled;
     private ScheduledExecutorService mExecutor;
-
-    private enum AnimationStates {
-        INVISIBLE,
-        ACTIVE_INIT,
-        ACTIVE,
-        INACTIVE,
-        MICROPHONE_OFF,
-    }
 
     public MicPrivacyChip(@NonNull Context context) {
         this(context, /* attrs= */ null);
@@ -100,20 +92,76 @@ public class MicPrivacyChip extends MotionLayout {
         mIsInflated = true;
     }
 
-    private boolean isMicrophoneToggledOff() {
-        // TODO(182826082): Implement Microphone off functionality
-        return false;
+    /**
+     * Sets whether microphone is enabled or disabled.
+     * If enabled, animates to {@link AnimationStates#INVISIBLE}.
+     * Otherwise, animates to {@link AnimationStates#MICROPHONE_OFF}.
+     */
+    @UiThread
+    public void setMicrophoneEnabled(boolean isMicrophoneEnabled) {
+        if (DEBUG) Log.d(TAG, "Microphone enabled: " + isMicrophoneEnabled);
+
+        if (mIsMicrophoneEnabled == isMicrophoneEnabled) return;
+
+        mIsMicrophoneEnabled = isMicrophoneEnabled;
+
+        if (!mIsInflated) {
+            if (DEBUG) Log.d(TAG, "Layout not inflated");
+
+            return;
+        }
+
+        if (mIsMicrophoneEnabled) {
+            if (DEBUG) Log.d(TAG, "setTransition: invisibleFromMicOff");
+            setTransition(R.id.invisibleFromMicOff);
+        } else {
+            switch (mCurrentTransitionState) {
+                case INVISIBLE:
+                    if (DEBUG) Log.d(TAG, "setTransition: micOffFromInvisible");
+                    setTransition(R.id.micOffFromInvisible);
+                    break;
+                case ACTIVE_INIT:
+                    if (DEBUG) Log.d(TAG, "setTransition: micOffFromActiveInit");
+                    setTransition(R.id.micOffFromActiveInit);
+                    break;
+                case ACTIVE:
+                    if (DEBUG) Log.d(TAG, "setTransition: micOffFromActive");
+                    setTransition(R.id.micOffFromActive);
+                    break;
+                case INACTIVE:
+                    if (DEBUG) Log.d(TAG, "setTransition: micOffFromInactive");
+                    setTransition(R.id.micOffFromInactive);
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        mExecutor.shutdownNow();
+        mExecutor = Executors.newSingleThreadScheduledExecutor();
+
+        // TODO(182938429): Use Transition Listeners once ConstraintLayout 2.0.0 is being used.
+
+        // When microphone is off, mic privacy chip is always visible.
+        if (!mIsMicrophoneEnabled) setVisibility(View.VISIBLE);
+        setContentDescription(!mIsMicrophoneEnabled);
+        mCurrentTransitionState = mIsMicrophoneEnabled ? MicPrivacyChip.AnimationStates.INVISIBLE
+                : MicPrivacyChip.AnimationStates.MICROPHONE_OFF;
+        transitionToEnd();
+        // When microphone is on, after animation we hide mic privacy chip until mic is next used.
+        if (mIsMicrophoneEnabled) setVisibility(View.GONE);
     }
 
     private void setContentDescription(boolean isMicOff) {
+        String contentDescription;
         if (isMicOff) {
-            // TODO(182826082): Implement Microphone off functionality
-            setContentDescription(null);
+            contentDescription = getResources().getString(R.string.mic_privacy_chip_off_content);
         } else {
-            setContentDescription(
-                    getResources().getString(R.string.ongoing_privacy_chip_content_multiple_apps,
-                            TYPES_TEXT_MICROPHONE));
+            contentDescription = getResources().getString(
+                    R.string.ongoing_privacy_chip_content_multiple_apps, TYPES_TEXT_MICROPHONE);
         }
+
+        setContentDescription(contentDescription);
     }
 
     /**
@@ -133,23 +181,43 @@ public class MicPrivacyChip extends MotionLayout {
             return;
         }
 
-        if (mCurrentTransitionState.equals(AnimationStates.INVISIBLE)) {
-            if (DEBUG) Log.d(TAG, isMicrophoneToggledOff() ? "setTransition: micOffFromInvisible"
-                    : "setTransition: activeInitFromInvisible");
+        switch (mCurrentTransitionState) {
+            case INVISIBLE:
+                if (DEBUG) {
+                    Log.d(TAG, mIsMicrophoneEnabled ? "setTransition: activeInitFromInvisible"
+                            : "setTransition: micOffFromInvisible");
+                }
+                setTransition(mIsMicrophoneEnabled ? R.id.activeInitFromInvisible
+                        : R.id.micOffFromInvisible);
+                break;
+            case INACTIVE:
+                if (DEBUG) {
+                    Log.d(TAG, mIsMicrophoneEnabled ? "setTransition: activeInitFromInactive"
+                            : "setTransition: micOffFromInactive");
+                }
 
-            setTransition(isMicrophoneToggledOff() ? R.id.micOffFromInvisible
-                    : R.id.activeInitFromInvisible);
-        } else if (mCurrentTransitionState.equals(AnimationStates.INACTIVE)) {
-            if (DEBUG) Log.d(TAG, isMicrophoneToggledOff() ? "setTransition: micOffFromInactive"
-                    : "setTransition: activeInitFromInactive");
+                setTransition(mIsMicrophoneEnabled ? R.id.activeInitFromInactive
+                        : R.id.micOffFromInactive);
+                break;
+            case MICROPHONE_OFF:
+                if (DEBUG) {
+                    Log.d(TAG, mIsMicrophoneEnabled ? "setTransition: activeInitFromMicOff"
+                            : "No Transition.");
+                }
 
-            setTransition(isMicrophoneToggledOff() ? R.id.micOffFromInactive
-                    : R.id.activeInitFromInactive);
-        } else {
-            if (DEBUG) Log.d(TAG, "Early exit, mCurrentTransitionState= "
-                    + mCurrentTransitionState);
+                if (!mIsMicrophoneEnabled) {
+                    return;
+                }
 
-            return;
+                setTransition(R.id.activeInitFromMicOff);
+                break;
+            default:
+                if (DEBUG) {
+                    Log.d(TAG, "Early exit, mCurrentTransitionState= "
+                            + mCurrentTransitionState);
+                }
+
+                return;
         }
 
         mExecutor.shutdownNow();
@@ -160,7 +228,7 @@ public class MicPrivacyChip extends MotionLayout {
         setVisibility(View.VISIBLE);
         transitionToEnd();
         mCurrentTransitionState = AnimationStates.ACTIVE_INIT;
-        if (!isMicrophoneToggledOff()) {
+        if (mIsMicrophoneEnabled) {
             mExecutor.schedule(MicPrivacyChip.this::animateToOrangeCircle, mDelayPillToCircle,
                     TimeUnit.MILLISECONDS);
         }
@@ -189,19 +257,24 @@ public class MicPrivacyChip extends MotionLayout {
             return;
         }
 
-        if (mCurrentTransitionState.equals(AnimationStates.ACTIVE_INIT)) {
-            if (DEBUG) Log.d(TAG, "setTransition: inactiveFromActiveInit");
+        switch (mCurrentTransitionState) {
+            case ACTIVE_INIT:
+                if (DEBUG) Log.d(TAG, "setTransition: inactiveFromActiveInit");
 
-            setTransition(R.id.inactiveFromActiveInit);
-        } else if (mCurrentTransitionState.equals(AnimationStates.ACTIVE)) {
-            if (DEBUG) Log.d(TAG, "setTransition: inactiveFromActive");
+                setTransition(R.id.inactiveFromActiveInit);
+                break;
+            case ACTIVE:
+                if (DEBUG) Log.d(TAG, "setTransition: inactiveFromActive");
 
-            setTransition(R.id.inactiveFromActive);
-        } else {
-            if (DEBUG) Log.d(TAG, "Early exit, mCurrentTransitionState= "
-                    + mCurrentTransitionState);
+                setTransition(R.id.inactiveFromActive);
+                break;
+            default:
+                if (DEBUG) {
+                    Log.d(TAG, "Early exit, mCurrentTransitionState= "
+                            + mCurrentTransitionState);
+                }
 
-            return;
+                return;
         }
 
         mExecutor.shutdownNow();
@@ -223,14 +296,14 @@ public class MicPrivacyChip extends MotionLayout {
 
     // TODO(182938429): Use Transition Listeners once ConstraintLayout 2.0.0 is being used.
     private void reset() {
-        if (isMicrophoneToggledOff()) {
-            if (DEBUG) Log.d(TAG, "setTransition: invisibleFromMicOff");
-
-            setTransition(R.id.invisibleFromMicOff);
-        } else {
+        if (mIsMicrophoneEnabled) {
             if (DEBUG) Log.d(TAG, "setTransition: invisibleFromInactive");
 
             setTransition(R.id.invisibleFromInactive);
+        } else {
+            if (DEBUG) Log.d(TAG, "setTransition: invisibleFromMicOff");
+
+            setTransition(R.id.invisibleFromMicOff);
         }
 
         // Since this is launched using a {@link ScheduledExecutorService}, its UI based elements
@@ -240,5 +313,13 @@ public class MicPrivacyChip extends MotionLayout {
             transitionToEnd();
             setVisibility(View.GONE);
         });
+    }
+
+    private enum AnimationStates {
+        INVISIBLE,
+        ACTIVE_INIT,
+        ACTIVE,
+        INACTIVE,
+        MICROPHONE_OFF,
     }
 }
