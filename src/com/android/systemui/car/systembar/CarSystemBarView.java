@@ -26,7 +26,6 @@ import android.widget.LinearLayout;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.car.systembar.CarSystemBarController.NotificationsShadeController;
-import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 
 import java.lang.annotation.ElementType;
@@ -82,8 +81,7 @@ public class CarSystemBarView extends LinearLayout {
             // container is in the view.
             StatusBarIconController.DarkIconManager mDarkIconManager =
                     new StatusBarIconController.DarkIconManager(
-                            mStatusIcons.findViewById(R.id.statusIcons),
-                            Dependency.get(CommandQueue.class));
+                            mStatusIcons.findViewById(R.id.statusIcons));
             mDarkIconManager.setShouldLog(true);
             Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
         }
