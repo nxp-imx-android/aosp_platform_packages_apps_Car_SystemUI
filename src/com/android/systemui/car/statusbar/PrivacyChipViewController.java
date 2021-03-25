@@ -23,16 +23,19 @@ import android.os.UserHandle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 
 import com.android.systemui.R;
-import com.android.systemui.car.privacy.CarOngoingPrivacyChip;
+import com.android.systemui.car.privacy.MicPrivacyChip;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.privacy.OngoingPrivacyChip;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
+import com.android.systemui.privacy.PrivacyType;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -46,9 +49,10 @@ public class PrivacyChipViewController implements View.OnClickListener {
     private final PrivacyItemController mPrivacyItemController;
     private final Context mContext;
     private final Handler mMainHandler;
-    private CarOngoingPrivacyChip mPrivacyChip;
+    private MicPrivacyChip mPrivacyChip;
     private boolean mAllIndicatorsEnabled;
     private boolean mMicCameraIndicatorsEnabled;
+    private boolean mIsMicPrivacyChipVisible;
 
     private final PrivacyItemController.Callback mPicCallback =
             new PrivacyItemController.Callback() {
@@ -57,8 +61,14 @@ public class PrivacyChipViewController implements View.OnClickListener {
                     if (mPrivacyChip == null) {
                         return;
                     }
-                    mPrivacyChip.setPrivacyItemList(privacyItems);
-                    setChipVisibility(!privacyItems.isEmpty());
+
+                    boolean shouldShowMicPrivacyChip = isMicPartOfPrivacyItems(privacyItems);
+                    if (mIsMicPrivacyChipVisible == shouldShowMicPrivacyChip) {
+                        return;
+                    }
+
+                    mIsMicPrivacyChipVisible = shouldShowMicPrivacyChip;
+                    setChipVisibility(shouldShowMicPrivacyChip);
                 }
 
                 @Override
@@ -74,22 +84,13 @@ public class PrivacyChipViewController implements View.OnClickListener {
                 private void onMicCameraToggled(boolean enabled) {
                     if (mMicCameraIndicatorsEnabled != enabled) {
                         mMicCameraIndicatorsEnabled = enabled;
-                        update();
                     }
                 }
 
                 private void onAllIndicatorsToggled(boolean enabled) {
                     if (mAllIndicatorsEnabled != enabled) {
                         mAllIndicatorsEnabled = enabled;
-                        update();
                     }
-                }
-
-                private void update() {
-                    if (mPrivacyChip == null) {
-                        return;
-                    }
-                    setChipVisibility(!mPrivacyChip.getPrivacyItemList().isEmpty());
                 }
             };
 
@@ -99,6 +100,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
         mContext = context;
         mMainHandler = mainHandler;
         mPrivacyItemController = privacyItemController;
+        mIsMicPrivacyChipVisible = false;
     }
 
     @Override
@@ -108,6 +110,14 @@ public class PrivacyChipViewController implements View.OnClickListener {
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         .addCategory(Intent.CATEGORY_DEFAULT),
                 UserHandle.CURRENT));
+    }
+
+    private boolean isMicPartOfPrivacyItems(@NonNull List<PrivacyItem> privacyItems) {
+        Optional<PrivacyItem> optionalMicPrivacyItem = privacyItems.stream()
+                .filter(privacyItem -> privacyItem.getPrivacyType()
+                        .equals(PrivacyType.TYPE_MICROPHONE))
+                .findAny();
+        return optionalMicPrivacyItem.isPresent();
     }
 
     /**
@@ -120,7 +130,6 @@ public class PrivacyChipViewController implements View.OnClickListener {
         }
 
         mPrivacyChip.setOnClickListener(this);
-        setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
         mAllIndicatorsEnabled = mPrivacyItemController.getAllIndicatorsAvailable();
         mMicCameraIndicatorsEnabled = mPrivacyItemController.getMicCameraAvailable();
         mPrivacyItemController.addCallback(mPicCallback);
@@ -133,6 +142,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
         if (mPrivacyChip != null) {
             mPrivacyChip.setOnClickListener(null);
         }
+
         mPrivacyItemController.removeCallback(mPicCallback);
     }
 
@@ -140,11 +150,16 @@ public class PrivacyChipViewController implements View.OnClickListener {
         if (mPrivacyChip == null) {
             return;
         }
-        if (chipVisible && getChipEnabled()) {
-            mPrivacyChip.setVisibility(View.VISIBLE);
-        } else {
-            mPrivacyChip.setVisibility(View.GONE);
-        }
+
+        // Since this is launched using a callback thread, its UI based elements need
+        // to execute on main executor.
+        mContext.getMainExecutor().execute(() -> {
+            if (chipVisible && getChipEnabled()) {
+                mPrivacyChip.animateIn();
+            } else {
+                mPrivacyChip.animateOut();
+            }
+        });
     }
 
     private boolean getChipEnabled() {

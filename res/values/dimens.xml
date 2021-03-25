@@ -60,6 +60,8 @@
     <dimen name="system_bar_button_margin">32dp</dimen>
     <!-- Padding between the system bar button and the icon within it -->
     <dimen name="system_bar_button_padding">16dp</dimen>
+    <!-- Radius for system bar pill buttons -->
+    <dimen name="system_bar_pill_radius">30dp</dimen>
 
     <!-- The amount by which to scale up the status bar icons. -->
     <item name="status_bar_icon_scale_factor" format="float" type="dimen">1.75</item>
@@ -100,14 +102,14 @@
 
     <!-- Height of icons in Privacy chip dialog. Both App Op icon and application icon -->
     <dimen name="privacy_chip_dialog_icon_height">48dp</dimen>
-    <!-- Start and End padding for Privacy chip -->
-    <dimen name="privacy_chip_side_padding">6dp</dimen>
     <!-- Icon size for Privacy chip -->
     <dimen name="privacy_chip_icon_size">32dp</dimen>
-    <!-- Minimum background width for Privacy chip -->
-    <dimen name="privacy_chip_bg_min_width">48dp</dimen>
+    <!-- Background width for Privacy chip -->
+    <dimen name="privacy_chip_width">76dp</dimen>
     <!-- Margin between icons of Privacy chip -->
     <dimen name="privacy_chip_icon_margin">2dp</dimen>
+    <!-- Diameter of indicator circle in mic privacy chip animation -->
+    <dimen name="privacy_chip_indicator_circle_diameter">21.5dp</dimen>
 
     <!-- Car volume dimens. -->
     <dimen name="car_volume_item_icon_size">@dimen/car_primary_icon_size</dimen>
