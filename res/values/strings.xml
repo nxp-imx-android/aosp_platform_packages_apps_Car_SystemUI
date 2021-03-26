@@ -44,4 +44,26 @@
     <string name="car_loading_profile_developer_message">Loading user (from <xliff:g id="from_user" example="10">%1$d</xliff:g> to <xliff:g id="to_user" example="12">%2$d</xliff:g>)</string>
     <!-- Text for the close button in Rear View Camera [CHAR LIMIT=30] -->
     <string name="rear_view_camera_close_button_text">Close</string>
+    <!-- Accessibility content description for microphone off state of microphone privacy chip. [CHAR LIMIT=40]-->
+    <string name="mic_privacy_chip_off_content">Microphone is off.</string>
+    <!-- Message displayed near microphone toggle when microphone is on. [CHAR LIMIT=50]-->
+    <string name="mic_privacy_chip_mic_enabled">Microphone is enabled</string>
+    <!-- Message Subtext displayed near microphone toggle when microphone is on. [CHAR LIMIT=60]-->
+    <string name="mic_privacy_chip_mic_enabled_subtext">Apps can access microphone</string>
+    <!-- Message displayed near microphone toggle when microphone is off. [CHAR LIMIT=50]-->
+    <string name="mic_privacy_chip_mic_disabled">Microphone is disabled</string>
+    <!-- Message Subtext displayed near microphone toggle when microphone is off. [CHAR LIMIT=60]-->
+    <string name="mic_privacy_chip_mic_disabled_subtext">No apps have access to microphone</string>
+    <!-- Privacy settings button text. [CHAR LIMIT=32]-->
+    <string name="mic_privacy_chip_privacy_settings">Privacy settings</string>
+    <!-- App is using microphone suffix [CHAR LIMIT=32]-->
+    <string name="mic_privacy_chip_app_using_mic_suffix"><xliff:g id="app" example="Assistant">%s</xliff:g> is using the mic</string>
+    <!-- Apps are using microphone suffix [CHAR LIMIT=32]-->
+    <string name="mic_privacy_chip_apps_using_mic_suffix"><xliff:g id="app_list" example="Assistant &amp; Phone">%s</xliff:g> are using the mic</string>
+    <!-- App was using microphone suffix [CHAR LIMIT=50]-->
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix"><xliff:g id="app" example="Assistant">%s</xliff:g> used the mic recently</string>
+    <!-- Microphone turned on toast text [CHAR LIMIT=40]-->
+    <string name="mic_privacy_chip_on_toast">Microphone turned on</string>
+    <!-- Microphone turned off toast text [CHAR LIMIT=42]-->
+    <string name="mic_privacy_chip_off_toast">Microphone turned off</string>
 </resources>

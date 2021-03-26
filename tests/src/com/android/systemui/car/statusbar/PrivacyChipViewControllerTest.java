@@ -21,7 +21,9 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -35,8 +37,10 @@ import androidx.test.filters.SmallTest;
 import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.car.CarSystemUiTest;
-import com.android.systemui.car.privacy.CarOngoingPrivacyChip;
+import com.android.systemui.car.privacy.MicPrivacyChip;
+import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
+import com.android.systemui.privacy.PrivacyType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +50,9 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+import java.util.concurrent.Executor;
+
 @CarSystemUiTest
 @RunWith(AndroidTestingRunner.class)
 @TestableLooper.RunWithLooper
@@ -54,27 +61,35 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
 
     private PrivacyChipViewController mPrivacyChipViewController;
     private FrameLayout mFrameLayout;
+    private MicPrivacyChip mMicPrivacyChip;
 
     @Captor
     private ArgumentCaptor<Intent> mIntentArgumentCaptor;
     @Captor
     private ArgumentCaptor<Runnable> mRunnableArgumentCaptor;
+    @Captor
+    private ArgumentCaptor<PrivacyItemController.Callback> mPicCallbackArgumentCaptor;
 
     @Mock
     private PrivacyItemController mPrivacyItemController;
     @Mock
     private Handler mHandler;
+    @Mock
+    private PrivacyItem mPrivacyItem;
+    @Mock
+    private Executor mExecutor;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(/* testClass= */ this);
         mFrameLayout = new FrameLayout(mContext);
-        CarOngoingPrivacyChip carOngoingPrivacyChip = new CarOngoingPrivacyChip(mContext);
+        mMicPrivacyChip = spy(new MicPrivacyChip(mContext));
         mContext = spy(mContext);
+        when(mContext.getMainExecutor()).thenReturn(mExecutor);
         mPrivacyChipViewController =
                 new PrivacyChipViewController(mContext, mHandler, mPrivacyItemController);
-        carOngoingPrivacyChip.setId(R.id.privacy_chip);
-        mFrameLayout.addView(carOngoingPrivacyChip);
+        mMicPrivacyChip.setId(R.id.privacy_chip);
+        mFrameLayout.addView(mMicPrivacyChip);
     }
 
     @Test
@@ -136,5 +151,76 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
 
         assertThat(mIntentArgumentCaptor.getValue().getFlags()).isEqualTo(
                 Intent.FLAG_ACTIVITY_NEW_TASK);
+    }
+
+    @Test
+    public void onPrivacyItemsChanged_micIsPartOfPrivacyItems_animateInCalled() {
+        when(mPrivacyItem.getPrivacyType()).thenReturn(PrivacyType.TYPE_MICROPHONE);
+        mPrivacyChipViewController.addPrivacyChipView(mFrameLayout);
+        verify(mPrivacyItemController).addCallback(mPicCallbackArgumentCaptor.capture());
+        mPicCallbackArgumentCaptor.getValue().onFlagAllChanged(true);
+        mPicCallbackArgumentCaptor.getValue().onFlagMicCameraChanged(true);
+
+        mPicCallbackArgumentCaptor.getValue()
+                .onPrivacyItemsChanged(Collections.singletonList(mPrivacyItem));
+        verify(mExecutor).execute(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getValue().run();
+
+        verify(mMicPrivacyChip).animateIn();
+    }
+
+    @Test
+    public void onPrivacyItemsChanged_micIsPartOfPrivacyItemsTwice_animateInCalledOnce() {
+        when(mPrivacyItem.getPrivacyType()).thenReturn(PrivacyType.TYPE_MICROPHONE);
+        mPrivacyChipViewController.addPrivacyChipView(mFrameLayout);
+        verify(mPrivacyItemController).addCallback(mPicCallbackArgumentCaptor.capture());
+        mPicCallbackArgumentCaptor.getValue().onFlagAllChanged(true);
+        mPicCallbackArgumentCaptor.getValue().onFlagMicCameraChanged(true);
+
+        mPicCallbackArgumentCaptor.getValue()
+                .onPrivacyItemsChanged(Collections.singletonList(mPrivacyItem));
+        mPicCallbackArgumentCaptor.getValue()
+                .onPrivacyItemsChanged(Collections.singletonList(mPrivacyItem));
+        verify(mExecutor).execute(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getAllValues().forEach(Runnable::run);
+
+        verify(mMicPrivacyChip).animateIn();
+    }
+
+    @Test
+    public void onPrivacyItemsChanged_micIsNotPartOfPrivacyItems_animateOutCalled() {
+        when(mPrivacyItem.getPrivacyType()).thenReturn(PrivacyType.TYPE_MICROPHONE);
+        mPrivacyChipViewController.addPrivacyChipView(mFrameLayout);
+        verify(mPrivacyItemController).addCallback(mPicCallbackArgumentCaptor.capture());
+        mPicCallbackArgumentCaptor.getValue().onFlagAllChanged(true);
+        mPicCallbackArgumentCaptor.getValue().onFlagMicCameraChanged(true);
+        mPicCallbackArgumentCaptor.getValue()
+                .onPrivacyItemsChanged(Collections.singletonList(mPrivacyItem));
+
+        mPicCallbackArgumentCaptor.getValue().onPrivacyItemsChanged(Collections.emptyList());
+        verify(mExecutor, times(/* wantedNumberOfInvocations= */ 2))
+                .execute(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getAllValues().forEach(Runnable::run);
+
+        verify(mMicPrivacyChip).animateOut();
+    }
+
+    @Test
+    public void onPrivacyItemsChanged_micIsNotPartOfPrivacyItemsTwice_animateOutCalledOnce() {
+        when(mPrivacyItem.getPrivacyType()).thenReturn(PrivacyType.TYPE_MICROPHONE);
+        mPrivacyChipViewController.addPrivacyChipView(mFrameLayout);
+        verify(mPrivacyItemController).addCallback(mPicCallbackArgumentCaptor.capture());
+        mPicCallbackArgumentCaptor.getValue().onFlagAllChanged(true);
+        mPicCallbackArgumentCaptor.getValue().onFlagMicCameraChanged(true);
+        mPicCallbackArgumentCaptor.getValue()
+                .onPrivacyItemsChanged(Collections.singletonList(mPrivacyItem));
+
+        mPicCallbackArgumentCaptor.getValue().onPrivacyItemsChanged(Collections.emptyList());
+        mPicCallbackArgumentCaptor.getValue().onPrivacyItemsChanged(Collections.emptyList());
+        verify(mExecutor, times(/* wantedNumberOfInvocations= */ 2))
+                .execute(mRunnableArgumentCaptor.capture());
+        mRunnableArgumentCaptor.getAllValues().forEach(Runnable::run);
+
+        verify(mMicPrivacyChip).animateOut();
     }
 }
