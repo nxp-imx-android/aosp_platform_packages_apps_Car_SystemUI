@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"ಲೋಡ್ ಆಗುತ್ತಿದೆ"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ಬಳಕೆದಾರರನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ (<xliff:g id="FROM_USER">%1$d</xliff:g> ನಿಂದ <xliff:g id="TO_USER">%2$d</xliff:g> ವರೆಗೆ)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"ಮುಚ್ಚಿರಿ"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"ಮೈಕ್ರೋಫೋನ್ ಆಫ್ ಆಗಿದೆ."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"ಮೈಕ್ರೋಫೋನ್ ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"ಆ್ಯಪ್‌ಗಳು ಮೈಕ್ರೋಫೋನ್ ಅನ್ನು ಪ್ರವೇಶಿಸಬಲ್ಲವು"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"ಮೈಕ್ರೋಫೋನ್ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"ಯಾವುದೇ ಆ್ಯಪ್‌ಗಳು ಮೈಕ್ರೋಫೋನ್‌ಗೆ ಪ್ರವೇಶವನ್ನು ಹೊಂದಿಲ್ಲ"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"ಗೌಪ್ಯತೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> ಮೈಕ್ ಅನ್ನು ಬಳಸುತ್ತಿದೆ"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> ಮೈಕ್ ಅನ್ನು ಬಳಸುತ್ತಿವೆ"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> ಇತ್ತೀಚೆಗೆ ಮೈಕ್ ಅನ್ನು ಬಳಸಿದೆ"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"ಮೈಕ್ರೋಫೋನ್ ಆನ್ ಮಾಡಲಾಗಿದೆ"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"ಮೈಕ್ರೋಫೋನ್ ಆಫ್ ಮಾಡಲಾಗಿದೆ"</string>
 </resources>

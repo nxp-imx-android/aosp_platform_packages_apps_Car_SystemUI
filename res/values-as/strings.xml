@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"ল’ড হৈ আছে"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ব্যৱহাৰকাৰী ল’ড হৈ আছে (<xliff:g id="FROM_USER">%1$d</xliff:g>ৰ পৰা to <xliff:g id="TO_USER">%2$d</xliff:g>লৈ)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"বন্ধ কৰক"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"মাইক্ৰ’ফ’ন অফ আছে।"</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"মাইক্ৰ’ফ’ন সক্ষম কৰি থোৱা আছে"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"এপ্‌সমূহে মাইক্ৰ’ফ’ন এক্সেছ কৰিব পাৰে"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"মাইক্ৰ’ফ’ন অক্ষম কৰি থোৱা আছে"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"কোনো এপৰ মাইক্ৰ’ফ’নলৈ এক্সেছ নাই"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"গোপনীয়তাৰ ছেটিং"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g>এ মাইক ব্যৱহাৰ কৰি আছে"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g>এ মাইক ব্যৱহাৰ কৰি আছে"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g>এ শেহতীয়াকৈ মাইক ব্যৱহাৰ কৰিছিল"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"মাইক্ৰ’ফ’ন অন কৰা হ’ল"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"মাইক্ৰ’ফ’ন অফ কৰা হ’ল"</string>
 </resources>

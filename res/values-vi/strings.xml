@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"Đang tải"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"Đang tải hồ sơ người dùng (từ <xliff:g id="FROM_USER">%1$d</xliff:g> sang <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Đóng"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"Micrô đang tắt."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"Micrô đang bật"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Ứng dụng có thể truy cập vào micrô"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"Micrô đang tắt"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"Không có ứng dụng nào có quyền truy cập vào micrô"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Chế độ cài đặt về quyền riêng tư"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> đang sử dụng micrô"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> đang sử dụng micrô"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> gần đây đã sử dụng micrô"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Đã bật micrô"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Đã tắt micrô"</string>
 </resources>

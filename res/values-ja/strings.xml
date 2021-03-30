@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"読み込んでいます"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ユーザーを読み込んでいます（<xliff:g id="FROM_USER">%1$d</xliff:g>～<xliff:g id="TO_USER">%2$d</xliff:g>）"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"閉じる"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"マイクは OFF です。"</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"マイクは有効です"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"アプリはマイクにアクセスできます"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"マイクは無効です"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"マイクにアクセスできるアプリはありません"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"プライバシー設定"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> がマイクを使用しています"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> がマイクを使用しています"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> が最近マイクを使用しました"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"マイクを ON にしました"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"マイクを OFF にしました"</string>
 </resources>

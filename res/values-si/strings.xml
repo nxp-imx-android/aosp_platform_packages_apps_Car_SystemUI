@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"පූරණය වෙමින්"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"පරිශීලකයා පූරණය වෙමින් (<xliff:g id="FROM_USER">%1$d</xliff:g> සිට <xliff:g id="TO_USER">%2$d</xliff:g> වෙත)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"වසන්න"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"මයික්‍රෆෝනය ක්‍රියාවිරහිත කර ඇත."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"මයික්‍රෆෝනය සබල කර ඇත"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"යෙදුම්වලට මයික්‍රෆෝනය වෙත ප්‍රවේශ විය හැකිය"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"මයික්‍රෆෝනය අබල කර ඇත"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"යෙදුම්වලට මයික්‍රෆෝනය වෙත ප්‍රවේශය නැත"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"පෞද්ගලිකත්ව සැකසීම්"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> මයික්‍රෆෝනය භාවිත කරමින්"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> මයික්‍රෆෝනය භාවිත කරමින්"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> මෑතකදී මයික්‍ර‍ෛා්නය භාවිත කළේය"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"මයික්‍රෆෝනය ක්‍රියාත්මකයි"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"මයික්‍රෆෝනය ක්‍රියාවිරහිතයි"</string>
 </resources>

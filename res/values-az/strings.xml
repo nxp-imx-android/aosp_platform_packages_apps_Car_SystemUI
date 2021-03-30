@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"Yüklənir"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"İstifadəçi yüklənir (<xliff:g id="FROM_USER">%1$d</xliff:g>-<xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Qapadın"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"Mikrofon deaktivdir."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"Mikrofon aktivdir"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Tətbiqlər mikrofona giriş edə bilər"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"Mikrofon deaktivdir"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"Heç bir tətbiqin mikrofona girişi yoxdur"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Məxfilik ayarları"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> mikrofondan istifadə edir"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> mikrofondan istifadə edir"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> bu yaxınlarda mikrofondan istifadə edib"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Mikrofon aktiv edilib"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Mikrofon deaktiv edilib"</string>
 </resources>

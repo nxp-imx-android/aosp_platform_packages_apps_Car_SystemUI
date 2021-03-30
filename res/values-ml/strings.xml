@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"ലോഡ് ചെയ്യുന്നു"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ഉപയോക്തൃ പ്രൊഫൈൽ ലോഡ് ചെയ്യുന്നു (<xliff:g id="FROM_USER">%1$d</xliff:g> എന്നതിൽ നിന്ന് <xliff:g id="TO_USER">%2$d</xliff:g> എന്നതിലേക്ക്)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"അടയ്ക്കുക"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"മൈക്രോഫോൺ ഓഫാണ്."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"മൈക്രോഫോൺ പ്രവർത്തനക്ഷമമാക്കി"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"ആപ്പുകൾക്ക് മൈക്രോഫോൺ ആക്‌സസ് ചെയ്യാനാകും"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"മൈക്രോഫോൺ പ്രവർത്തനരഹിതമാക്കി"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"ആപ്പുകൾക്കൊന്നും മൈക്രോഫോണിലേക്ക് ആക്‌സസ് ഇല്ല"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"സ്വകാര്യതാ ക്രമീകരണം"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> , മൈക്ക് ഉപയോഗിക്കുന്നു"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> എന്നിവ മൈക്ക് ഉപയോഗിക്കുന്നു"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g>, അടുത്തിടെ മൈക്ക് ഉപയോഗിച്ചു"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"മൈക്രോഫോൺ ഓണാക്കി"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"മൈക്രോഫോൺ ഓഫാക്കി"</string>
 </resources>

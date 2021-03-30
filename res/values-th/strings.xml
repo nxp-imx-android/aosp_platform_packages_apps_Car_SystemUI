@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"กำลังโหลด"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"กำลังโหลดผู้ใช้ (จาก <xliff:g id="FROM_USER">%1$d</xliff:g> ถึง <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"ปิด"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"ไมโครโฟนปิดอยู่"</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"เปิดใช้ไมโครโฟนอยู่"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"แอปเข้าถึงไมโครโฟนได้"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"ปิดใช้ไมโครโฟนอยู่"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"ไม่มีแอปมีสิทธิ์เข้าถึงไมโครโฟน"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"การตั้งค่าความเป็นส่วนตัว"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> กำลังใช้ไมค์"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> กำลังใช้ไมค์"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> ใช้ไมค์เมื่อเร็วๆ นี้"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"เปิดไมโครโฟนแล้ว"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"ปิดไมโครโฟนแล้ว"</string>
 </resources>

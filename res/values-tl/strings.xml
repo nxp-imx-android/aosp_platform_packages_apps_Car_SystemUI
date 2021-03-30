@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"Naglo-load"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"Nilo-load ang user (mula kay <xliff:g id="FROM_USER">%1$d</xliff:g> papunta kay <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Isara"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"Naka-off ang mikropono."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"Naka-enable ang mikropono"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Maa-access ng mga app ang mikropono"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"Naka-disable ang mikropono"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"Walang access ang alinmang app sa mikropono"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Mga setting ng privacy"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"Ginagamit ng <xliff:g id="APP">%s</xliff:g> ang mikropono"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"Ginagamit ng <xliff:g id="APP_LIST">%s</xliff:g> ang mikropono"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"Ginamit ng <xliff:g id="APP">%s</xliff:g> ang mikropono kamakailan"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Naka-on ang mikropono"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Naka-off ang mikropono"</string>
 </resources>

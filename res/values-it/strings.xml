@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"Caricamento"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"Caricamento dell\'utente (da <xliff:g id="FROM_USER">%1$d</xliff:g> a <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Chiudi"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"Il microfono non è attivo."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"Microfono attivo"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Le app possono accedere al microfono"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"Microfono non attivo"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"Nessuna app ha accesso al microfono"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Impostazioni privacy"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"Microfono in uso nell\'app <xliff:g id="APP">%s</xliff:g>"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"Microfono in uso nelle app <xliff:g id="APP_LIST">%s</xliff:g>"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"Il microfono è stato usato di recente nell\'app <xliff:g id="APP">%s</xliff:g>"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Microfono attivo"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Microfono non attivo"</string>
 </resources>
