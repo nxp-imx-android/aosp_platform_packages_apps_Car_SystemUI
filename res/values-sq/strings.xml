@@ -29,4 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"Po ngarkohet"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"Përdoruesi po ngarkohet (nga <xliff:g id="FROM_USER">%1$d</xliff:g> te <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Mbyll"</string>
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"Mikrofoni është joaktiv."</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"Mikrofoni është aktivizuar"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Aplikacionet mund të qasen te mikrofoni"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"Mikrofoni është çaktivizuar"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"Asnjë aplikacion nuk ka qasje te mikrofoni"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Cilësimet e privatësisë"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> po përdor mikrofonin"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> po përdorin mikrofonin"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> ka përdorur mikrofonin së fundi"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Mikrofoni është aktivizuar"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Mikrofoni është çaktivizuar"</string>
 </resources>
