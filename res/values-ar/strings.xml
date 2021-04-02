@@ -37,7 +37,7 @@
     <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"إعدادات الخصوصية"</string>
     <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"يستخدم تطبيق <xliff:g id="APP">%s</xliff:g> الميكروفون."</string>
     <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"تستخدم تطبيقات <xliff:g id="APP_LIST">%s</xliff:g> الميكروفون."</string>
-    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"استخدَم تطبيق <xliff:g id="APP">%s</xliff:g>الميكروفون مؤخرًا."</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"استخدَم تطبيق <xliff:g id="APP">%s</xliff:g> الميكروفون مؤخرًا."</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"تم تفعيل الميكروفون."</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"تم إيقاف الميكروفون."</string>
 </resources>
