@@ -542,7 +542,7 @@ public class CarVolumeDialogImpl implements VolumeDialog {
     private final class CustomDialog extends Dialog implements DialogInterface {
 
         private CustomDialog(Context context) {
-            super(context, com.android.systemui.R.style.qs_theme);
+            super(context, com.android.systemui.R.style.Theme_SystemUI);
         }
 
         @Override
