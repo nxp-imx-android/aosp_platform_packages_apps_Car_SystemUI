@@ -29,26 +29,15 @@
     <string name="car_loading_profile" msgid="458961191993686065">"ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ਵਰਤੋਂਕਾਰ ਨੂੰ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ (<xliff:g id="FROM_USER">%1$d</xliff:g> ਤੋਂ <xliff:g id="TO_USER">%2$d</xliff:g> ਤੱਕ)"</string>
     <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"ਬੰਦ ਕਰੋ"</string>
-    <!-- no translation found for mic_privacy_chip_off_content (4989623700063721557) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_mic_enabled (5667789064187849349) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_mic_enabled_subtext (815124399469247109) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_mic_disabled (2709173475947157320) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_mic_disabled_subtext (9059745506470016701) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_privacy_settings (719293067082198224) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_app_using_mic_suffix (8355462601492180023) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_apps_using_mic_suffix (6656026041668305817) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_app_recently_used_mic_suffix (1819299821245419382) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_on_toast (7003896860896586181) -->
-    <skip />
-    <!-- no translation found for mic_privacy_chip_off_toast (8718743873640788032) -->
-    <skip />
+    <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਹੈ।"</string>
+    <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਚਾਲੂ ਹੈ"</string>
+    <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"ਐਪਾਂ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦੀਆਂ ਹਨ"</string>
+    <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਹੈ"</string>
+    <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"ਕਿਸੇ ਐਪ ਕੋਲ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਤੱਕ ਪਹੁੰਚ ਨਹੀਂ ਹੈ"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"ਪਰਦੇਦਾਰੀ ਸੈਟਿੰਗਾਂ"</string>
+    <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> ਮਾਈਕ ਦੀ ਵਰਤੋਂ ਕਰ ਰਹੀ ਹੈ"</string>
+    <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> ਮਾਈਕ ਦੀ ਵਰਤੋਂ ਕਰ ਰਹੀਆਂ ਹਨ"</string>
+    <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> ਨੇ ਹਾਲ ਹੀ ਵਿੱਚ ਮਾਈਕ ਦੀ ਵਰਤੋਂ ਕੀਤੀ"</string>
+    <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਚਾਲੂ ਕੀਤਾ ਹੋਇਆ ਹੈ"</string>
+    <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਕੀਤਾ ਹੋਇਆ ਹੈ"</string>
 </resources>

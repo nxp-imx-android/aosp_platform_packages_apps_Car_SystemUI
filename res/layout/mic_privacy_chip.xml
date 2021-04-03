@@ -74,11 +74,13 @@
 
     <ImageView
         android:id="@+id/light_muted_icon"
-        android:src="@drawable/ic_mic_off_white"
+        android:src="@drawable/ic_mic_off_light"
+        android:visibility="gone"
         android:layout_width="@dimen/privacy_chip_icon_size"
         android:layout_height="@dimen/privacy_chip_icon_size"
         android:alpha="0.0"
         android:gravity="center"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -87,11 +89,12 @@
 
     <ImageView
         android:id="@+id/light_icon"
-        android:src="@drawable/ic_mic_white"
+        android:src="@drawable/ic_mic_light"
         android:layout_width="@dimen/privacy_chip_icon_size"
         android:layout_height="@dimen/privacy_chip_icon_size"
         android:alpha="0.0"
         android:gravity="center"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -100,11 +103,12 @@
 
     <ImageView
         android:id="@+id/dark_icon"
-        android:src="@drawable/ic_mic_black"
+        android:src="@drawable/ic_mic_dark"
         android:layout_width="@dimen/privacy_chip_icon_size"
         android:layout_height="@dimen/privacy_chip_icon_size"
         android:alpha="0.0"
         android:gravity="center"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
