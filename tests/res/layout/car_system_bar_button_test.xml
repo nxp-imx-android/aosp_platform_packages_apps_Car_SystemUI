@@ -45,6 +45,17 @@
     />
 
     <com.android.systemui.car.systembar.CarSystemBarButton
+        android:id="@+id/app_grid_activity_clear_backstack"
+        style="@style/SystemBarButton"
+        systemui:componentNames="com.android.car.carlauncher/.AppGridActivity"
+        systemui:icon="@drawable/car_ic_apps"
+        systemui:intent="intent:#Intent;component=com.android.car.carlauncher/.AppGridActivity;launchFlags=0x24000000;end"
+        systemui:selectedIcon="@drawable/car_ic_apps_selected"
+        systemui:highlightWhenSelected="true"
+        systemui:clearBackStack="true"
+    />
+
+    <com.android.systemui.car.systembar.CarSystemBarButton
         android:id="@+id/long_click_app_grid_activity"
         style="@style/SystemBarButton"
         systemui:componentNames="com.android.car.carlauncher/.AppGridActivity"
@@ -61,6 +72,16 @@
         android:background="@null"
         systemui:broadcast="true"
         systemui:intent="intent:#Intent;action=android.car.intent.action.TOGGLE_HVAC_CONTROLS;end"
+    />
+
+    <com.android.systemui.car.systembar.CarSystemBarButton
+        android:id="@+id/broadcast_try_clear_backstack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        systemui:broadcast="true"
+        systemui:intent="intent:#Intent;action=android.car.intent.action.TOGGLE_HVAC_CONTROLS;end"
+        systemui:clearBackStack="true"
     />
 
     <com.android.systemui.car.systembar.CarSystemBarButton
