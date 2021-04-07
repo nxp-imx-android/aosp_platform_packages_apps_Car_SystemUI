@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.UiBackground;
+import com.android.systemui.statusbar.policy.ConfigurationController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ import javax.inject.Inject;
  * {@link TemperatureView}s
  */
 @SysUISingleton
-public class HvacController {
+public class HvacController implements ConfigurationController.ConfigurationListener {
     public static final String TAG = "HvacController";
     private static final boolean DEBUG = true;
 
@@ -121,9 +122,11 @@ public class HvacController {
 
     @Inject
     public HvacController(CarServiceProvider carServiceProvider,
-            @UiBackground Executor backgroundExecutor) {
+            @UiBackground Executor backgroundExecutor,
+            ConfigurationController configurationController) {
         mCarServiceProvider = carServiceProvider;
         mBackgroundExecutor = backgroundExecutor;
+        configurationController.addCallback(this);
     }
 
     /**
@@ -220,6 +223,13 @@ public class HvacController {
             // Internally, all temperatures are represented in floating point Celsius
             mBackgroundExecutor.execute(
                     () -> mCarPropertyManager.setFloatProperty(HVAC_TEMPERATURE_SET, zone, tempC));
+        }
+    }
+
+    @Override
+    public void onLocaleListChanged() {
+        for (TemperatureView view : mRegisteredViews) {
+            view.onLocaleListChanged();
         }
     }
 
