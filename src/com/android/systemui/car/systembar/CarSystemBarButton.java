@@ -16,7 +16,9 @@
 
 package com.android.systemui.car.systembar;
 
+import android.app.ActivityManager;
 import android.app.ActivityOptions;
+import android.app.ActivityTaskManager;
 import android.app.role.RoleManager;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +38,7 @@ import com.android.systemui.R;
 import com.android.systemui.statusbar.AlphaOptimizedImageView;
 
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * CarSystemBarButton is an image button that allows for a bit more configuration at the
@@ -51,13 +54,16 @@ public class CarSystemBarButton extends LinearLayout {
     private static final float DEFAULT_SELECTED_ALPHA = 1f;
     private static final float DEFAULT_UNSELECTED_ALPHA = 0.75f;
 
-    private Context mContext;
+    private final Context mContext;
+    private final ActivityTaskManager mActivityTaskManager;
+    private final ActivityManager mActivityManager;
     private AlphaOptimizedImageView mIcon;
     private AlphaOptimizedImageView mMoreIcon;
     private ImageView mUnseenIcon;
     private String mIntent;
     private String mLongIntent;
     private boolean mBroadcastIntent;
+    private boolean mClearBackStack;
     private boolean mHasUnseen = false;
     private boolean mSelected = false;
     private float mSelectedAlpha;
@@ -79,6 +85,8 @@ public class CarSystemBarButton extends LinearLayout {
     public CarSystemBarButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+        mActivityTaskManager = ActivityTaskManager.getInstance();
+        mActivityManager = mContext.getSystemService(ActivityManager.class);
         View.inflate(mContext, R.layout.car_system_bar_button, /* root= */ this);
         // CarSystemBarButton attrs
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
@@ -216,6 +224,9 @@ public class CarSystemBarButton extends LinearLayout {
         mLongIntent = typedArray.getString(R.styleable.CarSystemBarButton_longIntent);
         mBroadcastIntent = typedArray.getBoolean(R.styleable.CarSystemBarButton_broadcast, false);
 
+        mClearBackStack = typedArray.getBoolean(R.styleable.CarSystemBarButton_clearBackStack,
+                false);
+
         String categoryString = typedArray.getString(R.styleable.CarSystemBarButton_categories);
         String packageString = typedArray.getString(R.styleable.CarSystemBarButton_packages);
         String componentNameString =
@@ -265,6 +276,17 @@ public class CarSystemBarButton extends LinearLayout {
                 options.setLaunchDisplayId(mContext.getDisplayId());
                 mContext.startActivityAsUser(toSend, options.toBundle(),
                         UserHandle.CURRENT);
+
+                if (mClearBackStack) {
+                    List<ActivityManager.RunningTaskInfo> runningTasks =
+                            mActivityTaskManager.getTasks(1);
+                    if (!runningTasks.isEmpty()) {
+                        mActivityManager.moveTaskToFront(runningTasks.get(0).taskId,
+                                ActivityManager.MOVE_TASK_WITH_HOME);
+                    } else {
+                        Log.e(TAG, "No backstack to clear");
+                    }
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Failed to launch intent", e);
             }

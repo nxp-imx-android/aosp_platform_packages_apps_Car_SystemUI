@@ -19,12 +19,16 @@ package com.android.systemui.car.systembar;
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 
 import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.testing.AndroidTestingRunner;
@@ -45,6 +49,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
+
+import java.util.List;
 
 @CarSystemUiTest
 @RunWith(AndroidTestingRunner.class)
@@ -68,10 +74,12 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
     @Before
     public void setUp() {
         mContext = spy(mContext);
+        ActivityManager am = mContext.getSystemService(ActivityManager.class);
+        mActivityManager = spy(am);
+        when(mContext.getSystemService(ActivityManager.class)).thenReturn(mActivityManager);
         mTestView = (LinearLayout) LayoutInflater.from(mContext).inflate(
                 R.layout.car_system_bar_button_test, /* root= */ null);
         mDefaultButton = mTestView.findViewById(R.id.default_no_selection_state);
-        mActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
     }
 
     @Test
@@ -266,6 +274,26 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
     }
 
     @Test
+    public void onClick_requestBackstackClear_clearBackStack() {
+        CarSystemBarButton appGridButton =
+                mTestView.findViewById(R.id.app_grid_activity_clear_backstack);
+
+        appGridButton.performClick();
+
+        verify(mActivityManager).moveTaskToFront(anyInt(), anyInt());
+    }
+
+    @Test
+    public void onClick_useBroadcast_requestBackstackClear_doesNotClearingBackstack() {
+        CarSystemBarButton appGridButton =
+                mTestView.findViewById(R.id.broadcast_try_clear_backstack);
+
+        appGridButton.performClick();
+
+        verify(mActivityManager, never()).moveTaskToFront(anyInt(), anyInt());
+    }
+
+    @Test
     public void onSetUnseen_hasUnseen_showsUnseenIndicator() {
         mDefaultButton.setUnseen(true);
         ImageView hasUnseenIndicator = mDefaultButton.findViewById(R.id.car_nav_button_unseen_icon);
@@ -281,7 +309,19 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
         assertThat(hasUnseenIndicator.getVisibility()).isEqualTo(View.GONE);
     }
 
+    /**
+     * Returns the name of the first activity running in fullscreen mode (i.e. excludes things
+     * like TaskViews).
+     */
     private String getCurrentActivityName() {
-        return mActivityManager.getRunningTasks(1).get(0).topActivity.flattenToShortString();
+        // Check 3 running tasks to be safe in making sure there is at least 1 task running in
+        // fullscreen mode.
+        List<ActivityManager.RunningTaskInfo> infos = mActivityManager.getRunningTasks(3);
+        for (ActivityManager.RunningTaskInfo info : infos) {
+            if (info.getWindowingMode() == WINDOWING_MODE_FULLSCREEN) {
+                return info.topActivity.flattenToShortString();
+            }
+        }
+        return null;
     }
 }

@@ -83,7 +83,7 @@ public class NotificationPanelViewController extends OverlayPanelViewController
     private final CarNotificationListener mCarNotificationListener;
     private final NotificationClickHandlerFactory mNotificationClickHandlerFactory;
     private final StatusBarStateController mStatusBarStateController;
-    private final boolean mEnableHeadsUpNotificationWhenNotificationShadeOpen;
+    private final boolean mEnableHeadsUpNotificationWhenNotificationPanelOpen;
     private final NotificationVisibilityLogger mNotificationVisibilityLogger;
 
     private final boolean mFitTopSystemBarInset;
@@ -168,9 +168,9 @@ public class NotificationPanelViewController extends OverlayPanelViewController
         }
         mBackgroundAlphaDiff = finalBackgroundAlpha - mInitialBackgroundAlpha;
 
-        mEnableHeadsUpNotificationWhenNotificationShadeOpen = mResources.getBoolean(
+        mEnableHeadsUpNotificationWhenNotificationPanelOpen = mResources.getBoolean(
                 com.android.car.notification.R.bool
-                        .config_enableHeadsUpNotificationWhenNotificationShadeOpen);
+                        .config_enableHeadsUpNotificationWhenNotificationPanelOpen);
 
         mFitTopSystemBarInset = mResources.getBoolean(
                 R.bool.config_notif_panel_inset_by_top_systembar);
@@ -264,7 +264,7 @@ public class NotificationPanelViewController extends OverlayPanelViewController
 
     @Override
     protected boolean shouldShowHUN() {
-        return mEnableHeadsUpNotificationWhenNotificationShadeOpen;
+        return mEnableHeadsUpNotificationWhenNotificationPanelOpen;
     }
 
     @Override

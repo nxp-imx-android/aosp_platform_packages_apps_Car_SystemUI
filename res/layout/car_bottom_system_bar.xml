@@ -67,7 +67,8 @@
                 systemui:highlightWhenSelected="true"
                 systemui:icon="@drawable/car_ic_phone"
                 systemui:intent="intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.android.car.dialer;launchFlags=0x10000000;end"
-                systemui:packages="com.android.car.dialer"/>
+                systemui:packages="com.android.car.dialer"
+                systemui:clearBackStack="true"/>
 
             <com.android.systemui.car.systembar.CarSystemBarButton
                 android:id="@+id/grid_nav"
@@ -75,7 +76,8 @@
                 systemui:componentNames="com.android.car.carlauncher/.AppGridActivity"
                 systemui:highlightWhenSelected="true"
                 systemui:icon="@drawable/car_ic_apps"
-                systemui:intent="intent:#Intent;component=com.android.car.carlauncher/.AppGridActivity;launchFlags=0x24000000;end"/>
+                systemui:intent="intent:#Intent;component=com.android.car.carlauncher/.AppGridActivity;launchFlags=0x24000000;end"
+                systemui:clearBackStack="true"/>
 
             <com.android.systemui.car.systembar.CarSystemBarButton
                 android:id="@+id/hvac"
