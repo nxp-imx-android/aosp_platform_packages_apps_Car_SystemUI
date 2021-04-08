@@ -336,7 +336,6 @@ public class CarKeyguardViewController extends OverlayViewController implements
     public void registerStatusBar(StatusBar statusBar, ViewGroup container,
             NotificationPanelViewController notificationPanelViewController,
             BiometricUnlockController biometricUnlockController,
-            ViewGroup lockIconContainer,
             View notificationContainer, KeyguardBypassController bypassController) {
         // no-op
     }
