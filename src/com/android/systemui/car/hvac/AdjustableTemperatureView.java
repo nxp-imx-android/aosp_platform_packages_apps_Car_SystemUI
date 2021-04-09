@@ -92,9 +92,8 @@ public class AdjustableTemperatureView extends LinearLayout implements Temperatu
             mCurrentTempC = mMaxTempC;
             return;
         }
-        mTempTextView.setText(String.format(mTempFormat,
-                mDisplayInFahrenheit ? convertToFahrenheit(tempC) : tempC));
         mCurrentTempC = tempC;
+        updateUi();
     }
 
     @Override
@@ -106,6 +105,16 @@ public class AdjustableTemperatureView extends LinearLayout implements Temperatu
     @Override
     public int getAreaId() {
         return mAreaId;
+    }
+
+    @Override
+    public void onLocaleListChanged() {
+        updateUi();
+    }
+
+    private void updateUi() {
+        mTempTextView.setText(String.format(mTempFormat,
+                mDisplayInFahrenheit ? convertToFahrenheit(mCurrentTempC) : mCurrentTempC));
     }
 
     private void initializeButtons() {
