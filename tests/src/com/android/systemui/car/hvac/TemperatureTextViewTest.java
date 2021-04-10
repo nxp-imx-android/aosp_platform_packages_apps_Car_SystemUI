@@ -40,6 +40,7 @@ import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.CarSystemUiTest;
+import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.util.concurrency.FakeExecutor;
 import com.android.systemui.util.time.FakeSystemClock;
 
@@ -66,6 +67,8 @@ public class TemperatureTextViewTest extends SysuiTestCase {
     private Car mCar;
     @Mock
     private CarPropertyManager mCarPropertyManager;
+    @Mock
+    private ConfigurationController mConfigurationController;
 
     @Before
     public void setUp() {
@@ -75,7 +78,7 @@ public class TemperatureTextViewTest extends SysuiTestCase {
 
         CarServiceProvider carServiceProvider = new CarServiceProvider(mContext, mCar);
         mHvacController = new HvacController(carServiceProvider,
-                new FakeExecutor(new FakeSystemClock()));
+                new FakeExecutor(new FakeSystemClock()), mConfigurationController);
         mHvacController.connectToCarService();
         mTextView = new TemperatureTextView(getContext(), /* attrs= */ null);
     }

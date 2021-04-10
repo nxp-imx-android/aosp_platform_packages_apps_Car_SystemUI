@@ -42,6 +42,7 @@ import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.CarSystemUiTest;
+import com.android.systemui.statusbar.policy.ConfigurationController;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +70,8 @@ public class AdjustableTemperatureViewTest extends SysuiTestCase {
     private CarPropertyManager mCarPropertyManager;
     @Mock
     private Executor mExecutor;
+    @Mock
+    private ConfigurationController mConfigurationController;
 
     @Before
     public void setUp() {
@@ -77,7 +80,8 @@ public class AdjustableTemperatureViewTest extends SysuiTestCase {
         when(mCar.getCarManager(Car.PROPERTY_SERVICE)).thenReturn(mCarPropertyManager);
 
         CarServiceProvider carServiceProvider = new CarServiceProvider(mContext, mCar);
-        mHvacController = new HvacController(carServiceProvider, mExecutor);
+        mHvacController = new HvacController(carServiceProvider, mExecutor,
+                mConfigurationController);
         mHvacController.connectToCarService();
         mAdjustableTemperatureView = new AdjustableTemperatureView(getContext(), /* attrs= */ null);
         mAdjustableTemperatureView.onFinishInflate();

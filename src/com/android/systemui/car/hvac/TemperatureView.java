@@ -36,7 +36,7 @@ public interface TemperatureView {
     void setTemp(float temp);
 
     /**
-     * Render the displayed temperature in Fahrenheit
+     * Renders the displayed temperature in Fahrenheit
      *
      * @param displayFahrenheit - True if temperature should be displayed in Fahrenheit
      */
@@ -46,4 +46,9 @@ public interface TemperatureView {
      * @return hvac AreaId - Example: VehicleAreaSeat.SEAT_ROW_1_LEFT (1)
      */
     int getAreaId();
+
+    /**
+     * Performs any action needed when locale is changed.
+     */
+    default void onLocaleListChanged() {}
 }
