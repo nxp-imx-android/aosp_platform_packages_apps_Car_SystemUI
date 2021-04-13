@@ -49,16 +49,11 @@
             />
         </FrameLayout>
 
-        <FrameLayout
+        <com.android.systemui.car.systembar.CarSystemBarButton
             android:id="@+id/clock_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true">
-            <com.android.systemui.car.systembar.CarSystemBarButton
-                android:id="@+id/qs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"/>
             <com.android.systemui.statusbar.policy.Clock
                 android:id="@+id/clock"
                 android:layout_width="wrap_content"
@@ -68,7 +63,7 @@
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.SystemBar.Clock"
                 systemui:amPmStyle="normal"/>
-        </FrameLayout>
+        </com.android.systemui.car.systembar.CarSystemBarButton>
 
         <include layout="@layout/mic_privacy_chip"
            android:layout_width="@dimen/privacy_chip_width"
