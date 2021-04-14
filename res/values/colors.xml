@@ -33,7 +33,7 @@
 
     <!-- colors for status bar -->
     <color name="system_bar_background_pill_color">#282A2D</color>
-    <color name="mic_privacy_chip_indicator_color">#FA7B17</color>
+    <color name="mic_privacy_chip_indicator_color">#66BB6A</color>
     <color name="mic_privacy_chip_light_icon_color">#FFFFFF</color>
     <color name="mic_privacy_chip_dark_icon_color">#000000</color>
     <color name="system_bar_icon_color">#FFFFFF</color>
