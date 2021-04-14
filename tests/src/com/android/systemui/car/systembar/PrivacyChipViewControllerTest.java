@@ -49,6 +49,7 @@ import com.android.systemui.car.CarDeviceProvisionedController;
 import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.CarSystemUiTest;
 import com.android.systemui.car.privacy.MicPrivacyChip;
+import com.android.systemui.car.privacy.MicPrivacyChipDialogController;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
 import com.android.systemui.privacy.PrivacyType;
@@ -107,6 +108,8 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
     private CarUserManager mCarUserManager;
     @Mock
     private Car mCar;
+    @Mock
+    private MicPrivacyChipDialogController mMicPrivacyChipDialogController;
 
     @Before
     public void setUp() {
@@ -125,7 +128,7 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
         mPrivacyChipViewController =
                 new PrivacyChipViewController(mContext, mHandler, mPrivacyItemController,
                         carServiceProvider, mBroadcastDispatcher, mSensorPrivacyManager,
-                        mCarDeviceProvisionedController);
+                        mCarDeviceProvisionedController, mMicPrivacyChipDialogController);
         mMicPrivacyChip.setId(R.id.privacy_chip);
         mFrameLayout.addView(mMicPrivacyChip);
         when(mCarDeviceProvisionedController.getCurrentUser()).thenReturn(0);
@@ -158,50 +161,10 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
     }
 
     @Test
-    public void onClick_intentNotNull() {
+    public void onClick_dialogShowCalled() {
         mPrivacyChipViewController.onClick(/* view= */ null);
 
-        verify(mHandler).post(mRunnableArgumentCaptor.capture());
-        mRunnableArgumentCaptor.getValue().run();
-        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
-
-        assertThat(mIntentArgumentCaptor.getValue()).isNotNull();
-    }
-
-    @Test
-    public void onClick_intentActionReviewOngoingPermissionUsage() {
-        mPrivacyChipViewController.onClick(/* view= */ null);
-
-        verify(mHandler).post(mRunnableArgumentCaptor.capture());
-        mRunnableArgumentCaptor.getValue().run();
-        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
-
-        assertThat(mIntentArgumentCaptor.getValue().getAction()).isEqualTo(
-                Intent.ACTION_REVIEW_ONGOING_PERMISSION_USAGE);
-    }
-
-    @Test
-    public void onClick_intentCategoryDefault() {
-        mPrivacyChipViewController.onClick(/* view= */ null);
-
-        verify(mHandler).post(mRunnableArgumentCaptor.capture());
-        mRunnableArgumentCaptor.getValue().run();
-        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
-
-        assertThat(mIntentArgumentCaptor.getValue().getCategories()).containsExactly(
-                Intent.CATEGORY_DEFAULT);
-    }
-
-    @Test
-    public void onClick_intentFlagActivityNewTask() {
-        mPrivacyChipViewController.onClick(/* view= */ null);
-
-        verify(mHandler).post(mRunnableArgumentCaptor.capture());
-        mRunnableArgumentCaptor.getValue().run();
-        verify(mContext).startActivityAsUser(mIntentArgumentCaptor.capture(), any());
-
-        assertThat(mIntentArgumentCaptor.getValue().getFlags()).isEqualTo(
-                Intent.FLAG_ACTIVITY_NEW_TASK);
+        verify(mMicPrivacyChipDialogController).show(mContext);
     }
 
     @Test
