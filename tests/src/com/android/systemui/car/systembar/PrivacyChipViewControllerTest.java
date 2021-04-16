@@ -283,7 +283,7 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
         reset(mMicPrivacyChip);
         reset(mExecutor);
         mOnSensorPrivacyChangedListenerArgumentCaptor.getValue()
-                .onSensorPrivacyChanged(/* enabled= */ true);
+                .onSensorPrivacyChanged(MICROPHONE, /* enabled= */ true);
         verify(mExecutor).execute(mRunnableArgumentCaptor.capture());
 
         mRunnableArgumentCaptor.getAllValues().forEach(Runnable::run);
@@ -299,7 +299,7 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
         reset(mMicPrivacyChip);
         reset(mExecutor);
         mOnSensorPrivacyChangedListenerArgumentCaptor.getValue()
-                .onSensorPrivacyChanged(/* enabled= */ false);
+                .onSensorPrivacyChanged(MICROPHONE, /* enabled= */ false);
         verify(mExecutor).execute(mRunnableArgumentCaptor.capture());
 
         mRunnableArgumentCaptor.getAllValues().forEach(Runnable::run);
