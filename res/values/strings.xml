@@ -66,4 +66,8 @@
     <string name="mic_privacy_chip_on_toast">Microphone turned on</string>
     <!-- Microphone turned off toast text [CHAR LIMIT=42]-->
     <string name="mic_privacy_chip_off_toast">Microphone turned off</string>
+    <!-- Title for dialog that shows which apps have recently used microphone [CHAR LIMIT=50]-->
+    <string name="mic_privacy_chip_dialog_title_mic">Recent use of microphone</string>
+    <!-- Ok button for dialog that shows which apps have recently used microphone [CHAR LIMIT=10]-->
+    <string name="mic_privacy_chip_dialog_ok">OK</string>
 </resources>

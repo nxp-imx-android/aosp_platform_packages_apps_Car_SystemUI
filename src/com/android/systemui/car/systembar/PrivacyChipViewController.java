@@ -38,6 +38,7 @@ import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.car.CarDeviceProvisionedController;
 import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.privacy.MicPrivacyChip;
+import com.android.systemui.car.privacy.MicPrivacyChipDialogController;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.privacy.OngoingPrivacyChip;
@@ -64,6 +65,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
     private final BroadcastDispatcher mBroadcastDispatcher;
     private final CarDeviceProvisionedController mCarDeviceProvisionedController;
     private final SensorPrivacyManager mSensorPrivacyManager;
+    private final MicPrivacyChipDialogController mMicPrivacyChipDialogController;
 
     private Context mContext;
     private MicPrivacyChip mPrivacyChip;
@@ -164,7 +166,8 @@ public class PrivacyChipViewController implements View.OnClickListener {
     public PrivacyChipViewController(Context context, @Main Handler mainHandler,
             PrivacyItemController privacyItemController, CarServiceProvider carServiceProvider,
             BroadcastDispatcher broadcastDispatcher, SensorPrivacyManager sensorPrivacyManager,
-            CarDeviceProvisionedController carDeviceProvisionedController) {
+            CarDeviceProvisionedController carDeviceProvisionedController,
+            MicPrivacyChipDialogController micPrivacyChipDialogController) {
         mContext = context;
         mMainHandler = mainHandler;
         mPrivacyItemController = privacyItemController;
@@ -172,6 +175,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
         mBroadcastDispatcher = broadcastDispatcher;
         mSensorPrivacyManager = sensorPrivacyManager;
         mCarDeviceProvisionedController = carDeviceProvisionedController;
+        mMicPrivacyChipDialogController = micPrivacyChipDialogController;
 
         mIsMicPrivacyChipVisible = false;
         mCurrentUserId = carDeviceProvisionedController.getCurrentUser();
@@ -179,11 +183,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        mMainHandler.post(() -> mContext.startActivityAsUser(
-                new Intent(Intent.ACTION_REVIEW_ONGOING_PERMISSION_USAGE)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        .addCategory(Intent.CATEGORY_DEFAULT),
-                UserHandle.CURRENT));
+        mMicPrivacyChipDialogController.show(mContext);
     }
 
     private boolean isMicPartOfPrivacyItems(@NonNull List<PrivacyItem> privacyItems) {
