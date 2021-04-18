@@ -40,4 +40,6 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> ಇತ್ತೀಚೆಗೆ ಮೈಕ್ ಅನ್ನು ಬಳಸಿದೆ"</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"ಮೈಕ್ರೋಫೋನ್ ಆನ್ ಮಾಡಲಾಗಿದೆ"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"ಮೈಕ್ರೋಫೋನ್ ಆಫ್ ಮಾಡಲಾಗಿದೆ"</string>
+    <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"ಮೈಕ್ರೋಫೋನ್‌ನ ಇತ್ತೀಚಿನ ಬಳಕೆ"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"ಸರಿ"</string>
 </resources>

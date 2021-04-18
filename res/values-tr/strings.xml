@@ -40,4 +40,6 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g>, kısa süre önce mikrofonu kullandı"</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Mikrofon açık"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Mikrofon kapalı"</string>
+    <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"Mikrofonun son kullanımı"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"Tamam"</string>
 </resources>

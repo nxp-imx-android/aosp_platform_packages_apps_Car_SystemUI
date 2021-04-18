@@ -40,4 +40,6 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g>এ শেহতীয়াকৈ মাইক ব্যৱহাৰ কৰিছিল"</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"মাইক্ৰ’ফ’ন অন কৰা হ’ল"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"মাইক্ৰ’ফ’ন অফ কৰা হ’ল"</string>
+    <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"মাইক্ৰ’ফ’নৰ শেহতীয়া ব্যৱহাৰ"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"ঠিক আছে"</string>
 </resources>

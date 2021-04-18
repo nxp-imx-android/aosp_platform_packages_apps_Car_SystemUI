@@ -40,4 +40,6 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"Додаток <xliff:g id="APP">%s</xliff:g> нещодавно використовував мікрофон"</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Мікрофон увімкнено"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Мікрофон вимкнено"</string>
+    <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"Нещодавнє використання мікрофона"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"OK"</string>
 </resources>
