@@ -40,4 +40,6 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> បានប្រើ​មីក្រូហ្វូនថ្មីៗនេះ"</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"បានបើក​មីក្រូហ្វូន"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"បានបិទ​មីក្រូហ្វូន"</string>
+    <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"ការប្រើប្រាស់​មីក្រូហ្វូនថ្មីៗ"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"អូខេ"</string>
 </resources>

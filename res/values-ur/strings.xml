@@ -40,4 +40,6 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> نے مائک کا حال ہی میں استعمال کیا"</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"مائیکروفون آن کر دیا گیا"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"مائیکروفون آف کر دیا گیا"</string>
+    <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"مائیکروفون کا حالیہ استعمال"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"ٹھیک ہے"</string>
 </resources>

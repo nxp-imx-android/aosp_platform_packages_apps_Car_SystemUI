@@ -40,4 +40,8 @@
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> жақында микрофонды қолданды."</string>
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Микрофон қосылды"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Микрофон өшірілді"</string>
+    <!-- no translation found for mic_privacy_chip_dialog_title_mic (3782090299882049010) -->
+    <skip />
+    <!-- no translation found for mic_privacy_chip_dialog_ok (2298690833121720237) -->
+    <skip />
 </resources>
