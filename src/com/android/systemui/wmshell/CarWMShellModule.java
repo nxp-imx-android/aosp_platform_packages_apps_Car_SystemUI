@@ -27,6 +27,8 @@ import com.android.wm.shell.common.DisplayController;
 import com.android.wm.shell.common.DisplayImeController;
 import com.android.wm.shell.common.TransactionPool;
 import com.android.wm.shell.pip.Pip;
+import com.android.wm.shell.startingsurface.StartingWindowTypeAlgorithm;
+import com.android.wm.shell.startingsurface.phone.PhoneStartingWindowTypeAlgorithm;
 
 import dagger.BindsOptionalOf;
 import dagger.Module;
@@ -46,4 +48,10 @@ public abstract class CarWMShellModule {
 
     @BindsOptionalOf
     abstract Pip optionalPip();
+
+    @WMSingleton
+    @Provides
+    static StartingWindowTypeAlgorithm provideStartingWindowTypeAlgorithm() {
+        return new PhoneStartingWindowTypeAlgorithm();
+    }
 }
