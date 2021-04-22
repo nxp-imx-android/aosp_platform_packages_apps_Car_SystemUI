@@ -41,5 +41,5 @@
     <string name="mic_privacy_chip_on_toast" msgid="7003896860896586181">"Мікрафон уключаны"</string>
     <string name="mic_privacy_chip_off_toast" msgid="8718743873640788032">"Мікрафон выключаны."</string>
     <string name="mic_privacy_chip_dialog_title_mic" msgid="3782090299882049010">"Нядаўняе выкарыстанне мікрафона"</string>
-    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"ОК"</string>
+    <string name="mic_privacy_chip_dialog_ok" msgid="2298690833121720237">"OK"</string>
 </resources>
