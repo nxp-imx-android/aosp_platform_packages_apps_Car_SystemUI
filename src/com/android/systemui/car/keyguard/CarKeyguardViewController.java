@@ -333,6 +333,11 @@ public class CarKeyguardViewController extends OverlayViewController implements
     }
 
     @Override
+    public void blockPanelExpansionFromCurrentTouch() {
+        // no-op
+    }
+
+    @Override
     public void registerStatusBar(StatusBar statusBar, ViewGroup container,
             NotificationPanelViewController notificationPanelViewController,
             BiometricUnlockController biometricUnlockController,
