@@ -77,7 +77,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
     private int mCurrentUserId;
 
     private final SensorPrivacyManager.OnSensorPrivacyChangedListener
-            mOnSensorPrivacyChangedListener = sensorPrivacyEnabled -> {
+            mOnSensorPrivacyChangedListener = (sensor, sensorPrivacyEnabled) -> {
         if (mContext == null) {
             return;
         }
