@@ -103,14 +103,14 @@
 
     <ConstraintSet android:id="@+id/invisible">
         <Constraint
-            android:id="@id/active_background"
+            android:id="@id/inactive_background"
             android:alpha="0.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toEndOf="parent"
             motion:layout_constraintTop_toBottomOf="parent" />
         <Constraint
-            android:id="@id/inactive_background"
+            android:id="@id/active_background"
             android:alpha="0.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -157,14 +157,14 @@
 
     <ConstraintSet android:id="@+id/active_init">
         <Constraint
-            android:id="@id/active_background"
+            android:id="@id/inactive_background"
             android:alpha="1.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="@id/max_width_guideline"
             motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
-            android:id="@id/inactive_background"
+            android:id="@id/active_background"
             android:alpha="1.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -211,19 +211,19 @@
 
     <ConstraintSet android:id="@+id/active">
         <Constraint
-            android:id="@id/active_background"
-            android:alpha="1.0"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="@id/circular_active_indicator_vertical_guideline"
-            motion:layout_constraintTop_toTopOf="@id/circular_active_indicator_horizontal_guideline" />
-        <Constraint
             android:id="@id/inactive_background"
             android:alpha="1.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="@id/max_width_guideline"
             motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/active_background"
+            android:alpha="1.0"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="@id/circular_active_indicator_vertical_guideline"
+            motion:layout_constraintTop_toTopOf="@id/circular_active_indicator_horizontal_guideline" />
         <Constraint
             android:id="@id/light_muted_icon"
             android:src="@drawable/ic_mic_off_light"
@@ -265,19 +265,19 @@
 
     <ConstraintSet android:id="@+id/inactive">
         <Constraint
-            android:id="@id/active_background"
-            android:alpha="0.0"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="parent" />
-        <Constraint
             android:id="@id/inactive_background"
             android:alpha="1.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="@id/max_width_guideline"
             motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/active_background"
+            android:alpha="0.0"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toEndOf="parent"
+            motion:layout_constraintTop_toBottomOf="parent" />
         <Constraint
             android:id="@id/light_muted_icon"
             android:src="@drawable/ic_mic_off_light"
@@ -319,19 +319,19 @@
 
     <ConstraintSet android:id="@+id/mic_off">
         <Constraint
-            android:id="@id/active_background"
-            android:alpha="0.0"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toEndOf="parent"
-            motion:layout_constraintTop_toBottomOf="parent" />
-        <Constraint
             android:id="@id/inactive_background"
             android:alpha="1.0"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="@id/max_width_guideline"
             motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@id/active_background"
+            android:alpha="0.0"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toEndOf="parent"
+            motion:layout_constraintTop_toBottomOf="parent" />
         <Constraint
             android:id="@id/light_muted_icon"
             android:src="@drawable/ic_mic_off_light"
