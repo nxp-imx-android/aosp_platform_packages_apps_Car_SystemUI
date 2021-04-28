@@ -25,9 +25,4 @@
             </shape>
         </aapt:attr>
     </item>
-    <item>
-        <aapt:attr name="android:drawable">
-            <ripple android:color="?android:attr/colorControlHighlight"/>
-        </aapt:attr>
-    </item>
 </layer-list>
