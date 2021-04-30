@@ -102,7 +102,7 @@ public class CarVolumeItem {
         public CarVolumeItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            mSeekBar = itemView.findViewById(R.id.seek_bar);
+            mSeekBar = itemView.findViewById(R.id.volume_seek_bar);
             mPrimaryIcon = itemView.findViewById(R.id.primary_icon);
             mSupplementalIcon = itemView.findViewById(R.id.supplemental_icon);
             mSupplementalIconDivider = itemView.findViewById(R.id.supplemental_icon_divider);
