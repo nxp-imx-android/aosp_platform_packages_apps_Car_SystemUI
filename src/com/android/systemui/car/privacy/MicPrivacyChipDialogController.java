@@ -16,6 +16,8 @@
 
 package com.android.systemui.car.privacy;
 
+import static android.os.UserHandle.USER_SYSTEM;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -26,6 +28,7 @@ import android.content.pm.UserInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.permission.PermGroupUsage;
 import android.permission.PermissionManager;
 import android.text.TextUtils;
@@ -81,6 +84,7 @@ public class MicPrivacyChipDialogController {
                     Manifest.permission_group.LOCATION, PrivacyType.TYPE_LOCATION);
 
 
+    private final Context mContext;
     private final PermissionManager mPermissionManager;
     private final UserTracker mUserTracker;
     private final Executor mBackgroundExecutor;
@@ -88,11 +92,15 @@ public class MicPrivacyChipDialogController {
     private final PrivacyLogger mPrivacyLogger;
     private final PackageManager mPackageManager;
     private final PrivacyItemController mPrivacyItemController;
+    private final UserManager mUserManager;
+    private final String mDialogTitle;
+    private final String mPhoneCallTitle;
 
     private AlertDialog mDialog;
 
     @Inject
     public MicPrivacyChipDialogController(
+            Context context,
             @Background Executor backgroundExecutor,
             @Main Executor uiExecutor,
             PermissionManager permissionManager,
@@ -100,6 +108,7 @@ public class MicPrivacyChipDialogController {
             PrivacyItemController privacyItemController,
             UserTracker userTracker,
             PrivacyLogger privacyLogger) {
+        mContext = context;
         mBackgroundExecutor = backgroundExecutor;
         mUiExecutor = uiExecutor;
         mPermissionManager = permissionManager;
@@ -107,17 +116,21 @@ public class MicPrivacyChipDialogController {
         mPrivacyItemController = privacyItemController;
         mUserTracker = userTracker;
         mPrivacyLogger = privacyLogger;
+
+        mUserManager = context.getSystemService(UserManager.class);
+        mDialogTitle = context.getString(R.string.mic_privacy_chip_dialog_title_mic);
+        mPhoneCallTitle = context.getString(R.string.ongoing_privacy_dialog_phonecall);
     }
 
     /**
      * Creates and shows {@link AlertDialog}.
      */
     @AnyThread
-    public void show(Context context) {
+    public void show() {
         // TODO(b/185482811): Move this to where {@link Context} is created in Dagger.
         // We need to inject Chassis' LayoutInflater into our context
         // to use {@link AlertDialogBuilder}.
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         if (layoutInflater.getFactory2() == null) {
             layoutInflater.setFactory2(new CarUiLayoutInflaterFactory());
         }
@@ -129,10 +142,10 @@ public class MicPrivacyChipDialogController {
 
             mUiExecutor.execute(() -> {
                 List<PrivacyDialog.PrivacyElement> elements = filterAndSort(items);
-                mDialog = createDialog(context, elements);
+                mDialog = createDialog(elements);
                 addFlagsAndListenersForSystemUi();
                 mPrivacyLogger.logShowDialogContents(elements);
-                mDialog.show();
+                showDialog();
             });
         });
     }
@@ -149,10 +162,13 @@ public class MicPrivacyChipDialogController {
             if (type == null) return;
 
             int userId = UserHandle.getUserId(usage.getUid());
-            Optional<UserInfo> userInfo = userInfos.stream()
+            Optional<UserInfo> optionalUserInfo = userInfos.stream()
                     .filter(ui -> ui.id == userId)
                     .findFirst();
-            if (!userInfo.isPresent()) return;
+            if (!optionalUserInfo.isPresent() && userId != USER_SYSTEM) return;
+
+            UserInfo userInfo =
+                    optionalUserInfo.orElseGet(() -> mUserManager.getUserInfo(USER_SYSTEM));
 
             String appName = usage.isPhoneCall()
                     ? EMPTY_APP_NAME
@@ -167,7 +183,7 @@ public class MicPrivacyChipDialogController {
                             usage.getAttribution(),
                             usage.getLastAccess(),
                             usage.isActive(),
-                            userInfo.get().isManagedProfile(),
+                            userInfo.isManagedProfile(),
                             usage.isPhoneCall())
             );
         });
@@ -175,10 +191,10 @@ public class MicPrivacyChipDialogController {
         return items;
     }
 
-    private AlertDialog createDialog(Context context, List<PrivacyDialog.PrivacyElement> elements) {
-        return new AlertDialogBuilder(context)
-                .setAdapter(createCarListAdapter(context, elements))
-                .setTitle(context.getString(R.string.mic_privacy_chip_dialog_title_mic))
+    private AlertDialog createDialog(List<PrivacyDialog.PrivacyElement> elements) {
+        return new AlertDialogBuilder(mContext)
+                .setAdapter(createCarListAdapter(elements))
+                .setTitle(mDialogTitle)
                 .setPositiveButton(R.string.mic_privacy_chip_dialog_ok,
                         (dialog, which) -> {
                             mPrivacyLogger.logPrivacyDialogDismissed();
@@ -192,7 +208,7 @@ public class MicPrivacyChipDialogController {
     }
 
     @NonNull
-    private CarUiListItemAdapter createCarListAdapter(Context context,
+    private CarUiListItemAdapter createCarListAdapter(
             @NonNull List<PrivacyDialog.PrivacyElement> elements) {
         List<CarUiListItem> carUiListItems = new ArrayList<>();
 
@@ -200,20 +216,24 @@ public class MicPrivacyChipDialogController {
             Optional<ApplicationInfo> applicationInfo = getApplicationInfo(element);
             if (!applicationInfo.isPresent()) return;
 
-            carUiListItems.add(createCarUiContentListItem(context, applicationInfo.get(),
-                    element.getPackageName(), element.getUserId()));
+            carUiListItems.add(createCarUiContentListItem(mContext, applicationInfo.get(),
+                    element.getPackageName(), element.getUserId(), element.getPhoneCall()));
         });
 
         return new CarUiListItemAdapter(carUiListItems);
     }
 
     private CarUiContentListItem createCarUiContentListItem(Context context,
-            ApplicationInfo applicationInfo, String packageName, int userId) {
+            ApplicationInfo applicationInfo, String packageName, int userId, boolean isPhoneCall) {
         CarUiContentListItem item = new CarUiContentListItem(CarUiContentListItem.Action.NONE);
 
-        item.setTitle(getAppLabel(applicationInfo, context));
+        item.setTitle(isPhoneCall
+                ? mPhoneCallTitle
+                : getAppLabel(applicationInfo, context));
         item.setIcon(getBadgedIcon(context, applicationInfo));
-        item.setOnItemClickedListener(it -> startActivity(context, packageName, userId));
+        if (!isPhoneCall) {
+            item.setOnItemClickedListener(it -> startActivity(context, packageName, userId));
+        }
 
         return item;
     }

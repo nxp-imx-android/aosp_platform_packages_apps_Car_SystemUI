@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.SensorPrivacyManager;
-import android.os.Handler;
 import android.os.UserHandle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +39,6 @@ import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.privacy.MicPrivacyChip;
 import com.android.systemui.car.privacy.MicPrivacyChipDialogController;
 import com.android.systemui.dagger.SysUISingleton;
-import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.privacy.OngoingPrivacyChip;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
@@ -60,7 +58,6 @@ public class PrivacyChipViewController implements View.OnClickListener {
     private static final boolean DEBUG = false;
 
     private final PrivacyItemController mPrivacyItemController;
-    private final Handler mMainHandler;
     private final CarServiceProvider mCarServiceProvider;
     private final BroadcastDispatcher mBroadcastDispatcher;
     private final CarDeviceProvisionedController mCarDeviceProvisionedController;
@@ -163,13 +160,12 @@ public class PrivacyChipViewController implements View.OnClickListener {
             };
 
     @Inject
-    public PrivacyChipViewController(Context context, @Main Handler mainHandler,
-            PrivacyItemController privacyItemController, CarServiceProvider carServiceProvider,
-            BroadcastDispatcher broadcastDispatcher, SensorPrivacyManager sensorPrivacyManager,
+    public PrivacyChipViewController(Context context, PrivacyItemController privacyItemController,
+            CarServiceProvider carServiceProvider, BroadcastDispatcher broadcastDispatcher,
+            SensorPrivacyManager sensorPrivacyManager,
             CarDeviceProvisionedController carDeviceProvisionedController,
             MicPrivacyChipDialogController micPrivacyChipDialogController) {
         mContext = context;
-        mMainHandler = mainHandler;
         mPrivacyItemController = privacyItemController;
         mCarServiceProvider = carServiceProvider;
         mBroadcastDispatcher = broadcastDispatcher;
@@ -183,7 +179,7 @@ public class PrivacyChipViewController implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        mMicPrivacyChipDialogController.show(mContext);
+        mMicPrivacyChipDialogController.show();
     }
 
     private boolean isMicPartOfPrivacyItems(@NonNull List<PrivacyItem> privacyItems) {
