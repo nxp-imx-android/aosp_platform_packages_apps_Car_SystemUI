@@ -21,11 +21,13 @@ import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 import android.app.ActivityOptions;
 import android.app.ActivityTaskManager;
 import android.app.TaskStackListener;
+import android.car.evs.CarEvsManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Slog;
 import android.view.Display;
@@ -68,6 +70,7 @@ public class RearViewCameraViewController extends OverlayViewController {
 
     ViewGroup mRvcView;
     private int mRvcTaskId = INVALID_TASK_ID;
+    private IBinder mSessionToken;
 
     private final LayoutParams mRvcViewLayoutParams = new LayoutParams(
             LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, /* weight= */ 1.0f);
@@ -144,6 +147,10 @@ public class RearViewCameraViewController extends OverlayViewController {
         mView = new View(mRvcView.getContext());
         mView.setLayoutParams(mRvcViewLayoutParams);
         mRvcView.addView(mView, /* index= */ 0);
+    }
+
+    void setSessionToken(IBinder token) {
+        mSessionToken = token;
     }
 
     @VisibleForTesting
@@ -236,7 +243,10 @@ public class RearViewCameraViewController extends OverlayViewController {
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
                     .addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-                    .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    .putExtra(CarEvsManager.EXTRA_SESSION_TOKEN, mSessionToken);
+            if (DBG) Slog.d(TAG, "SessionToken: " + mSessionToken);
+            mSessionToken = null;
 
             ActivityOptions activityOptions = ActivityOptions.makeBasic().setLaunchTaskDisplayArea(
                     token);
