@@ -34,7 +34,6 @@ import android.car.user.CarUserManager;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.hardware.SensorPrivacyManager;
-import android.os.Handler;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.view.View;
@@ -93,8 +92,6 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
     @Mock
     private PrivacyItemController mPrivacyItemController;
     @Mock
-    private Handler mHandler;
-    @Mock
     private PrivacyItem mPrivacyItem;
     @Mock
     private Executor mExecutor;
@@ -126,8 +123,8 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
         CarServiceProvider carServiceProvider = new CarServiceProvider(mContext, mCar);
 
         mPrivacyChipViewController =
-                new PrivacyChipViewController(mContext, mHandler, mPrivacyItemController,
-                        carServiceProvider, mBroadcastDispatcher, mSensorPrivacyManager,
+                new PrivacyChipViewController(mContext, mPrivacyItemController, carServiceProvider,
+                        mBroadcastDispatcher, mSensorPrivacyManager,
                         mCarDeviceProvisionedController, mMicPrivacyChipDialogController);
         mMicPrivacyChip.setId(R.id.privacy_chip);
         mFrameLayout.addView(mMicPrivacyChip);
@@ -164,7 +161,7 @@ public class PrivacyChipViewControllerTest extends SysuiTestCase {
     public void onClick_dialogShowCalled() {
         mPrivacyChipViewController.onClick(/* view= */ null);
 
-        verify(mMicPrivacyChipDialogController).show(mContext);
+        verify(mMicPrivacyChipDialogController).show();
     }
 
     @Test
