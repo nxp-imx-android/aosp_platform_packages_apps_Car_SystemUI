@@ -35,6 +35,8 @@ import android.car.Car;
 import android.car.VehicleAreaType;
 import android.car.VehicleGear;
 import android.car.VehiclePropertyIds;
+import android.car.evs.CarEvsManager;
+import android.car.evs.CarEvsStatus;
 import android.car.hardware.CarPropertyValue;
 import android.car.hardware.property.CarPropertyManager;
 import android.car.hardware.property.CarPropertyManager.CarPropertyEventCallback;
@@ -60,6 +62,8 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.concurrent.Executor;
+
 @CarSystemUiTest
 @RunWith(MockitoJUnitRunner.class)
 @TestableLooper.RunWithLooper
@@ -77,6 +81,10 @@ public class RearViewCameraViewMediatorTest extends SysuiTestCase {
     private CarPropertyManager mCarPropertyManager;
     @Captor
     private ArgumentCaptor<CarPropertyEventCallback> mCarPropertyEventCallbackCaptor;
+    @Mock
+    private CarEvsManager mCarEvsManager;
+    @Captor
+    private ArgumentCaptor<CarEvsManager.CarEvsStatusListener> mCarEvsStatusListenerCaptor;
 
     @Mock
     private BroadcastDispatcher mBroadcastDispatcher;
@@ -91,7 +99,8 @@ public class RearViewCameraViewMediatorTest extends SysuiTestCase {
     @Before
     public void setUp() throws Exception {
         mRearViewCameraViewMediator = new RearViewCameraViewMediator(
-                mRearViewCameraViewController, mCarServiceProvider, mBroadcastDispatcher);
+                mRearViewCameraViewController, mCarServiceProvider, mBroadcastDispatcher,
+                mContext.getMainExecutor());
     }
 
     public void setUpListener() {
@@ -100,13 +109,13 @@ public class RearViewCameraViewMediatorTest extends SysuiTestCase {
             listener.onConnected(mCar);
             return null;
         }).when(mCarServiceProvider).addListener(any(CarServiceOnConnectedListener.class));
-        when(mCar.getCarManager(Car.PROPERTY_SERVICE)).thenReturn(mCarPropertyManager);
+        when(mCar.getCarManager(Car.CAR_EVS_SERVICE)).thenReturn(mCarEvsManager);
         when(mRearViewCameraViewController.isEnabled()).thenReturn(true);
 
         mRearViewCameraViewMediator.registerListeners();
 
-        verify(mCarPropertyManager).registerCallback(mCarPropertyEventCallbackCaptor.capture(),
-                eq(VehiclePropertyIds.GEAR_SELECTION), anyFloat());
+        verify(mCarEvsManager).setStatusListener(any(Executor.class),
+                mCarEvsStatusListenerCaptor.capture());
         verify(mBroadcastDispatcher).registerReceiver(mBroadcastReceiverCaptor.capture(),
                 mIntentFilterCaptor.capture(), any(), any());
         assertThat(mIntentFilterCaptor.getValue().getAction(0)).isEqualTo(
@@ -124,34 +133,25 @@ public class RearViewCameraViewMediatorTest extends SysuiTestCase {
     }
 
     @Test
-    public void testGearReverseStartsRearViewCamera() {
+    public void testEvsRequestingStartsRearViewCamera() {
         setUpListener();
 
-        CarPropertyValue<Integer> gearReverse = new CarPropertyValue(
-                VehiclePropertyIds.GEAR_SELECTION, VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,
-                VehicleGear.GEAR_REVERSE);
-        mCarPropertyEventCallbackCaptor.getValue().onChangeEvent(gearReverse);
+        CarEvsStatus evsStatusRequested = new CarEvsStatus(CarEvsManager.SERVICE_TYPE_REARVIEW,
+                CarEvsManager.SERVICE_STATE_REQUESTED);
+        mCarEvsStatusListenerCaptor.getValue().onStatusChanged(evsStatusRequested);
 
         verify(mRearViewCameraViewController, times(1)).start();
     }
 
     @Test
-    public void testGearNonReverseStopsRearViewCamera() {
+    public void testEvsInactiveStopsRearViewCamera() {
         setUpListener();
 
-        int[] nonReverseVehicleGears = new int[]{
-                VehicleGear.GEAR_NEUTRAL, VehicleGear.GEAR_PARK, VehicleGear.GEAR_DRIVE,
-                VehicleGear.GEAR_FIRST
-        };
-        for (int i = 0; i < nonReverseVehicleGears.length; ++i) {
-            Log.i(TAG, "testGearNonReverseStopsRearViewCamera: gear=" + nonReverseVehicleGears[i]);
-            CarPropertyValue<Integer> propertyGear = new CarPropertyValue(
-                    VehiclePropertyIds.GEAR_SELECTION, VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,
-                    nonReverseVehicleGears[i]);
-            mCarPropertyEventCallbackCaptor.getValue().onChangeEvent(propertyGear);
+        CarEvsStatus evsStatusInactive = new CarEvsStatus(CarEvsManager.SERVICE_TYPE_REARVIEW,
+                CarEvsManager.SERVICE_STATE_INACTIVE);
+        mCarEvsStatusListenerCaptor.getValue().onStatusChanged(evsStatusInactive);
 
-            verify(mRearViewCameraViewController, times(i + 1)).stop();
-        }
+        verify(mRearViewCameraViewController, times(1)).stop();
     }
 
     @Test

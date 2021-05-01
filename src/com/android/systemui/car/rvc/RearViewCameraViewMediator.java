@@ -20,11 +20,9 @@ import static com.android.systemui.car.rvc.RearViewCameraViewController.CLOSE_SY
 import static com.android.systemui.car.rvc.RearViewCameraViewController.CLOSE_SYSTEM_DIALOG_REASON_VALUE;
 
 import android.car.Car;
-import android.car.VehicleGear;
-import android.car.VehiclePropertyIds;
-import android.car.hardware.CarPropertyValue;
-import android.car.hardware.property.CarPropertyManager;
-import android.car.hardware.property.CarPropertyManager.CarPropertyEventCallback;
+import android.car.evs.CarEvsManager;
+import android.car.evs.CarEvsManager.CarEvsStatusListener;
+import android.car.evs.CarEvsStatus;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,10 +30,15 @@ import android.content.IntentFilter;
 import android.os.UserHandle;
 import android.util.Slog;
 
+import androidx.annotation.NonNull;
+
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.car.CarServiceProvider;
 import com.android.systemui.car.window.OverlayViewMediator;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Main;
+
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -51,26 +54,27 @@ public class RearViewCameraViewMediator implements OverlayViewMediator {
     private final RearViewCameraViewController mRearViewCameraViewController;
     private final CarServiceProvider mCarServiceProvider;
     private final BroadcastDispatcher mBroadcastDispatcher;
+    private final Executor mMainExecutor;
 
-    private CarPropertyManager mCarPropertyManager;
-    // TODO(b/170792252): Replace the following with the callback from CarEvsManager if it's ready.
-    private final CarPropertyEventCallback mPropertyEventCallback = new CarPropertyEventCallback() {
+    private CarEvsManager mEvsManager;
+    private final CarEvsStatusListener mEvsStatusListener = new CarEvsStatusListener() {
         @Override
-        public void onChangeEvent(CarPropertyValue value) {
-            if (DBG) Slog.d(TAG, "onChangeEvent value=" + value);
-            if (value.getPropertyId() != VehiclePropertyIds.GEAR_SELECTION) {
-                Slog.w(TAG, "Got the event for non-registered property: " + value.getPropertyId());
+        public void onStatusChanged(@NonNull CarEvsStatus status) {
+            if (DBG) Slog.d(TAG, "onStatusChanged status=" + status);
+            if (status.getServiceType() != CarEvsManager.SERVICE_TYPE_REARVIEW) {
                 return;
             }
-            if ((Integer) value.getValue() == VehicleGear.GEAR_REVERSE) {
-                mRearViewCameraViewController.start();
-            } else {
-                mRearViewCameraViewController.stop();
+            switch (status.getState()) {
+                case CarEvsManager.SERVICE_STATE_REQUESTED:
+                    mRearViewCameraViewController.setSessionToken(
+                            mEvsManager.generateSessionToken());
+                    mRearViewCameraViewController.start();
+                    break;
+                case CarEvsManager.SERVICE_STATE_INACTIVE:
+                case CarEvsManager.SERVICE_STATE_UNAVAILABLE:
+                    mRearViewCameraViewController.stop();
+                    break;
             }
-        }
-        @Override
-        public void onErrorEvent(int propId, int zone) {
-            Slog.e(TAG, "onErrorEvent propId=" + propId + ", zone=" + zone);
         }
     };
 
@@ -91,11 +95,13 @@ public class RearViewCameraViewMediator implements OverlayViewMediator {
     public RearViewCameraViewMediator(
             RearViewCameraViewController rearViewCameraViewController,
             CarServiceProvider carServiceProvider,
-            BroadcastDispatcher broadcastDispatcher) {
+            BroadcastDispatcher broadcastDispatcher,
+            @Main Executor mainExecutor) {
         if (DBG) Slog.d(TAG, "RearViewCameraViewMediator:init");
         mRearViewCameraViewController = rearViewCameraViewController;
         mCarServiceProvider = carServiceProvider;
         mBroadcastDispatcher = broadcastDispatcher;
+        mMainExecutor = mainExecutor;
     }
 
     @Override
@@ -107,14 +113,13 @@ public class RearViewCameraViewMediator implements OverlayViewMediator {
         }
 
         mCarServiceProvider.addListener(car -> {
-            mCarPropertyManager = (CarPropertyManager) car.getCarManager(Car.PROPERTY_SERVICE);
-            if (mCarPropertyManager == null) {
-                Slog.e(TAG, "Unable to get CarPropertyManager");
+            mEvsManager = (CarEvsManager) car.getCarManager(Car.CAR_EVS_SERVICE);
+            if (mEvsManager == null) {
+                Slog.e(TAG, "Unable to get CarEvsManager");
                 return;
             }
-            if (DBG) Slog.d(TAG, "Registering mPropertyEventCallback.");
-            mCarPropertyManager.registerCallback(mPropertyEventCallback,
-                    VehiclePropertyIds.GEAR_SELECTION, CarPropertyManager.SENSOR_RATE_UI);
+            if (DBG) Slog.d(TAG, "Registering mEvsStatusListener.");
+            mEvsManager.setStatusListener(mMainExecutor, mEvsStatusListener);
         });
         mBroadcastDispatcher.registerReceiver(mBroadcastReceiver,
                 new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS), /* executor= */ null,
