@@ -92,6 +92,11 @@ public class MicPrivacyChip extends MotionLayout {
         mIsInflated = true;
     }
 
+    @Override
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        requireViewById(R.id.focus_view).setOnClickListener(onClickListener);
+    }
+
     /**
      * Sets whether microphone is enabled or disabled.
      * If enabled, animates to {@link AnimationStates#INVISIBLE}.
