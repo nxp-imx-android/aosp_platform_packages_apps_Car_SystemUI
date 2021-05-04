@@ -20,13 +20,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/privacy_chip"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/privacy_chip_width"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/car_padding_1"
     android:paddingBottom="@dimen/car_padding_1"
     android:paddingStart="@dimen/car_padding_3"
     android:paddingEnd="@dimen/car_padding_3"
-    android:focusable="true"
+    android:focusable="false"
     app:layoutDescription="@xml/mic_privacy_chip_scene">
 
     <androidx.constraintlayout.widget.Guideline
@@ -42,6 +42,7 @@
         android:layout_height="0dp"
         android:alpha="0.0"
         android:background="@drawable/system_bar_background_pill"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -67,6 +68,7 @@
         android:layout_height="0dp"
         android:alpha="0.0"
         android:background="@drawable/mic_privacy_chip_background_pill"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -81,6 +83,7 @@
         android:alpha="0.0"
         android:gravity="center"
         android:scaleType="fitCenter"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -95,6 +98,7 @@
         android:alpha="0.0"
         android:gravity="center"
         android:scaleType="fitCenter"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
@@ -109,9 +113,23 @@
         android:alpha="0.0"
         android:gravity="center"
         android:scaleType="fitCenter"
+        android:focusable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
     />
+
+    <!-- Vew to properly show rotary focus highlight for mic privacy chip. -->
+    <View
+        android:id="@+id/focus_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.0"
+        android:background="@drawable/system_bar_pill_rotary_background"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 </com.android.systemui.car.privacy.MicPrivacyChip>
