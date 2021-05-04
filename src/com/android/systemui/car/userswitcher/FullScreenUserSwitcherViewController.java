@@ -69,7 +69,7 @@ public class FullScreenUserSwitcherViewController extends OverlayViewController 
     @Override
     protected void onFinishInflate() {
         // Intercept back button.
-        UserSwitcherContainer container = getLayout().findViewById(R.id.container);
+        UserSwitcherContainer container = getLayout().findViewById(R.id.user_switcher_container);
         container.setKeyEventHandler(event -> {
             if (event.getKeyCode() != KeyEvent.KEYCODE_BACK) {
                 return false;
@@ -93,7 +93,7 @@ public class FullScreenUserSwitcherViewController extends OverlayViewController 
 
     @Override
     protected int getFocusAreaViewId() {
-        return R.id.user_switcher_container;
+        return R.id.user_switcher_focus_area;
     }
 
     @Override

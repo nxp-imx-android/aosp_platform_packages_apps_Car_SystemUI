@@ -16,12 +16,12 @@
 -->
 <com.android.car.ui.FocusArea
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/user_switcher_container"
+    android:id="@+id/user_switcher_focus_area"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
     <com.android.systemui.car.userswitcher.UserSwitcherContainer
-        android:id="@+id/container"
+        android:id="@+id/user_switcher_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/car_user_switcher_background_color"
