@@ -35,7 +35,7 @@
     <!-- Note: the horizontal padding and offset are set to 0 so that the track and thumb
              aligns with the proper keylines. -->
     <SeekBar
-        android:id="@+id/seek_bar"
+        android:id="@+id/volume_seek_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/car_volume_item_seekbar_margin_vertical"
