@@ -26,6 +26,8 @@
     <!-- This permission is required to use EVS. -->
     <uses-permission android:name="android.car.permission.CONTROL_CAR_EVS_ACTIVITY" />
     <uses-permission android:name="android.car.permission.MONITOR_CAR_EVS_STATUS" />
+    <!-- This permission is required to use ClusterHomeManager. -->
+    <uses-permission android:name="android.car.permission.CAR_INSTRUMENT_CLUSTER_CONTROL" />
     <!-- This permission is required to get bluetooth broadcast. -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />

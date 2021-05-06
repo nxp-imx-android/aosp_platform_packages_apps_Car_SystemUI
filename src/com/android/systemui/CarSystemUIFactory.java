@@ -20,6 +20,9 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.android.systemui.dagger.GlobalRootComponent;
+import com.android.systemui.dagger.SysUIComponent;
+import com.android.systemui.dagger.WMComponent;
+import com.android.systemui.wmshell.CarWMComponent;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -56,5 +59,13 @@ public class CarSystemUIFactory extends SystemUIFactory {
         names.toArray(finalNames);
 
         return finalNames;
+    }
+
+    @Override
+    protected SysUIComponent.Builder prepareSysUIComponentBuilder(
+            SysUIComponent.Builder sysUIBuilder, WMComponent wm) {
+        CarWMComponent carWm = (CarWMComponent) wm;
+        return ((CarSysUIComponent.Builder) sysUIBuilder)
+                .setRootTaskDisplayAreaOrganizer(carWm.getRootTaskDisplayAreaOrganizer());
     }
 }

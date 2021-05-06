@@ -18,6 +18,7 @@ package com.android.systemui.wmshell;
 
 import com.android.systemui.dagger.WMComponent;
 import com.android.systemui.dagger.WMSingleton;
+import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 
 import dagger.Subcomponent;
 
@@ -36,4 +37,7 @@ public interface CarWMComponent extends WMComponent {
     interface Builder extends WMComponent.Builder {
         CarWMComponent build();
     }
+
+    @WMSingleton
+    RootTaskDisplayAreaOrganizer getRootTaskDisplayAreaOrganizer();
 }
