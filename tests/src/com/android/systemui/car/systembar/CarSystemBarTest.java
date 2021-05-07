@@ -145,7 +145,7 @@ public class CarSystemBarTest extends SysuiTestCase {
                 mStatusBarIconController, mWindowManager, mDeviceProvisionedController,
                 new CommandQueue(mContext), mAutoHideController, mButtonSelectionStateListener,
                 mExecutor, mUiBgExecutor, mBarService, () -> mKeyguardStateController,
-                () -> mIconPolicy, () -> mIconController,
+                () -> mIconPolicy, mSignalPolicy,
                 new SystemBarConfigs(mTestableResources.getResources()));
         mCarSystemBar.setSignalPolicy(mSignalPolicy);
     }
