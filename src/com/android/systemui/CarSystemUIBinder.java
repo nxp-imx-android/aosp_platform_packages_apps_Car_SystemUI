@@ -18,9 +18,10 @@ package com.android.systemui;
 
 import com.android.systemui.accessibility.SystemActions;
 import com.android.systemui.biometrics.AuthController;
-import com.android.systemui.car.systembar.CarSystemBar;
+import com.android.systemui.car.cluster.ClusterDisplayController;
 import com.android.systemui.car.notification.CarNotificationModule;
 import com.android.systemui.car.sideloaded.SideLoadedAppController;
+import com.android.systemui.car.systembar.CarSystemBar;
 import com.android.systemui.car.toast.CarToastUI;
 import com.android.systemui.car.voicerecognition.ConnectedDeviceVoiceRecognitionNotifier;
 import com.android.systemui.car.volume.VolumeUI;
@@ -176,4 +177,10 @@ public abstract class CarSystemUIBinder {
     @IntoMap
     @ClassKey(WMShell.class)
     public abstract SystemUI bindWMShell(WMShell sysui);
+
+    /** Inject into ClusterDisplayController. */
+    @Binds
+    @IntoMap
+    @ClassKey(ClusterDisplayController.class)
+    public abstract SystemUI bindClusterDisplayController(ClusterDisplayController sysui);
 }
