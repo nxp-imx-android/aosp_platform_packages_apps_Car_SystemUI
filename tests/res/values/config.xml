@@ -20,4 +20,8 @@
     <bool name="config_enableLeftSystemBar">false</bool>
     <bool name="config_enableRightSystemBar">false</bool>
     <bool name="config_enableBottomSystemBar">false</bool>
+
+    <string name="config_systemUIFactoryComponent" translatable="false">
+        com.android.systemui.CarSystemUITestFactory
+    </string>
 </resources>
