@@ -146,6 +146,7 @@
         <item>com.android.systemui.car.window.SystemUIOverlayWindowManager</item>
         <item>com.android.systemui.car.toast.CarToastUI</item>
         <item>com.android.systemui.car.volume.VolumeUI</item>
+        <item>com.android.systemui.car.cluster.ClusterDisplayController</item>
     </string-array>
 
     <!-- The Activity name for the Rear View Camera, if empty, the feature will be disabled. -->

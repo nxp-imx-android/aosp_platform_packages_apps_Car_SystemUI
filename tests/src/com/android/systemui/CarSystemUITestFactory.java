@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,19 @@
  * limitations under the License.
  */
 
-package com.android.systemui.wmshell;
+package com.android.systemui;
 
+import static org.mockito.Mockito.mock;
+
+import com.android.systemui.dagger.SysUIComponent;
 import com.android.systemui.dagger.WMComponent;
-import com.android.systemui.dagger.WMSingleton;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 
-import dagger.Subcomponent;
-
-
-/**
- * Dagger Subcomponent for WindowManager.
- */
-@WMSingleton
-@Subcomponent(modules = {CarWMShellModule.class})
-public interface CarWMComponent extends WMComponent {
-
-    /**
-     * Builder for a SysUIComponent.
-     */
-    @Subcomponent.Builder
-    interface Builder extends WMComponent.Builder {
-        CarWMComponent build();
+public class CarSystemUITestFactory extends CarSystemUIFactory {
+    @Override
+    protected SysUIComponent.Builder prepareSysUIComponentBuilder(
+            SysUIComponent.Builder sysUIBuilder, WMComponent wm) {
+        return ((CarSysUIComponent.Builder) sysUIBuilder)
+                .setRootTaskDisplayAreaOrganizer(mock(RootTaskDisplayAreaOrganizer.class));
     }
-
-    @WMSingleton
-    RootTaskDisplayAreaOrganizer getRootTaskDisplayAreaOrganizer();
 }
