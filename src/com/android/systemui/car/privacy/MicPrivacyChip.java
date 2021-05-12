@@ -82,6 +82,9 @@ public class MicPrivacyChip extends MotionLayout {
 
         mExecutor = Executors.newSingleThreadScheduledExecutor();
         mIsInflated = false;
+
+        // Microphone is enabled by default (invisible state).
+        mIsMicrophoneEnabled = true;
     }
 
     @Override
@@ -106,7 +109,19 @@ public class MicPrivacyChip extends MotionLayout {
     public void setMicrophoneEnabled(boolean isMicrophoneEnabled) {
         if (DEBUG) Log.d(TAG, "Microphone enabled: " + isMicrophoneEnabled);
 
-        if (mIsMicrophoneEnabled == isMicrophoneEnabled) return;
+        if (mIsMicrophoneEnabled == isMicrophoneEnabled) {
+            if (isMicrophoneEnabled) {
+                switch (mCurrentTransitionState) {
+                    case INVISIBLE:
+                    case ACTIVE:
+                    case INACTIVE:
+                    case ACTIVE_INIT:
+                        return;
+                }
+            } else {
+                if (mCurrentTransitionState == AnimationStates.MICROPHONE_OFF) return;
+            }
+        }
 
         mIsMicrophoneEnabled = isMicrophoneEnabled;
 
