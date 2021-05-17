@@ -19,6 +19,7 @@
     <item target="layout/car_bottom_system_bar" value="@layout/car_bottom_system_bar"/>
     <item target="layout/system_icons" value="@layout/system_icons"/>
     <item target="layout/car_right_system_bar" value="@layout/car_right_system_bar"/>
+    <item target="string/config_appGridComponentName" value="@string/config_appGridComponentName"/>
 
     <item target="attr/icon" value="@attr/icon"/>
     <item target="attr/selectedIcon" value="@attr/selectedIcon"/>

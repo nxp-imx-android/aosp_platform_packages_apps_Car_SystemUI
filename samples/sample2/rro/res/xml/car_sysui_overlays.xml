@@ -17,6 +17,7 @@
 
 <overlay>
     <item target="layout/car_left_system_bar" value="@layout/car_left_system_bar"/>
+    <item target="string/config_appGridComponentName" value="@string/config_appGridComponentName"/>
 
     <item target="attr/icon" value="@attr/icon"/>
     <item target="attr/selectedIcon" value="@attr/selectedIcon"/>

@@ -264,6 +264,7 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="id" name="connected_device_signals_stub"/>
       <item type="id" name="dark_icon"/>
       <item type="id" name="driver_hvac"/>
+      <item type="id" name="focus_view"/>
       <item type="id" name="fullscreen_user_switcher_stub"/>
       <item type="id" name="glass_pane"/>
       <item type="id" name="grid"/>
@@ -371,6 +372,7 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="string" name="car_loading_profile"/>
       <item type="string" name="car_loading_profile_developer_message"/>
       <item type="string" name="car_new_user"/>
+      <item type="string" name="config_appGridComponentName"/>
       <item type="string" name="config_notificationPanelViewMediator"/>
       <item type="string" name="config_rearViewCameraActivity"/>
       <item type="string" name="config_statusBarComponent"/>
