@@ -35,12 +35,29 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="array" name="config_statusBarIconsToExclude"/>
       <item type="array" name="config_systemUIServiceComponentsExclude"/>
       <item type="array" name="config_systemUIServiceComponentsInclude"/>
+      <item type="attr" name="broadcast"/>
+      <item type="attr" name="categories"/>
+      <item type="attr" name="clearBackStack"/>
+      <item type="attr" name="componentNames"/>
+      <item type="attr" name="highlightWhenSelected"/>
+      <item type="attr" name="hvacAreaId"/>
+      <item type="attr" name="hvacMaxText"/>
+      <item type="attr" name="hvacMaxValue"/>
+      <item type="attr" name="hvacMinText"/>
+      <item type="attr" name="hvacMinValue"/>
+      <item type="attr" name="hvacPivotOffset"/>
+      <item type="attr" name="hvacPropertyId"/>
+      <item type="attr" name="hvacTempFormat"/>
       <item type="attr" name="icon"/>
       <item type="attr" name="intent"/>
       <item type="attr" name="longIntent"/>
+      <item type="attr" name="packages"/>
       <item type="attr" name="selectedAlpha"/>
       <item type="attr" name="selectedIcon"/>
+      <item type="attr" name="showMoreWhenSelected"/>
       <item type="attr" name="unselectedAlpha"/>
+      <item type="attr" name="usage"/>
+      <item type="attr" name="useDefaultAppIconForRole"/>
       <item type="bool" name="config_consumeSystemBarTouchWhenNotificationPanelOpen"/>
       <item type="bool" name="config_enableBottomSystemBar"/>
       <item type="bool" name="config_enableHeadsUpNotificationWhenNotificationPanelOpen"/>
@@ -84,7 +101,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="color" name="notification_divider_color"/>
       <item type="color" name="notification_ripple_untinted_color"/>
       <item type="color" name="notification_shade_background_color"/>
-      <item type="color" name="rear_view_camera_button_background"/>
       <item type="color" name="status_bar_background_color"/>
       <item type="color" name="system_bar_background_opaque"/>
       <item type="color" name="system_bar_background_pill_color"/>
@@ -186,8 +202,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="dimen" name="privacy_chip_icon_size"/>
       <item type="dimen" name="privacy_chip_indicator_circle_diameter"/>
       <item type="dimen" name="privacy_chip_width"/>
-      <item type="dimen" name="rear_view_camera_height"/>
-      <item type="dimen" name="rear_view_camera_width"/>
       <item type="dimen" name="scrim_behind_alpha"/>
       <item type="dimen" name="side_margin"/>
       <item type="dimen" name="signal_icon_size"/>
@@ -261,7 +275,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="id" name="circular_active_indicator_vertical_guideline"/>
       <item type="id" name="clock"/>
       <item type="id" name="clock_container"/>
-      <item type="id" name="close_button"/>
       <item type="id" name="connected_device_signals_stub"/>
       <item type="id" name="dark_icon"/>
       <item type="id" name="driver_hvac"/>
@@ -298,8 +311,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="id" name="primary_icon"/>
       <item type="id" name="privacy_chip"/>
       <item type="id" name="qs_car_top_bar"/>
-      <item type="id" name="rear_view_camera_container"/>
-      <item type="id" name="rear_view_camera_stub"/>
       <item type="id" name="settingsIcon"/>
       <item type="id" name="statusIcons"/>
       <item type="id" name="supplemental_icon"/>
@@ -366,7 +377,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="layout" name="notification_center_activity"/>
       <item type="layout" name="notification_handle_bar"/>
       <item type="layout" name="notification_panel_container"/>
-      <item type="layout" name="rear_view_camera"/>
       <item type="layout" name="status_bar_wifi_group"/>
       <item type="layout" name="system_icons"/>
       <item type="layout" name="sysui_overlay_window"/>
@@ -377,7 +387,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="string" name="car_new_user"/>
       <item type="string" name="config_appGridComponentName"/>
       <item type="string" name="config_notificationPanelViewMediator"/>
-      <item type="string" name="config_rearViewCameraActivity"/>
       <item type="string" name="config_statusBarComponent"/>
       <item type="string" name="config_systemUIFactoryComponent"/>
       <item type="string" name="hvac_max_text"/>
@@ -397,7 +406,6 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="string" name="mic_privacy_chip_off_toast"/>
       <item type="string" name="mic_privacy_chip_on_toast"/>
       <item type="string" name="mic_privacy_chip_privacy_settings"/>
-      <item type="string" name="rear_view_camera_close_button_text"/>
       <item type="string" name="start_guest_session"/>
       <item type="string" name="user_add_user_message_setup"/>
       <item type="string" name="user_add_user_message_update"/>
