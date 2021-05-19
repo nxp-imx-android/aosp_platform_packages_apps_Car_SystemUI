@@ -34,7 +34,7 @@
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Sovelluksilla on mikrofonin käyttöoikeus"</string>
     <string name="mic_privacy_chip_mic_disabled" msgid="2709173475947157320">"Mikrofoni on poistettu käytöstä"</string>
     <string name="mic_privacy_chip_mic_disabled_subtext" msgid="9059745506470016701">"Millään sovelluksella ei ole mikrofonin käyttöoikeutta"</string>
-    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Tietosuoja-asetukset"</string>
+    <string name="mic_privacy_chip_privacy_settings" msgid="719293067082198224">"Yksityisyysasetukset"</string>
     <string name="mic_privacy_chip_app_using_mic_suffix" msgid="8355462601492180023">"<xliff:g id="APP">%s</xliff:g> käyttää mikrofonia"</string>
     <string name="mic_privacy_chip_apps_using_mic_suffix" msgid="6656026041668305817">"<xliff:g id="APP_LIST">%s</xliff:g> käyttävät mikrofonia"</string>
     <string name="mic_privacy_chip_app_recently_used_mic_suffix" msgid="1819299821245419382">"<xliff:g id="APP">%s</xliff:g> käytti mikrofonia äskettäin"</string>
