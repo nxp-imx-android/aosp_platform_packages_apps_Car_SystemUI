@@ -22,11 +22,13 @@ import com.android.systemui.dagger.SysUIComponent;
 import com.android.systemui.dagger.WMComponent;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 
+import java.util.Optional;
+
 public class CarSystemUITestFactory extends CarSystemUIFactory {
     @Override
     protected SysUIComponent.Builder prepareSysUIComponentBuilder(
             SysUIComponent.Builder sysUIBuilder, WMComponent wm) {
-        return ((CarSysUIComponent.Builder) sysUIBuilder)
-                .setRootTaskDisplayAreaOrganizer(mock(RootTaskDisplayAreaOrganizer.class));
+        return ((CarSysUIComponent.Builder) sysUIBuilder).setRootTaskDisplayAreaOrganizer(
+                Optional.of(mock(RootTaskDisplayAreaOrganizer.class)));
     }
 }
