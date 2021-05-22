@@ -226,7 +226,8 @@ public class PrivacyChipViewController implements View.OnClickListener {
             }
             mUserLifecycleListenerRegistered = false;
         }
-        mSensorPrivacyManager.removeSensorPrivacyListener(mOnSensorPrivacyChangedListener);
+        mSensorPrivacyManager.removeSensorPrivacyListener(MICROPHONE,
+                mOnSensorPrivacyChangedListener);
         mPrivacyChip = null;
     }
 
@@ -274,7 +275,8 @@ public class PrivacyChipViewController implements View.OnClickListener {
 
         mCurrentUserId = userId;
 
-        mSensorPrivacyManager.removeSensorPrivacyListener(mOnSensorPrivacyChangedListener);
+        mSensorPrivacyManager.removeSensorPrivacyListener(MICROPHONE,
+                mOnSensorPrivacyChangedListener);
         mSensorPrivacyManager.addSensorPrivacyListener(MICROPHONE, userId,
                 mOnSensorPrivacyChangedListener);
 
