@@ -162,4 +162,6 @@
         <item>@*android:string/status_bar_microphone</item>
     </string-array>
 
+    <!-- Specifies the component name of the app grid activity -->
+    <string name="config_appGridComponentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
 </resources>

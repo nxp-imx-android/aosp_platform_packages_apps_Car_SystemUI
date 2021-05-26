@@ -16,6 +16,8 @@
 
 package com.android.systemui.car.systembar;
 
+import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -25,8 +27,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 
 import android.app.ActivityManager;
 import android.content.Intent;
@@ -60,8 +60,8 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
 
     private static final String DEFAULT_BUTTON_ACTIVITY_NAME =
             "com.android.car.carlauncher/.CarLauncher";
-    private static final String APP_GRID_BUTTON_ACTIVITY_NAME =
-            "com.android.car.carlauncher/.AppGridActivity";
+    private static final String DIALER_BUTTON_ACTIVITY_NAME =
+            "com.android.car.dialer/.ui.TelecomActivity";
     private static final String BROADCAST_ACTION_NAME =
             "android.car.intent.action.TOGGLE_HVAC_CONTROLS";
 
@@ -241,10 +241,10 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
 
         assertThat(getCurrentActivityName()).isEqualTo(DEFAULT_BUTTON_ACTIVITY_NAME);
 
-        CarSystemBarButton appGridButton = mTestView.findViewById(R.id.app_grid_activity);
-        appGridButton.performClick();
+        CarSystemBarButton dialerButton = mTestView.findViewById(R.id.dialer_activity);
+        dialerButton.performClick();
 
-        assertThat(getCurrentActivityName()).isEqualTo(APP_GRID_BUTTON_ACTIVITY_NAME);
+        assertThat(getCurrentActivityName()).isEqualTo(DIALER_BUTTON_ACTIVITY_NAME);
     }
 
     @Test
@@ -253,17 +253,17 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
 
         assertThat(getCurrentActivityName()).isEqualTo(DEFAULT_BUTTON_ACTIVITY_NAME);
 
-        CarSystemBarButton appGridButton = mTestView.findViewById(
-                R.id.long_click_app_grid_activity);
-        appGridButton.performLongClick();
+        CarSystemBarButton dialerButton = mTestView.findViewById(
+                R.id.long_click_dialer_activity);
+        dialerButton.performLongClick();
 
-        assertThat(getCurrentActivityName()).isEqualTo(APP_GRID_BUTTON_ACTIVITY_NAME);
+        assertThat(getCurrentActivityName()).isEqualTo(DIALER_BUTTON_ACTIVITY_NAME);
     }
 
     @Test
     public void onClick_useBroadcast_broadcastsIntent() {
-        CarSystemBarButton appGridButton = mTestView.findViewById(R.id.broadcast);
-        appGridButton.performClick();
+        CarSystemBarButton button = mTestView.findViewById(R.id.broadcast);
+        button.performClick();
 
         verify(mContext).sendBroadcastAsUser(argThat(new ArgumentMatcher<Intent>() {
             @Override
@@ -275,20 +275,20 @@ public class CarSystemBarButtonTest extends SysuiTestCase {
 
     @Test
     public void onClick_requestBackstackClear_clearBackStack() {
-        CarSystemBarButton appGridButton =
-                mTestView.findViewById(R.id.app_grid_activity_clear_backstack);
+        CarSystemBarButton dialerButton =
+                mTestView.findViewById(R.id.dialer_activity_clear_backstack);
 
-        appGridButton.performClick();
+        dialerButton.performClick();
 
         verify(mActivityManager).moveTaskToFront(anyInt(), anyInt());
     }
 
     @Test
     public void onClick_useBroadcast_requestBackstackClear_doesNotClearingBackstack() {
-        CarSystemBarButton appGridButton =
+        CarSystemBarButton button =
                 mTestView.findViewById(R.id.broadcast_try_clear_backstack);
 
-        appGridButton.performClick();
+        button.performClick();
 
         verify(mActivityManager, never()).moveTaskToFront(anyInt(), anyInt());
     }

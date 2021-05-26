@@ -57,9 +57,9 @@
     <com.android.systemui.car.systembar.CarSystemBarButton
         android:id="@+id/grid_nav"
         style="@style/SystemBarButton"
-        systemui:componentNames="com.android.car.carlauncher/.AppGridActivity"
+        systemui:componentNames="@string/config_appGridComponentName"
         systemui:icon="@drawable/car_ic_apps"
-        systemui:intent="intent:#Intent;component=com.android.car.carlauncher/.AppGridActivity;launchFlags=0x24000000;end"
+        systemui:intent="intent:#Intent;action=com.android.car.carlauncher.ACTION_APP_GRID;package=com.android.car.carlauncher;launchFlags=0x24000000;end"
         systemui:highlightWhenSelected="true"
     />
 
