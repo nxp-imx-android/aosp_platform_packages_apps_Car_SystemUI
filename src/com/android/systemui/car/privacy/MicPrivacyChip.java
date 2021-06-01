@@ -94,6 +94,9 @@ public class MicPrivacyChip extends MotionLayout {
 
     @Override
     public void setOnClickListener(View.OnClickListener onClickListener) {
+        // required for CTS tests.
+        super.setOnClickListener(onClickListener);
+        // required for rotary.
         requireViewById(R.id.focus_view).setOnClickListener(onClickListener);
     }
 
