@@ -264,6 +264,7 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="id" name="connected_device_signals_stub"/>
       <item type="id" name="dark_icon"/>
       <item type="id" name="driver_hvac"/>
+      <item type="id" name="empty_notification_text"/>
       <item type="id" name="focus_view"/>
       <item type="id" name="fullscreen_user_switcher_stub"/>
       <item type="id" name="glass_pane"/>
@@ -282,6 +283,7 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="id" name="light_icon"/>
       <item type="id" name="light_muted_icon"/>
       <item type="id" name="lock_screen_nav_buttons"/>
+      <item type="id" name="manage_button"/>
       <item type="id" name="max_width_guideline"/>
       <item type="id" name="nav_buttons"/>
       <item type="id" name="note"/>
