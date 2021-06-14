@@ -21,17 +21,23 @@ import android.app.ITransientNotificationCallback;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.android.systemui.R;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.toast.ToastFactory;
 import com.android.systemui.toast.ToastLogger;
 import com.android.systemui.toast.ToastUI;
-import com.android.systemui.util.concurrency.DelayableExecutor;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -42,24 +48,29 @@ import javax.inject.Inject;
 public class CarToastUI extends ToastUI {
     private static final boolean DEBUG = false;
     private static final String TAG = "CarToastUI";
-  
+
     private final PackageManager mPackageManager;
+    private final Set<String> mPackageNameAllowList;
 
     @Inject
-    public CarToastUI(Context context, CommandQueue commandQueue, ToastFactory toastFactory,
-            ToastLogger toastLogger, PackageManager packageManager) {
+    public CarToastUI(Context context, @Main Resources resources, CommandQueue commandQueue,
+            ToastFactory toastFactory, ToastLogger toastLogger, PackageManager packageManager) {
         super(context, commandQueue, toastFactory, toastLogger);
         mPackageManager = packageManager;
+
+        String[] allowList = resources.getStringArray(
+                R.array.config_restrictedToastsPackageNameAllowList);
+        mPackageNameAllowList = new HashSet<>(Arrays.asList(allowList));
     }
 
     @Override
     public void showToast(int uid, String packageName, IBinder token, CharSequence text,
             IBinder windowToken, int duration, @Nullable ITransientNotificationCallback callback) {
-        if (!isSystemPrivilegedOrPlatformKey(packageName)) {
+        if (!isAllowListed(packageName) && !isSystemPrivilegedOrPlatformKey(packageName)) {
             if (DEBUG) {
                 Log.w(TAG, packageName
-                        + " cannot show a Toast since it is not a system privileged app or has not "
-                        + "been signed with platform key.");
+                        + " cannot show a Toast since it is not allow listed and it isn't "
+                        + "privileged.");
             }
             return;
         }
@@ -70,6 +81,10 @@ public class CarToastUI extends ToastUI {
         }
 
         super.showToast(uid, packageName, token, text, windowToken, duration, callback);
+    }
+
+    private boolean isAllowListed(String packageName) {
+        return mPackageNameAllowList.contains(packageName);
     }
 
     private boolean isSystemPrivilegedOrPlatformKey(String packageName) {

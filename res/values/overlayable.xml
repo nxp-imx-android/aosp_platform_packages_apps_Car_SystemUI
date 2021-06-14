@@ -31,6 +31,7 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="anim" name="car_user_switcher_open_pod_animation"/>
       <item type="array" name="config_allowedAppInstallSources"/>
       <item type="array" name="config_carSystemUIOverlayViewsMediators"/>
+      <item type="array" name="config_restrictedToastsPackageNameAllowList"/>
       <item type="array" name="config_statusBarIconsToExclude"/>
       <item type="array" name="config_systemUIServiceComponentsExclude"/>
       <item type="array" name="config_systemUIServiceComponentsInclude"/>
