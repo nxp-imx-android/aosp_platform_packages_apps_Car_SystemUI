@@ -162,6 +162,13 @@
         <item>@*android:string/status_bar_microphone</item>
     </string-array>
 
+    <!-- Packages that can post toasts even if it isn't a system application. -->
+    <string-array name="config_restrictedToastsPackageNameAllowList" translatable="false">
+        <!-- These packages may be used for CTS purposes. -->
+        <item>android.server.wm.cts</item>
+        <item>android.server.wm.second</item>
+    </string-array>
+
     <!-- Specifies the component name of the app grid activity -->
     <string name="config_appGridComponentName" translatable="false">com.android.car.carlauncher/.AppGridActivity</string>
 </resources>

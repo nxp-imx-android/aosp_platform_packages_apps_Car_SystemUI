@@ -36,6 +36,7 @@ import android.view.View;
 
 import androidx.test.filters.SmallTest;
 
+import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.car.CarSystemUiTest;
 import com.android.systemui.statusbar.CommandQueue;
@@ -43,6 +44,7 @@ import com.android.systemui.toast.SystemUIToast;
 import com.android.systemui.toast.ToastFactory;
 import com.android.systemui.toast.ToastLogger;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,8 +82,9 @@ public class CarToastUITest extends SysuiTestCase {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mCarToastUI = new CarToastUI(mContext, mCommandQueue, mToastFactory,
-                mToastLogger, mPackageManager);
+        mCarToastUI = new CarToastUI(mContext,
+                mContext.getOrCreateTestableResources().getResources(), mCommandQueue,
+                mToastFactory, mToastLogger, mPackageManager);
         when(mSystemUIToast.hasCustomAnimation()).thenReturn(false);
         when(mSystemUIToast.getView()).thenReturn(new View(mContext));
         when(mSystemUIToast.getGravity()).thenReturn(Gravity.BOTTOM);
@@ -91,6 +94,12 @@ public class CarToastUITest extends SysuiTestCase {
         when(mSystemUIToast.getVerticalMargin()).thenReturn(0);
         when(mToastFactory.createToast(any(), eq(TEXT), eq(PACKAGE_NAME), anyInt(), anyInt()))
                 .thenReturn(mSystemUIToast);
+    }
+
+    @After
+    public void tearDown() {
+        mContext.getOrCreateTestableResources().removeOverride(
+                R.array.config_restrictedToastsPackageNameAllowList);
     }
 
 
@@ -155,6 +164,22 @@ public class CarToastUITest extends SysuiTestCase {
 
         verify(mToastFactory, never()).createToast(any(), eq(TEXT), eq(PACKAGE_NAME), anyInt(),
                 anyInt());
+    }
+
+    @Test
+    public void showToast_isSystemNotPrivilegedNotPlatformKeyAllowListed_createToastCalled()
+            throws PackageManager.NameNotFoundException {
+        setupPackageInfo(/* isSystem= */ true, /* isPrivileged= */
+                false, /* isSignedWithPlatformKey= */ false);
+
+        mContext.getOrCreateTestableResources().addOverride(
+                R.array.config_restrictedToastsPackageNameAllowList,
+                new String[]{PACKAGE_NAME});
+
+        mCarToastUI.showToast(UID, PACKAGE_NAME, mIBinder, TEXT, mIBinder, DURATION,
+                mITransientNotificationCallback);
+
+        verify(mToastFactory).createToast(any(), eq(TEXT), eq(PACKAGE_NAME), anyInt(), anyInt());
     }
 
     @Test
