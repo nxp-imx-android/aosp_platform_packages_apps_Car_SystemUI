@@ -22,6 +22,7 @@
     android:id="@+id/privacy_chip"
     android:layout_width="@dimen/privacy_chip_width"
     android:layout_height="match_parent"
+    android:visibility="gone"
     android:paddingTop="@dimen/car_padding_1"
     android:paddingBottom="@dimen/car_padding_1"
     android:paddingStart="@dimen/car_padding_3"
