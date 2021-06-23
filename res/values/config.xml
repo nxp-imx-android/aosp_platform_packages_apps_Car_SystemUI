@@ -115,7 +115,6 @@
         <item>com.android.systemui.car.keyguard.CarKeyguardViewMediator</item>
         <item>com.android.systemui.car.userswitcher.FullscreenUserSwitcherViewMediator</item>
         <item>com.android.systemui.car.userswitcher.UserSwitchTransitionViewMediator</item>
-        <item>com.android.systemui.car.rvc.RearViewCameraViewMediator</item>
     </string-array>
 
     <!-- List of package names that are allowed sources of app installation. -->
@@ -148,9 +147,6 @@
         <item>com.android.systemui.car.volume.VolumeUI</item>
         <item>com.android.systemui.car.cluster.ClusterDisplayController</item>
     </string-array>
-
-    <!-- The Activity name for the Rear View Camera, if empty, the feature will be disabled. -->
-    <string name="config_rearViewCameraActivity" translatable="false"></string>
 
     <!-- Defines system icons to be excluded from the display. That is to say, the icons in the
          status bar that are part of this list are never displayed. Each item in the list must be a
