@@ -161,6 +161,7 @@
     <!-- Packages that can post toasts even if it isn't a system application. -->
     <string-array name="config_restrictedToastsPackageNameAllowList" translatable="false">
         <!-- These packages may be used for CTS purposes. -->
+        <item>android.widget.cts</item>
         <item>android.server.wm.cts</item>
         <item>android.server.wm.second</item>
     </string-array>
