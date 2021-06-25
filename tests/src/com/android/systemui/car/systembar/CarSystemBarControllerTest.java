@@ -35,6 +35,7 @@ import com.android.systemui.car.CarSystemUiTest;
 import com.android.systemui.car.hvac.HvacController;
 import com.android.systemui.car.statusbar.UserNameViewController;
 import com.android.systemui.plugins.DarkIconDispatcher;
+import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 
 import org.junit.Before;
@@ -67,11 +68,16 @@ public class CarSystemBarControllerTest extends SysuiTestCase {
     private UserNameViewController mUserNameViewController;
     @Mock
     private PrivacyChipViewController mPrivacyChipViewController;
+    @Mock
+    private FeatureFlags mFeatureFlags;
+    @Mock
+    private StatusBarIconController mIconController;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        mCarSystemBarViewFactory = new CarSystemBarViewFactory(mContext);
+        mCarSystemBarViewFactory = new CarSystemBarViewFactory(
+                mContext, mFeatureFlags, mIconController);
         mTestableResources = mContext.getOrCreateTestableResources();
 
         // Needed to inflate top navigation bar.

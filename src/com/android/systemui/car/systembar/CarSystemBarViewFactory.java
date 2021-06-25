@@ -27,6 +27,8 @@ import androidx.annotation.LayoutRes;
 import com.android.car.ui.FocusParkingView;
 import com.android.systemui.R;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.statusbar.FeatureFlags;
+import com.android.systemui.statusbar.phone.StatusBarIconController;
 
 import javax.inject.Inject;
 
@@ -54,6 +56,8 @@ public class CarSystemBarViewFactory {
     private final ArrayMap<Type, CarSystemBarView> mCachedViewMap = new ArrayMap<>(
             Type.values().length);
     private final ArrayMap<Type, ViewGroup> mCachedContainerMap = new ArrayMap<>();
+    private final FeatureFlags mFeatureFlags;
+    private final StatusBarIconController mIconController;
 
     /** Type of navigation bar to be created. */
     private enum Type {
@@ -68,8 +72,14 @@ public class CarSystemBarViewFactory {
     }
 
     @Inject
-    public CarSystemBarViewFactory(Context context) {
+    public CarSystemBarViewFactory(
+            Context context,
+            FeatureFlags featureFlags,
+            StatusBarIconController iconController
+    ) {
         mContext = context;
+        mFeatureFlags = featureFlags;
+        mIconController = iconController;
     }
 
     /** Gets the top window. */
@@ -147,6 +157,8 @@ public class CarSystemBarViewFactory {
 
         CarSystemBarView view = (CarSystemBarView) View.inflate(mContext, barLayout,
                 /* root= */ null);
+
+        view.setupIconController(mFeatureFlags, mIconController);
 
         // Include a FocusParkingView at the beginning. The rotary controller "parks" the focus here
         // when the user navigates to another window. This is also used to prevent wrap-around.
