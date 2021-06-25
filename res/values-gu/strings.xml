@@ -28,7 +28,6 @@
     <string name="user_add_user_message_update" msgid="1001907075316748931">"કોઈપણ વપરાશકર્તા અન્ય બધા વપરાશકર્તાઓ માટે ઍપને અપડેટ કરી શકે છે."</string>
     <string name="car_loading_profile" msgid="458961191993686065">"લોડ કરી રહ્યાં છીએ"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"વપરાશકર્તાને લોડ કરી રહ્યાં છીએ (<xliff:g id="FROM_USER">%1$d</xliff:g>માંથી <xliff:g id="TO_USER">%2$d</xliff:g>માં)"</string>
-    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"બંધ કરો"</string>
     <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"માઇક્રોફોન બંધ છે."</string>
     <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"માઇક્રોફોન ચાલુ કરેલું છે"</string>
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"ઍપ માઇક્રોફોન ઍક્સેસ કરી શકે છે"</string>

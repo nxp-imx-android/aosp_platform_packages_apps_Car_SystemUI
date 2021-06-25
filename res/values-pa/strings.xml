@@ -28,7 +28,6 @@
     <string name="user_add_user_message_update" msgid="1001907075316748931">"ਕੋਈ ਵੀ ਵਰਤੋਂਕਾਰ ਹੋਰ ਸਾਰੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀਆਂ ਐਪਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰ ਸਕਦਾ ਹੈ।"</string>
     <string name="car_loading_profile" msgid="458961191993686065">"ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ਵਰਤੋਂਕਾਰ ਨੂੰ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ (<xliff:g id="FROM_USER">%1$d</xliff:g> ਤੋਂ <xliff:g id="TO_USER">%2$d</xliff:g> ਤੱਕ)"</string>
-    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"ਬੰਦ ਕਰੋ"</string>
     <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਬੰਦ ਹੈ।"</string>
     <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਚਾਲੂ ਹੈ"</string>
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"ਐਪਾਂ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਤੱਕ ਪਹੁੰਚ ਕਰ ਸਕਦੀਆਂ ਹਨ"</string>

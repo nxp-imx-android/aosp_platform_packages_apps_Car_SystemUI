@@ -28,7 +28,6 @@
     <string name="user_add_user_message_update" msgid="1001907075316748931">"ማንኛውም ተጠቃሚ መተግበሪያዎችን ለሌሎች ተጠቃሚዎች ሁሉ ማዘመን ይችላል።"</string>
     <string name="car_loading_profile" msgid="458961191993686065">"በመጫን ላይ"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"ተጠቃሚን (ከ<xliff:g id="FROM_USER">%1$d</xliff:g> ወደ <xliff:g id="TO_USER">%2$d</xliff:g>) በመጫን ላይ"</string>
-    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"ዝጋ"</string>
     <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"ማይክሮፎን ጠፍቷል።"</string>
     <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"ማይክሮፎን ነቅቷል"</string>
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"መተግበሪያዎች ማይክሮፎንን መድረስ ይችላሉ"</string>
