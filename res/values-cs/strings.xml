@@ -28,7 +28,6 @@
     <string name="user_add_user_message_update" msgid="1001907075316748931">"Každý uživatel může aktualizovat aplikace všech ostatních uživatelů."</string>
     <string name="car_loading_profile" msgid="458961191993686065">"Načítání"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"Načítání uživatele (předchozí: <xliff:g id="FROM_USER">%1$d</xliff:g>, následující: <xliff:g id="TO_USER">%2$d</xliff:g>)"</string>
-    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"Zavřít"</string>
     <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"Mikrofon je vypnutý."</string>
     <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"Mikrofon je aktivovaný"</string>
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"Aplikace mají přístup k mikrofonu"</string>

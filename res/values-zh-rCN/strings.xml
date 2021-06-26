@@ -28,7 +28,6 @@
     <string name="user_add_user_message_update" msgid="1001907075316748931">"任何用户均可为所有其他用户更新应用。"</string>
     <string name="car_loading_profile" msgid="458961191993686065">"正在加载"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"正在加载用户（从 <xliff:g id="FROM_USER">%1$d</xliff:g> 到 <xliff:g id="TO_USER">%2$d</xliff:g>）"</string>
-    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"关闭"</string>
     <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"麦克风已关闭。"</string>
     <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"麦克风已启用"</string>
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"应用可以使用麦克风"</string>

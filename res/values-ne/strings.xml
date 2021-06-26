@@ -28,7 +28,6 @@
     <string name="user_add_user_message_update" msgid="1001907075316748931">"सबै प्रयोगकर्ताले अन्य प्रयोगकर्ताका एपहरू अद्यावधिक गर्न सक्छन्।"</string>
     <string name="car_loading_profile" msgid="458961191993686065">"लोड गरिँदै"</string>
     <string name="car_loading_profile_developer_message" msgid="737810794567935702">"प्रयोगकर्तासम्बन्धी जानकारी लोड गरिँदै (<xliff:g id="FROM_USER">%1$d</xliff:g> बाट <xliff:g id="TO_USER">%2$d</xliff:g> मा)"</string>
-    <string name="rear_view_camera_close_button_text" msgid="2123997911640772573">"बन्द गर्नुहोस्"</string>
     <string name="mic_privacy_chip_off_content" msgid="4989623700063721557">"माइक्रोफोन अफ छ।"</string>
     <string name="mic_privacy_chip_mic_enabled" msgid="5667789064187849349">"माइक्रोफोन अन गरिएको छ"</string>
     <string name="mic_privacy_chip_mic_enabled_subtext" msgid="815124399469247109">"एपहरू माइक्रोफोन प्रयोग गर्न पाउँछन्"</string>
