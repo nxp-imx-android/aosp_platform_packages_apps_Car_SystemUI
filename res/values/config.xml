@@ -162,6 +162,7 @@
     <string-array name="config_restrictedToastsPackageNameAllowList" translatable="false">
         <!-- These packages may be used for CTS purposes. -->
         <item>android.widget.cts</item>
+        <item>android.server.wm.app</item>
         <item>android.server.wm.cts</item>
         <item>android.server.wm.second</item>
     </string-array>
