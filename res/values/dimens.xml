@@ -210,6 +210,7 @@
     <dimen name="car_system_bar_button_width">64dp</dimen>
     <dimen name="car_system_bar_button_icon_height">44dp</dimen>
     <dimen name="car_system_bar_width">760dp</dimen>
+    <dimen name="car_system_bar_user_name_max_width">176dp</dimen>
     <dimen name="car_left_system_bar_width">96dp</dimen>
     <dimen name="car_right_system_bar_width">96dp</dimen>
     <!-- In order to change the height of the bottom nav bar, overlay system_bar_height in
