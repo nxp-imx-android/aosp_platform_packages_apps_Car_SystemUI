@@ -23,9 +23,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.car.systembar.CarSystemBarController.NotificationsShadeController;
+import com.android.systemui.statusbar.FeatureFlags;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 
 import java.lang.annotation.ElementType;
@@ -75,20 +75,23 @@ public class CarSystemBarView extends LinearLayout {
         if (mNotificationsButton != null) {
             mNotificationsButton.setOnClickListener(this::onNotificationsClick);
         }
+        // Needs to be clickable so that it will receive ACTION_MOVE events.
+        setClickable(true);
+        // Needs to not be focusable so rotary won't highlight the entire nav bar.
+        setFocusable(false);
+    }
+
+    void setupIconController(FeatureFlags featureFlags, StatusBarIconController iconController) {
         View mStatusIcons = findViewById(R.id.statusIcons);
         if (mStatusIcons != null) {
             // Attach the controllers for Status icons such as wifi and bluetooth if the standard
             // container is in the view.
             StatusBarIconController.DarkIconManager mDarkIconManager =
                     new StatusBarIconController.DarkIconManager(
-                            mStatusIcons.findViewById(R.id.statusIcons));
+                            mStatusIcons.findViewById(R.id.statusIcons), featureFlags);
             mDarkIconManager.setShouldLog(true);
-            Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
+            iconController.addIconGroup(mDarkIconManager);
         }
-        // Needs to be clickable so that it will receive ACTION_MOVE events.
-        setClickable(true);
-        // Needs to not be focusable so rotary won't highlight the entire nav bar.
-        setFocusable(false);
     }
 
     // Used to forward touch events even if the touch was initiated from a child component

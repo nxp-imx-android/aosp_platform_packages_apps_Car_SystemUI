@@ -126,8 +126,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textAppearance="@style/TextAppearance.SystemBar.Username"
-                        android:maxLines="1"
-                        android:maxLength="10"
+                        android:singleLine="true"
+                        android:maxWidth="@dimen/car_system_bar_user_name_max_width"
                         android:layout_marginEnd="@dimen/system_bar_user_icon_padding"
                     />
                 </LinearLayout>

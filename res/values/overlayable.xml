@@ -137,6 +137,7 @@ REGENERATE USING packages/apps/Car/tests/tools/rro/generate-overlayable.py
       <item type="dimen" name="car_right_system_bar_width"/>
       <item type="dimen" name="car_system_bar_button_icon_height"/>
       <item type="dimen" name="car_system_bar_button_width"/>
+      <item type="dimen" name="car_system_bar_user_name_max_width"/>
       <item type="dimen" name="car_system_bar_width"/>
       <item type="dimen" name="car_title2_size"/>
       <item type="dimen" name="car_title_size"/>
