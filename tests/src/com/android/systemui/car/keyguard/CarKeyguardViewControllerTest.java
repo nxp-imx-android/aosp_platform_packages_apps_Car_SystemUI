@@ -26,7 +26,6 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.os.Handler;
 import android.testing.AndroidTestingRunner;
 import android.testing.TestableLooper;
 import android.view.LayoutInflater;
@@ -191,6 +190,39 @@ public class CarKeyguardViewControllerTest extends SysuiTestCase {
         mCarKeyguardViewController.onCancelClicked();
 
         verify(mCancelClickedListener).onCancelClicked();
+    }
+
+    @Test
+    public void onEnterSleepModeAndThenShowKeyguard_bouncerNotSecure_keyguardIsVisible() {
+        when(mBouncer.isSecure()).thenReturn(false);
+        mCarKeyguardViewController.onStartedGoingToSleep();
+        mCarKeyguardViewController.show(/* options= */ null);
+        waitForDelayableExecutor();
+
+        // We want to make sure that showView is called beforehand and hideView is never called
+        // so that the Keyguard is visible as a result.
+        InOrder inOrder = inOrder(mOverlayViewGlobalStateController);
+        inOrder.verify(mOverlayViewGlobalStateController).showView(eq(mCarKeyguardViewController),
+                any());
+        inOrder.verify(mOverlayViewGlobalStateController, never()).hideView(
+                eq(mCarKeyguardViewController), any());
+    }
+
+    @Test
+    public void onDeviceWakeUpWhileKeyguardShown_bouncerNotSecure_keyguardIsNotVisible() {
+        when(mBouncer.isSecure()).thenReturn(false);
+        mCarKeyguardViewController.onStartedGoingToSleep();
+        mCarKeyguardViewController.show(/* options= */ null);
+        mCarKeyguardViewController.onStartedWakingUp();
+        waitForDelayableExecutor();
+
+        // We want to make sure that showView is called beforehand and then hideView is called so
+        // that the Keyguard is invisible as a result.
+        InOrder inOrder = inOrder(mOverlayViewGlobalStateController);
+        inOrder.verify(mOverlayViewGlobalStateController).showView(eq(mCarKeyguardViewController),
+                any());
+        inOrder.verify(mOverlayViewGlobalStateController).hideView(eq(mCarKeyguardViewController),
+                any());
     }
 
     @Test
