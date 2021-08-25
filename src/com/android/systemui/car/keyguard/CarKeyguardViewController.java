@@ -87,6 +87,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
     private OnKeyguardCancelClickedListener mKeyguardCancelClickedListener;
     private boolean mShowing;
     private boolean mIsOccluded;
+    private boolean mIsSleeping;
 
     @Inject
     public CarKeyguardViewController(
@@ -155,7 +156,7 @@ public class CarKeyguardViewController extends OverlayViewController implements
 
     @Override
     public void hide(long startTime, long fadeoutDuration) {
-        if (!mShowing) return;
+        if (!mShowing || mIsSleeping) return;
 
         mViewMediatorCallback.readyForKeyguardDone();
         mShowing = false;
@@ -170,6 +171,8 @@ public class CarKeyguardViewController extends OverlayViewController implements
 
     @Override
     public void reset(boolean hideBouncerWhenShowing) {
+        if (mIsSleeping) return;
+
         mMainExecutor.execute(() -> {
             if (mShowing) {
                 if (mBouncer != null) {
@@ -251,6 +254,17 @@ public class CarKeyguardViewController extends OverlayViewController implements
         getOverlayViewGlobalStateController().setWindowNeedsInput(needsInput);
     }
 
+    @Override
+    public void onStartedGoingToSleep() {
+        mIsSleeping = true;
+    }
+
+    @Override
+    public void onStartedWakingUp() {
+        mIsSleeping = false;
+        reset(/* hideBouncerWhenShowing= */ false);
+    }
+
     /**
      * Add listener for keyguard cancel clicked.
      */
@@ -289,16 +303,6 @@ public class CarKeyguardViewController extends OverlayViewController implements
 
     @Override
     public void setKeyguardGoingAwayState(boolean isKeyguardGoingAway) {
-        // no-op
-    }
-
-    @Override
-    public void onStartedGoingToSleep() {
-        // no-op
-    }
-
-    @Override
-    public void onStartedWakingUp() {
         // no-op
     }
 
