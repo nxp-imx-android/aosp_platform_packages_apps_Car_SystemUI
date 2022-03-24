@@ -165,6 +165,7 @@
         <item>android.server.wm.app</item>
         <item>android.server.wm.cts</item>
         <item>android.server.wm.second</item>
+        <item>com.android.cts.verifier</item>
     </string-array>
 
     <!-- Specifies the component name of the app grid activity -->
